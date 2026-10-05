@@ -1,0 +1,183 @@
+---
+import Base from '../../layouts/Base.astro';
+import Picture from '../../components/Picture.astro';
+import ListingCard from '../../components/ListingCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { listings, VILLAGES, euro, type Listing } from '../../lib/listings';
+import { SITE } from '../../lib/site';
+import { rentalLd, breadcrumbLd } from '../../lib/schema';
+
+export function getStaticPaths() {
+  return listings.map((l) => ({ params: { slug: l.slug }, props: { l } }));
+}
+const { l } = Astro.props as { l: Listing };
+const village = VILLAGES.find((v) => v.name === l.village)!;
+const kindLabel = l.kind === 'chalet' ? 'Chalets' : 'Appartements';
+const kindHref = l.kind === 'chalet' ? '/chalets/' : '/appartements/';
+const crumbs = [
+  { name: 'Accueil', href: '/' },
+  { name: kindLabel, href: kindHref },
+  { name: l.village, href: `/${village.slug}/` },
+  { name: l.name, href: `/locations/${l.slug}/` },
+];
+const similar = listings
+  .filter((o) => o.slug !== l.slug)
+  .map((o) => ({ o, score: (o.kind === l.kind ? 2 : 0) + (o.village === l.village ? 2 : 0) - Math.abs(o.capacity - l.capacity) / 2 }))
+  .sort((a, b) => b.score - a.score)
+  .slice(0, 3)
+  .map((x) => x.o);
+const facts = [
+  { b: `${l.capacity}`, s: 'voyageurs' },
+  l.surface && { b: `${l.surface} m²`, s: 'surface' },
+  l.pieces && { b: `${l.pieces}`, s: 'pièces' },
+  l.floor && { b: l.floor.replace(/ étage/i, ''), s: 'étage' },
+  l.standing && { b: l.standing.replace(' étoiles', ' ★'), s: 'classement' },
+].filter(Boolean) as { b: string; s: string }[];
+const bbox = l.latlng ? [l.latlng[1] - 0.012, l.latlng[0] - 0.007, l.latlng[1] + 0.012, l.latlng[0] + 0.007].join(',') : null;
+const extras = [
+  l.garage && 'Garage',
+  l.parking && 'Parking',
+  l.petsAllowed === false && 'Animaux non admis',
+  l.petsAllowed === true && 'Animaux acceptés',
+].filter(Boolean) as string[];
+---
+<Base
+  title={`${l.seoTitle}`}
+  description={l.metaDescription}
+  image={l.photos[0] ? `${l.photos[0].base}-1280.webp` : undefined}
+  preloadImage={l.photos[0] ? `${l.photos[0].base}-1280.webp` : undefined}
+  jsonLd={[rentalLd(l), breadcrumbLd(crumbs)]}
+>
+  <div class="wrap">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <div class="listing-head">
+      <div>
+        <h1>{l.name}</h1>
+        <div class="listing-sub">
+          <span>{l.kind === 'chalet' ? 'Chalet' : 'Appartement'} à {l.village}</span>
+          <span>{l.capacity} personnes</span>
+          {l.surface && <span>{l.surface} m²</span>}
+          {l.skiInSkiOut && <span>Skis aux pieds</span>}
+        </div>
+      </div>
+      {l.priceFrom && <div class="muted">À partir de <strong style="color:var(--ink);font-size:1.2rem">{euro(l.priceFrom)}</strong> / semaine</div>}
+    </div>
+
+    <div class="gallery" data-gallery>
+      {l.photos.slice(0, 5).map((p, i) => (
+        <button type="button" data-index={i} aria-label={`Agrandir la photo ${i + 1}`}>
+          <Picture photo={p} alt={`${l.name} à ${l.village} — photo ${i + 1}`} eager={i === 0} large={i === 0} sizes={i === 0 ? '(max-width: 760px) 100vw, 60vw' : '25vw'} />
+        </button>
+      ))}
+      {l.photos.length > 1 && <button type="button" class="btn btn--light gallery-all" data-index="0" style="cursor:pointer">Voir les {l.photos.length} photos</button>}
+    </div>
+  </div>
+
+  <div class="wrap listing-layout">
+    <article>
+      <ul class="facts">{facts.map((f) => <li><b>{f.b}</b><span>{f.s}</span></li>)}</ul>
+      {l.headline && <p style="font:500 1.35rem/1.35 var(--serif);margin-bottom:18px">{l.headline}</p>}
+      {l.intro.map((p) => <p>{p}</p>)}
+
+      {l.highlights.length > 0 && (
+        <section class="block">
+          <h2>Les points forts</h2>
+          <ul class="check-list">{l.highlights.map((h) => <li>{h}</li>)}</ul>
+        </section>
+      )}
+
+      {(l.rooms.length > 0 || l.bathrooms) && (
+        <section class="block">
+          <h2>Couchages et salles d'eau</h2>
+          {l.rooms.length > 0 && <ul class="check-list">{l.rooms.map((r) => <li>{r}</li>)}</ul>}
+          {l.bathrooms && <p class="muted">{l.bathrooms}</p>}
+        </section>
+      )}
+
+      {l.equipment.length > 0 && (
+        <section class="block">
+          <h2>Équipements</h2>
+          <ul class="check-list columns-2">{[...l.equipment, ...extras].map((e) => <li>{e}</li>)}</ul>
+        </section>
+      )}
+
+      <section class="block">
+        <h2>Situation</h2>
+        <p>{l.name} se trouve à <a href={`/${village.slug}/`}>{l.village}</a> ({village.altitude}), dans la vallée de la Vallouise, aux portes du Parc national des Écrins. {village.blurb}</p>
+        {bbox && <iframe class="map" loading="lazy" title={`Carte : ${l.name} à ${l.village}`} src={`https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${l.latlng![0]},${l.latlng![1]}`}></iframe>}
+        <p class="small muted" style="margin-top:8px">Emplacement approximatif. L'adresse exacte vous est communiquée à la réservation.</p>
+      </section>
+    </article>
+
+    <aside>
+      <div class="booking">
+        {l.priceFrom ? (
+          <div class="booking-price">{euro(l.priceFrom)} <small>/ semaine minimum</small></div>
+        ) : (
+          <div class="booking-price" style="font-size:1.4rem">Tarifs sur demande</div>
+        )}
+        <table class="price-table">
+          <tbody>
+            {l.prices.map((p) => (
+              <tr><td>{p.label}</td><td>{p.amount ? euro(p.amount) : <span class="na" title="Semaine déjà réservée ou tarif non publié">—</span>}</td></tr>
+            ))}
+          </tbody>
+        </table>
+        <a class="btn btn--primary btn--block" href={l.bookingUrl} rel="noopener" data-track="reserver">Voir les disponibilités et réserver</a>
+        <p class="note">Tarifs à la semaine relevés le {SITE.priceCheckedOn}, à titre indicatif (— : semaine déjà réservée ou tarif non publié). Réservation et paiement sécurisés sur le site de l'agence.</p>
+        <div class="booking-agency">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></svg>
+          <div>Géré par <strong>{SITE.agency.name}</strong>, agence à Vallouise depuis {SITE.agency.since}.<br /><a href={SITE.agency.phoneHref}>{SITE.agency.phone}</a> · réf. {l.ref}</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <section class="section section--snow">
+    <div class="wrap">
+      <div class="section-head"><div><span class="eyebrow">À découvrir aussi</span><h2>Logements similaires</h2></div><a class="link-arrow" href={kindHref}>Tous les {kindLabel.toLowerCase()}</a></div>
+      <div class="grid grid--3">{similar.map((o) => <ListingCard l={o} />)}</div>
+    </div>
+  </section>
+
+  <div class="mobile-cta">
+    <div>{l.priceFrom ? <><strong>{euro(l.priceFrom)}</strong> <span class="small muted">/ sem.</span></> : <strong>Sur demande</strong>}</div>
+    <a class="btn btn--primary" href={l.bookingUrl} rel="noopener">Réserver</a>
+  </div>
+
+  <dialog class="lightbox" data-lightbox aria-label={`Photos de ${l.name}`}>
+    <div class="lightbox-inner">
+      <div class="lightbox-bar"><span data-counter></span><button type="button" data-close aria-label="Fermer">✕</button></div>
+      <div class="lightbox-stage">
+        <button type="button" class="lightbox-nav prev" data-prev aria-label="Photo précédente">‹</button>
+        <img data-full alt="" />
+        <button type="button" class="lightbox-nav next" data-next aria-label="Photo suivante">›</button>
+      </div>
+    </div>
+  </dialog>
+  <script type="application/json" data-photos set:html={JSON.stringify(l.photos.map((p) => `${p.base}-1280.webp`))} />
+</Base>
+
+<script>
+  const dlg = document.querySelector<HTMLDialogElement>('[data-lightbox]');
+  const img = dlg?.querySelector<HTMLImageElement>('[data-full]');
+  const counter = dlg?.querySelector('[data-counter]');
+  const photos: string[] = JSON.parse(document.querySelector('[data-photos]')?.textContent ?? '[]');
+  let i = 0;
+  const show = (n: number) => {
+    if (!img || !photos.length) return;
+    i = (n + photos.length) % photos.length;
+    img.src = photos[i];
+    if (counter) counter.textContent = `${i + 1} / ${photos.length}`;
+  };
+  document.querySelectorAll<HTMLElement>('[data-gallery] [data-index]').forEach((b) =>
+    b.addEventListener('click', () => { show(Number(b.dataset.index)); dlg?.showModal(); }));
+  dlg?.querySelector('[data-close]')?.addEventListener('click', () => dlg.close());
+  dlg?.querySelector('[data-prev]')?.addEventListener('click', () => show(i - 1));
+  dlg?.querySelector('[data-next]')?.addEventListener('click', () => show(i + 1));
+  document.addEventListener('keydown', (e) => {
+    if (!dlg?.open) return;
+    if (e.key === 'ArrowLeft') show(i - 1);
+    if (e.key === 'ArrowRight') show(i + 1);
+  });
+</script>

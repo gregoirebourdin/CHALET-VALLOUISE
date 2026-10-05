@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ListingBrowser from '../../components/ListingBrowser.astro';
+import { listings, chalets, apartments, cover } from '../../lib/listings';
+import { breadcrumbLd, itemListLd } from '../../lib/schema';
+const crumbs = [{ name: 'Accueil', href: '/' }, { name: 'Toutes les locations', href: '/locations/' }];
+const img = cover('CHAL LE CERF ROUGE');
+---
+<Base
+  title="Locations de vacances en Vallouise · 41 chalets et appartements"
+  description={`${chalets.length} chalets et ${apartments.length} appartements à louer à Vallouise, Pelvoux et Puy-Saint-Vincent. Filtrez par village, capacité et atouts (skis aux pieds, jacuzzi, sauna).`}
+  image={img ? `${img.base}-1280.webp` : undefined}
+  jsonLd={[breadcrumbLd(crumbs), itemListLd(listings, 'Locations de vacances en Vallouise')]}
+>
+  <div class="wrap">
+    <Breadcrumbs items={[crumbs[0], { name: crumbs[1].name }]} />
+    <header style="padding-block:24px 30px">
+      <span class="eyebrow">Toutes les locations</span>
+      <h1 style="font-size:clamp(2rem,4.4vw,3.2rem)">Locations de vacances en Vallouise</h1>
+      <p class="lead">{chalets.length} chalets et {apartments.length} appartements à Vallouise, Pelvoux et Puy-Saint-Vincent, au cœur du Parc national des Écrins. Tarifs indicatifs à la semaine.</p>
+    </header>
+    <ListingBrowser items={listings} />
+  </div>
+  <div style="height:80px"></div>
+</Base>

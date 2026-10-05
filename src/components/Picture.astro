@@ -1,0 +1,24 @@
+---
+import type { Photo } from '../lib/listings';
+interface Props {
+  photo?: Photo; alt: string; sizes?: string; eager?: boolean; class?: string; large?: boolean;
+}
+const { photo, alt, sizes = '(max-width: 760px) 100vw, 33vw', eager = false, class: cls, large = false } = Astro.props;
+const w = large ? 1280 : 640;
+---
+{photo ? (
+  <img
+    src={`${photo.base}-${w}.webp`}
+    srcset={`${photo.base}-640.webp 640w, ${photo.base}-1280.webp 1280w`}
+    sizes={sizes}
+    width={w}
+    height={Math.round(w * photo.ratio)}
+    alt={alt}
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : undefined}
+    decoding="async"
+    class={cls}
+  />
+) : (
+  <div class={cls} style="background:var(--sky);width:100%;height:100%" role="img" aria-label={alt}></div>
+)}

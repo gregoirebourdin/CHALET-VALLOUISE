@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Picture from '../../components/Picture.astro';
+import { getCollection } from 'astro:content';
+import { VILLAGES, cover } from '../../lib/listings';
+import { breadcrumbLd } from '../../lib/schema';
+const posts = (await getCollection('blog')).sort((a, b) => +b.data.updated - +a.data.updated);
+const crumbs = [{ name: 'Accueil', href: '/' }, { name: 'Guides', href: '/guides/' }];
+---
+<Base
+  title="Guides Vallouise, Pelvoux, Puy-Saint-Vincent · préparer son séjour"
+  description="Nos guides pour préparer vos vacances dans le Pays des Écrins : choisir sa station de ski, que faire à Vallouise en été, randonnées, villages."
+  jsonLd={[breadcrumbLd(crumbs)]}
+>
+  <div class="wrap">
+    <Breadcrumbs items={[crumbs[0], { name: 'Guides' }]} />
+    <header style="padding-block:24px 36px">
+      <span class="eyebrow">Guides</span>
+      <h1 style="font-size:clamp(2rem,4.4vw,3.2rem)">Préparer son séjour dans les Écrins</h1>
+      <p class="lead">Conseils locaux, comparatifs et itinéraires pour profiter de la vallée de la Vallouise, été comme hiver.</p>
+    </header>
+    <div class="grid grid--3">
+      {posts.map((p) => (
+        <a class="card" href={`/guides/${p.id}/`}>
+          <div class="card-body" style="padding:26px">
+            <span class="eyebrow" style="margin:0">Guide</span>
+            <h2 class="card-title" style="font-size:1.4rem">{p.data.h1}</h2>
+            <p class="muted" style="margin:0">{p.data.excerpt ?? p.data.description}</p>
+            <span class="link-arrow" style="margin-top:auto;padding-top:14px">Lire le guide</span>
+          </div>
+        </a>
+      ))}
+      {VILLAGES.map((v) => (
+        <a class="card" href={`/${v.slug}/`}>
+          <div class="card-media" style="aspect-ratio:16/9"><Picture photo={cover(v.cover)} alt={v.name} /></div>
+          <div class="card-body"><span class="eyebrow" style="margin:0">Village</span><h2 class="card-title">Séjourner à {v.name}</h2><p class="muted" style="margin:0">{v.blurb}</p></div>
+        </a>
+      ))}
+    </div>
+  </div>
+  <div style="height:90px"></div>
+</Base>

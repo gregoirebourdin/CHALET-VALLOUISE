@@ -1,0 +1,90 @@
+---
+import ListingCard from './ListingCard.astro';
+import type { Listing } from '../lib/listings';
+interface Props { items: Listing[]; showKind?: boolean; showVillage?: boolean }
+const { items, showKind = true, showVillage = true } = Astro.props;
+const villages = [...new Set(items.map((l) => l.village))];
+const tags = ['skis aux pieds', 'jacuzzi', 'sauna', 'cheminée', 'jardin', 'garage'].filter((t) => items.some((l) => l.tags.includes(t)));
+---
+<div class="filters" data-filters>
+  {showKind && (
+    <>
+      <button class="chip" type="button" data-kind="" aria-pressed="true">Tous</button>
+      <button class="chip" type="button" data-kind="chalet" aria-pressed="false">Chalets</button>
+      <button class="chip" type="button" data-kind="appartement" aria-pressed="false">Appartements</button>
+    </>
+  )}
+  {showVillage && villages.length > 1 && (
+    <select data-village aria-label="Village">
+      <option value="">Tous les villages</option>
+      {villages.map((v) => <option value={v}>{v}</option>)}
+    </select>
+  )}
+  <select data-cap aria-label="Nombre de voyageurs">
+    <option value="">Voyageurs</option>
+    <option value="4">4 et +</option><option value="6">6 et +</option><option value="8">8 et +</option><option value="10">10 et +</option>
+  </select>
+  {tags.length > 0 && (
+    <select data-tag aria-label="Atout">
+      <option value="">Atouts</option>
+      {tags.map((t) => <option value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>)}
+    </select>
+  )}
+  <select data-sort aria-label="Trier">
+    <option value="">Trier : sélection</option>
+    <option value="price-asc">Prix croissant</option>
+    <option value="price-desc">Prix décroissant</option>
+    <option value="cap-desc">Capacité</option>
+  </select>
+  <span class="count" data-count>{items.length} logements</span>
+</div>
+<div class="grid grid--3" data-results>
+  {items.map((l, i) => <ListingCard l={l} eager={i < 3} />)}
+</div>
+<p data-empty hidden class="muted" style="text-align:center;padding:40px 0">Aucun logement ne correspond à ces critères. <button class="chip" type="button" data-reset>Réinitialiser</button></p>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-filters]');
+  const grid = document.querySelector<HTMLElement>('[data-results]');
+  if (root && grid) {
+    const cards = [...grid.querySelectorAll<HTMLElement>('[data-listing]')];
+    const original = [...cards];
+    const q = new URLSearchParams(location.search);
+    const state = { kind: q.get('type') ?? '', village: q.get('village') ?? '', cap: q.get('cap') ?? '', tag: q.get('tag') ?? '', sort: '' };
+    const sel = (k: string) => root.querySelector<HTMLSelectElement>(`[data-${k}]`);
+    (['village', 'cap', 'tag', 'sort'] as const).forEach((k) => {
+      const s = sel(k); if (!s) return;
+      s.value = state[k];
+      s.addEventListener('change', () => { state[k] = s.value; apply(); });
+    });
+    const chips = [...root.querySelectorAll<HTMLButtonElement>('[data-kind]')];
+    chips.forEach((c) => c.addEventListener('click', () => { state.kind = c.dataset.kind ?? ''; apply(); }));
+    document.querySelector('[data-reset]')?.addEventListener('click', () => {
+      Object.assign(state, { kind: '', village: '', cap: '', tag: '', sort: '' });
+      (['village', 'cap', 'tag', 'sort'] as const).forEach((k) => { const s = sel(k); if (s) s.value = ''; });
+      apply();
+    });
+    function apply() {
+      chips.forEach((c) => c.setAttribute('aria-pressed', String((c.dataset.kind ?? '') === state.kind)));
+      let n = 0;
+      const order = [...original];
+      const price = (el: HTMLElement) => Number(el.dataset.price || 1e9);
+      if (state.sort === 'price-asc') order.sort((a, b) => price(a) - price(b));
+      if (state.sort === 'price-desc') order.sort((a, b) => (Number(b.dataset.price) || 0) - (Number(a.dataset.price) || 0));
+      if (state.sort === 'cap-desc') order.sort((a, b) => Number(b.dataset.cap) - Number(a.dataset.cap));
+      order.forEach((el) => {
+        const ok = (!state.kind || el.dataset.kind === state.kind)
+          && (!state.village || el.dataset.village === state.village)
+          && (!state.cap || Number(el.dataset.cap) >= Number(state.cap))
+          && (!state.tag || (el.dataset.tags ?? '').split('|').includes(state.tag));
+        el.hidden = !ok; if (ok) n++;
+        grid!.appendChild(el);
+      });
+      const count = root!.querySelector('[data-count]');
+      if (count) count.textContent = `${n} logement${n > 1 ? 's' : ''}`;
+      const empty = document.querySelector<HTMLElement>('[data-empty]');
+      if (empty) empty.hidden = n > 0;
+    }
+    apply();
+  }
+</script>

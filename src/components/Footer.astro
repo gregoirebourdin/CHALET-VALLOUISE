@@ -1,0 +1,46 @@
+---
+import Logo from './Logo.astro';
+import { SITE } from '../lib/site';
+import { listings, chalets, apartments } from '../lib/listings';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="/" class="brand" style="margin-bottom:18px"><Logo /><span><span class="brand-name" style="color:#fff">{SITE.name}</span><span class="brand-sub">Pays des Écrins</span></span></a>
+        <p style="max-width:36ch">{listings.length} chalets et appartements de vacances à Vallouise, Pelvoux et Puy-Saint-Vincent, aux portes du Parc national des Écrins.</p>
+        <p class="small">Logements gérés et réservés par l'agence locale <a href={SITE.agency.url}>{SITE.agency.name}</a> — {SITE.agency.street}, {SITE.agency.postalCode} {SITE.agency.city} · <a href={SITE.agency.phoneHref}>{SITE.agency.phone}</a></p>
+      </div>
+      <div>
+        <h3>Locations</h3>
+        <ul>
+          <li><a href="/locations/">Toutes les locations ({listings.length})</a></li>
+          <li><a href="/chalets/">Chalets ({chalets.length})</a></li>
+          <li><a href="/appartements/">Appartements ({apartments.length})</a></li>
+          <li><a href="/locations/?tag=skis+aux+pieds">Skis aux pieds</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Villages</h3>
+        <ul>
+          <li><a href="/vallouise/">Location à Vallouise</a></li>
+          <li><a href="/pelvoux/">Location à Pelvoux</a></li>
+          <li><a href="/puy-saint-vincent/">Location à Puy-Saint-Vincent</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Préparer son séjour</h3>
+        <ul>
+          <li><a href="/guides/">Guides de la vallée</a></li>
+          <li><a href="/a-propos/">Qui sommes-nous ?</a></li>
+          <li><a href="/mentions-legales/">Mentions légales</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {year} {SITE.name}</span>
+      <span>Vallouise-Pelvoux · Puy-Saint-Vincent · Hautes-Alpes</span>
+    </div>
+  </div>
+</footer>

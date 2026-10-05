@@ -1,0 +1,37 @@
+---
+import Logo from './Logo.astro';
+import { SITE } from '../lib/site';
+const path = Astro.url.pathname;
+const links = [
+  { href: '/locations/', label: 'Toutes les locations' },
+  { href: '/chalets/', label: 'Chalets' },
+  { href: '/appartements/', label: 'Appartements' },
+  { href: '/vallouise/', label: 'Vallouise' },
+  { href: '/pelvoux/', label: 'Pelvoux' },
+  { href: '/puy-saint-vincent/', label: 'Puy-Saint-Vincent' },
+  { href: '/guides/', label: 'Guides' },
+];
+---
+{!SITE.indexable && (
+  <div class="demo-banner"><b>Maquette de démonstration</b> — site non indexé, présenté à l'agence Vallouise Immobilier.</div>
+)}
+<header class="site-header">
+  <div class="wrap">
+    <a href="/" class="brand" aria-label={`${SITE.name} — accueil`}>
+      <Logo />
+      <span><span class="brand-name">{SITE.name}</span><span class="brand-sub">Pays des Écrins</span></span>
+    </a>
+    <nav class="nav" aria-label="Navigation principale">
+      {links.slice(1).map((l) => <a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}</a>)}
+      <a href="/locations/" class="btn btn--dark">Voir les 41 logements</a>
+    </nav>
+    <details class="nav-toggle">
+      <summary aria-label="Ouvrir le menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
+      </summary>
+      <nav class="mobile-menu" aria-label="Menu mobile">
+        {links.map((l) => <a href={l.href}>{l.label}</a>)}
+      </nav>
+    </details>
+  </div>
+</header>

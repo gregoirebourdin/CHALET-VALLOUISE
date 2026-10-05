@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../lib/site';
+import { listings, chalets, apartments } from '../lib/listings';
+import { agencyLd, breadcrumbLd } from '../lib/schema';
+const crumbs = [{ name: 'Accueil', href: '/' }, { name: 'Qui sommes-nous ?', href: '/a-propos/' }];
+---
+<Base
+  title="Qui sommes-nous ? · Chalet Vallouise et Vallouise Immobilier"
+  description={`Chalet Vallouise présente les ${listings.length} locations de vacances gérées par Vallouise Immobilier, agence installée à Vallouise depuis ${SITE.agency.since}.`}
+  jsonLd={[agencyLd(), breadcrumbLd(crumbs)]}
+>
+  <div class="narrow">
+    <Breadcrumbs items={[crumbs[0], { name: crumbs[1].name }]} />
+    <header style="padding-block:28px 12px">
+      <span class="eyebrow">Qui sommes-nous ?</span>
+      <h1 style="font-size:clamp(2rem,4.4vw,3.2rem)">Une vitrine pour les plus beaux logements de la Vallouise</h1>
+    </header>
+    <div class="prose">
+      <p>Chalet Vallouise réunit les {chalets.length} chalets et {apartments.length} appartements de vacances gérés par <strong>{SITE.agency.name}</strong>, agence immobilière installée à Vallouise depuis {SITE.agency.since}. Tous les logements appartiennent à des particuliers qui ont confié leur location à l'agence.</p>
+      <h2>Comment réserver ?</h2>
+      <p>Chaque fiche présente le logement, ses équipements et des tarifs indicatifs. Le bouton « Voir les disponibilités et réserver » vous mène au calendrier en temps réel de l'agence, où vous réglez un acompte en ligne pour bloquer vos dates.</p>
+      <h2>L'agence</h2>
+      <ul>
+        <li>{SITE.agency.name} — {SITE.agency.street}, {SITE.agency.postalCode} {SITE.agency.city}</li>
+        <li>Téléphone : <a href={SITE.agency.phoneHref}>{SITE.agency.phone}</a>, {SITE.agency.hours}</li>
+        <li>Services : location de draps et serviettes, lit bébé, chaise haute, ménage, dépannage dans la journée</li>
+        <li>Site de l'agence : <a href={SITE.agency.url}>vallouise-immobilier.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div style="height:90px"></div>
+</Base>

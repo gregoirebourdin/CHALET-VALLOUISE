@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import ListingBrowser from './ListingBrowser.astro';
+import Picture from './Picture.astro';
+import Faq from './Faq.astro';
+import type { Listing, Photo } from '../lib/listings';
+import { breadcrumbLd, itemListLd, faqLd } from '../lib/schema';
+interface Props {
+  title: string; description: string; h1: string; eyebrow: string; lead: string; path: string;
+  items: Listing[]; image?: Photo; faq: { q: string; a: string }[]; showKind?: boolean; showVillage?: boolean;
+}
+const p = Astro.props;
+const crumbs = [{ name: 'Accueil', href: '/' }, { name: p.eyebrow, href: p.path }];
+---
+<Base
+  title={p.title}
+  description={p.description}
+  image={p.image ? `${p.image.base}-1280.webp` : undefined}
+  preloadImage={p.image ? `${p.image.base}-1280.webp` : undefined}
+  jsonLd={[breadcrumbLd(crumbs), itemListLd(p.items, p.h1), faqLd(p.faq)].filter(Boolean)}
+>
+  <section class="page-hero">
+    <Picture photo={p.image} alt={p.h1} eager large sizes="100vw" />
+    <div class="wrap">
+      <Breadcrumbs items={[crumbs[0], { name: crumbs[1].name }]} />
+      <span class="eyebrow" style="color:#f0bf98">{p.eyebrow}</span>
+      <h1>{p.h1}</h1>
+      <p class="lead">{p.lead}</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top:44px">
+    <div class="wrap">
+      <slot name="intro" />
+      <ListingBrowser items={p.items} showKind={p.showKind} showVillage={p.showVillage} />
+    </div>
+  </section>
+  <slot />
+  <section class="section section--snow">
+    <div class="narrow"><Faq items={p.faq} /></div>
+  </section>
+</Base>

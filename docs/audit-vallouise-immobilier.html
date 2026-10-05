@@ -1,0 +1,452 @@
+<title>Audit Vallouise Immobilier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout : dossier d'audit, une colonne de lecture (≈ 980 px), tableaux et graphiques pleine largeur de colonne */
+:root {
+  --bg: #f4f6f7; --surface: #ffffff; --ink: #13202a; --ink-2: #4a5965; --ink-3: #6f7d88; --line: #dbe2e7;
+  --accent: #1d5f86; --accent-soft: #e2edf4; --series: #2a78d6; --neutral-bar: #b7c1c9;
+  --crit: #b8372d; --crit-soft: #f8e4e1; --warn: #9a6512; --warn-soft: #f7ecd8; --good: #2c7a4b; --good-soft: #e0f0e6;
+  --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e161c; --surface: #152029; --ink: #e7edf1; --ink-2: #a7b6c1; --ink-3: #8394a1; --line: #263540;
+  --accent: #79b6dc; --accent-soft: #1a2d3a; --series: #3987e5; --neutral-bar: #4b5a65;
+  --crit: #ec7d72; --crit-soft: #3a1f1d; --warn: #dcab55; --warn-soft: #362a14; --good: #6cc08c; --good-soft: #17301f; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0e161c; --surface: #152029; --ink: #e7edf1; --ink-2: #a7b6c1; --ink-3: #8394a1; --line: #263540;
+  --accent: #79b6dc; --accent-soft: #1a2d3a; --series: #3987e5; --neutral-bar: #4b5a65;
+  --crit: #ec7d72; --crit-soft: #3a1f1d; --warn: #dcab55; --warn-soft: #362a14; --good: #6cc08c; --good-soft: #17301f; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--body); margin: 0; padding: 0 16px; }
+.doc { max-width: 980px; margin: 0 auto; padding-block: 48px 96px; }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -0.01em; line-height: 1.15; text-wrap: balance; margin: 0 0 .5em; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; }
+h2 { font-size: clamp(1.45rem, 3vw, 1.9rem); font-weight: 600; }
+h3 { font-size: 1.12rem; font-weight: 600; }
+p { margin: 0 0 1em; max-width: 68ch; }
+a { color: var(--accent); }
+.kicker { font: 600 .74rem/1.2 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; display: block; }
+.meta { color: var(--ink-3); font-size: .92rem; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+section { padding-block: 44px; border-top: 1px solid var(--line); }
+header.top { padding-bottom: 36px; }
+.lede { font-size: 1.18rem; color: var(--ink-2); max-width: 64ch; }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 28px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; min-width: 0; }
+.tile b { display: block; font: 500 1.7rem/1.1 var(--mono); font-variant-numeric: tabular-nums; margin-bottom: 4px; }
+.tile span { font-size: .88rem; color: var(--ink-2); }
+
+.verdict { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+.verdict li { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font: 600 .72rem/1 var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; white-space: nowrap; }
+.chip.crit { background: var(--crit-soft); color: var(--crit); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.chip.good { background: var(--good-soft); color: var(--good); }
+.chip.info { background: var(--accent-soft); color: var(--accent); }
+
+.figure { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 20px 14px; margin: 22px 0; position: relative; min-width: 0; }
+.figure h3 { margin-bottom: 2px; }
+.figure .meta { margin: 0 0 12px; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart text { fill: var(--ink-3); font: 12px var(--body); }
+.chart .grid line { stroke: var(--line); stroke-width: 1; }
+.chart .series-line { fill: none; stroke: var(--series); stroke-width: 2; stroke-linejoin: round; }
+.chart .series-area { fill: var(--series); opacity: .1; }
+.chart .cross { stroke: var(--ink-3); stroke-width: 1; }
+.chart .dot { fill: var(--series); stroke: var(--surface); stroke-width: 2; }
+.chart .anno { fill: var(--ink-2); font-weight: 600; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 6px 20px rgba(0,0,0,.12); border-radius: 8px; padding: 8px 10px; font-size: .85rem; white-space: nowrap; }
+.tip b { font: 500 1rem var(--mono); display: block; }
+
+.bars { display: grid; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: minmax(120px, 230px) 1fr; gap: 14px; align-items: center; }
+.bar-row .label { font-size: .95rem; min-width: 0; overflow-wrap: anywhere; }
+.bar-row .label small { display: block; color: var(--ink-3); font-size: .8rem; }
+.bar-track { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.bar { height: 14px; border-radius: 0 4px 4px 0; background: var(--neutral-bar); min-width: 3px; }
+.bar.hl { background: var(--series); }
+.bar-val { font: 500 .9rem var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+@media (max-width: 560px) { .bar-row { grid-template-columns: 1fr; gap: 4px; } }
+
+.table-wrap { overflow-x: auto; margin: 18px 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .94rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 .74rem/1.2 var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); background: var(--bg); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.r, th.r { text-align: right; }
+.vol { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.vol i { display: inline-block; height: 8px; border-radius: 0 3px 3px 0; background: var(--series); opacity: .75; }
+.pos { font: 500 .85rem var(--mono); padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+.pos.top { background: var(--good-soft); color: var(--good); }
+.pos.mid { background: var(--warn-soft); color: var(--warn); }
+.pos.none { background: var(--crit-soft); color: var(--crit); }
+
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 18px 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; min-width: 0; }
+.card h3 { margin-bottom: 6px; }
+.card p, .card li { font-size: .95rem; color: var(--ink-2); }
+.card ul { margin: 0; padding-left: 1.1em; }
+.card.feature { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.price { font: 500 1.6rem/1.1 var(--mono); color: var(--ink); margin: 6px 0 10px; }
+.price small { font: 400 .9rem var(--body); color: var(--ink-3); }
+
+.callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 20px; margin: 18px 0; }
+.callout p:last-child { margin: 0; }
+.steps { counter-reset: s; list-style: none; padding: 0; margin: 18px 0; display: grid; gap: 14px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 12px; }
+.steps li::before { content: counter(s); font: 600 .9rem/34px var(--mono); text-align: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); }
+.steps b { display: block; }
+.months { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.month { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; }
+.month b { font-family: var(--display); font-size: .95rem; }
+.month p { font-size: .92rem; color: var(--ink-2); margin: 4px 0 0; }
+footer { color: var(--ink-3); font-size: .86rem; padding-top: 28px; border-top: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="doc">
+<header class="top">
+  <span class="kicker">Audit SEO &amp; GEO · 5 octobre 2026</span>
+  <h1>Vallouise Immobilier : capter toute la demande de location de la vallée</h1>
+  <p class="lede">L'agence tient déjà la première place sur « location vallouise ». Elle est en revanche absente de Puy-Saint-Vincent, des recherches « Hautes-Alpes », des contenus d'information et des réponses des IA. Un second site, chalet-vallouise.fr, peut aller chercher ce trafic sans toucher au site actuel.</p>
+  <p class="meta">Sources : SE Ranking (base France, octobre 2026), crawl complet du site (181 pages), relevé des 41 annonces et de leurs tarifs. Le trafic indiqué est une estimation d'outil : les vrais chiffres viendront de la Google Search Console de l'agence.</p>
+  <div class="tiles">
+    <div class="tile"><b>≈ 208</b><span>visites Google / mois (estimation)</span></div>
+    <div class="tile"><b>−61 %</b><span>depuis le pic de février 2023 (537)</span></div>
+    <div class="tile"><b>313</b><span>mots-clés positionnés, dont 83 dans le top 5</span></div>
+    <div class="tile"><b>0,4 %</b><span>part de voix dans les réponses IA</span></div>
+    <div class="tile"><b>41</b><span>locations : 12 chalets, 29 appartements</span></div>
+  </div>
+</header>
+
+<section>
+  <span class="kicker">Synthèse</span>
+  <h2>Ce qu'il faut retenir</h2>
+  <ul class="verdict">
+    <li><span class="chip good">Acquis</span><span>1<sup>re</sup> place sur « location vallouise » (170 recherches/mois), « location vacances vallouise », « location pelvoux » et « location chalet vallouise ». Le cœur de marque tient.</span></li>
+    <li><span class="chip crit">Manque</span><span>Absent du top 100 sur « location puy saint vincent » (590/mois) et les recherches proches (≈ 1 100 recherches/mois), comme sur « location chalet hautes alpes » ou « gite hautes alpes ». Une agence concurrente y est 1<sup>re</sup> et capte environ 4 fois plus de trafic.</span></li>
+    <li><span class="chip crit">Manque</span><span>Aucun contenu d'information (météo, enneigement, forfaits, randonnées, été) alors que ces recherches pèsent plusieurs milliers de visites par mois et alimentent les réponses des IA.</span></li>
+    <li><span class="chip warn">Fragile</span><span>Le trafic estimé baisse : 257 visites/mois en moyenne sur 12 mois, contre 301 l'année précédente (−15 %).</span></li>
+    <li><span class="chip warn">Technique</span><span>La même meta description sur toutes les pages, aucun balisage schema.org sur les annonces, aucun sitemap, 175 images sans texte alternatif. La page qui ranke sur « location chalet vallouise » est… la page 3 de la pagination.</span></li>
+  </ul>
+</section>
+
+<section>
+  <span class="kicker">Trafic</span>
+  <h2>Un trafic organique en recul depuis 2023</h2>
+  <p>Estimation mensuelle du trafic Google (France) de vallouise-immobilier.com. Ces estimations sous-évaluent en général le trafic réel d'un petit site, mais la tendance est fiable : après un pic à l'hiver 2023, le trafic a été divisé par plus de deux.</p>
+  <div class="figure">
+    <h3>Trafic organique estimé, visites par mois</h3>
+    <p class="meta">vallouise-immobilier.com · France · févr. 2020 – oct. 2026 · source SE Ranking</p>
+    <div class="chart" id="traffic"></div>
+  </div>
+</section>
+
+<section>
+  <span class="kicker">Concurrence</span>
+  <h2>Qui capte la demande aujourd'hui</h2>
+  <p>Trafic organique estimé des sites qui se disputent les mêmes recherches. L'agence locale de Puy-Saint-Vincent fait environ 4 fois mieux, grâce à sa position sur « location puy saint vincent ». Le site Huttopia (chalet-vallouise.com) est quasiment invisible.</p>
+  <div class="figure">
+    <h3>Visites Google estimées par mois</h3>
+    <p class="meta">Base France, octobre 2026 · source SE Ranking</p>
+    <div class="bars" id="competitors"></div>
+  </div>
+  <p>Sur « location chalet vallouise », la page 1 de Google est occupée par l'agence (1<sup>re</sup>), puis par des portails nationaux (Chalet Montagne, Gîtes de France, Vacances.com, Cozycozy, PAP Vacances, Gites.fr). Les Chalets de Vallouise (Huttopia) sont 5<sup>e</sup>. chalet-vallouise.fr, le site d'une seule page lancé il y a 3 mois, est déjà 12<sup>e</sup> et a généré 3 demandes de réservation. Google affiche aussi un AI Overview sur cette requête.</p>
+</section>
+
+<section>
+  <span class="kicker">Opportunités</span>
+  <h2>Les recherches qui échappent à l'agence</h2>
+  <p>Volumes mensuels moyens en France (SE Ranking). La colonne « Agence » donne la position actuelle de vallouise-immobilier.com dans Google (« hors top 100 » : l'agence n'apparaît pas dans les 100 premiers résultats). Sur « location puy saint vincent », la 1<sup>re</sup> place revient à montagne-immobilier.com (Cimes et Neige).</p>
+  <h3 style="margin-top:22px">Recherches de réservation</h3>
+  <div class="table-wrap"><table id="kw-trans"><thead><tr><th>Recherche</th><th class="r">Volume / mois</th><th>Agence</th><th>Page cible sur chalet-vallouise.fr</th></tr></thead><tbody></tbody></table></div>
+  <h3 style="margin-top:30px">Recherches d'information (guides et blog)</h3>
+  <p>Ces recherches ne réservent pas directement, mais elles attirent les vacanciers au moment où ils préparent leur séjour, font monter l'autorité du site et nourrissent les réponses des IA.</p>
+  <div class="table-wrap"><table id="kw-info"><thead><tr><th>Recherche</th><th class="r">Volume / mois</th><th>Difficulté</th><th>Contenu à créer</th></tr></thead><tbody></tbody></table></div>
+  <div class="callout"><p><b>Calendrier :</b> en octobre, les semaines de vacances d'hiver se remplissent déjà (9 à 11 logements sur 41 sans tarif disponible), alors que l'été 2027 est presque entièrement ouvert. Un contenu publié cet automne a le temps de se positionner avant la période de réservation de l'été.</p></div>
+</section>
+
+<section>
+  <span class="kicker">GEO · moteurs de réponse IA</span>
+  <h2>Invisible dans ChatGPT, Gemini et les AI Overviews</h2>
+  <p>Part de voix mesurée par SE Ranking sur les réponses de ChatGPT, AI Overviews, AI Mode, Perplexity et Gemini (France). Aucune agence locale n'est citée : les IA renvoient vers les portails nationaux et l'office de tourisme. La place de « source locale de référence » est libre.</p>
+  <div class="figure">
+    <h3>Part de voix dans les réponses IA</h3>
+    <p class="meta">Mentions de marque et liens cités, 5 moteurs, France · source SE Ranking</p>
+    <div class="bars" id="ai"></div>
+  </div>
+  <p>Pour être cité, un site doit donner des réponses directes et chiffrées (altitudes, distances, prix, capacités), structurées en tableaux et FAQ, balisées en schema.org, et cohérentes partout où la marque apparaît. C'est exactement ce que le nouveau site met en place, avec en plus un fichier <span class="num">llms.txt</span> qui résume l'offre pour les IA.</p>
+</section>
+
+<section>
+  <span class="kicker">Audit technique</span>
+  <h2>Ce qui freine le site actuel</h2>
+  <p>Crawl de 181 pages (score de santé SE Ranking : 84/100), vérifié à la main sur les pages clés. Ces corrections peuvent être faites sur le site actuel, en option.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Priorité</th><th>Constat</th><th>Impact</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip crit">Haute</span></td><td>Même meta description sur toutes les annonces (109 doublons, 111 trop longues).</td><td>Google réécrit les extraits, le taux de clic baisse.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>Aucun balisage schema.org sur les 41 annonces (capacité, prix, photos, adresse).</td><td>Pas de résultats enrichis, données illisibles pour les IA.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>H1 des annonces au format « Appartement - Vallouise - Réf : APPA CHAMBONNETTEA22 » ; H1 de l'accueil : « Accueil ».</td><td>Le titre principal ne contient aucun mot-clé utile.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>Pas de page dédiée aux chalets : Google positionne la page 3 de la pagination sur « location chalet vallouise ».</td><td>Position fragile, page peu engageante.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Pas de sitemap XML (<span class="num">/sitemap.xml</span> redirige vers l'accueil), robots.txt sans sitemap.</td><td>Découverte et indexation des annonces plus lentes.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>175 images sans texte alternatif ; photos servies en 2048 px (≈ 1 Mo) même en vignette.</td><td>Pages lourdes sur mobile, aucune visibilité dans Google Images.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>111 liens internes vers des redirections (liens en http:// ou sans www).</td><td>Budget de crawl gaspillé.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Lien visible vers un serveur de test (<span class="num">…zephyr17.atester.fr</span>) sur la page d'accueil.</td><td>Risque d'indexation d'une copie du site.</td></tr>
+      <tr><td><span class="chip info">Faible</span></td><td>Descriptions d'annonces courtes (médiane 108 mots), en partie en majuscules, aucune page village ni blog.</td><td>Peu de longue traîne, peu de contenu citable.</td></tr>
+      <tr><td><span class="chip info">Faible</span></td><td>Temps de réponse serveur de 0,7 à 1,8 s ; balise meta keywords obsolète.</td><td>Expérience mobile moins bonne.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <span class="kicker">Stratégie</span>
+  <h2>Un second site, chalet-vallouise.fr, qui renvoie tout vers l'agence</h2>
+  <p>Le site actuel reste tel quel. Le nouveau site présente les 41 locations sous une marque distincte, avec un contenu entièrement réécrit (pas de contenu dupliqué), et chaque bouton « Réserver » mène au calendrier et au paiement en ligne de l'agence, avec un suivi de chaque clic.</p>
+  <ol class="steps">
+    <li><span><b>Occuper deux places sur la page 1</b>Sur « location vallouise » et « location chalet vallouise », l'agence et chalet-vallouise.fr peuvent apparaître côte à côte et prendre les places des portails nationaux. Les deux renvoient vers l'agence.</span></li>
+    <li><span><b>Conquérir Puy-Saint-Vincent et les Hautes-Alpes</b>Une page « Location à Puy-Saint-Vincent et aux alentours » honnête (un chalet sur place, le reste à quelques minutes), plus des pages chalets, appartements et skis aux pieds pour les recherches « Hautes-Alpes » et « chalet 10 personnes ».</span></li>
+    <li><span><b>Publier les contenus que personne ne fait</b>Météo et enneigement, forfaits, comparatif des stations, randonnées, été dans les Écrins : 2 à 4 articles par mois, chacun relié aux logements.</span></li>
+    <li><span><b>Devenir la source citée par les IA</b>Réponses directes, tableaux, FAQ, schema.org VacationRental et FAQPage, fichier llms.txt, informations identiques partout (adresse, téléphone, ancienneté).</span></li>
+    <li><span><b>Renforcer l'autorité locale</b>Référencement sur le site de l'office de tourisme Pays des Écrins (2<sup>e</sup> source citée par les IA sur la vallée), partenaires (écoles de ski, guides), fiche Google Business Profile.</span></li>
+    <li><span><b>Mesurer chaque mois</b>Search Console, statistiques de visite et clics sur « Réserver » tracés, envoyés dans un compte rendu mensuel.</span></li>
+  </ol>
+  <h3 style="margin-top:28px">Le nom de domaine</h3>
+  <p>chalet-vallouise.fr reprend mot pour mot la recherche « chalet vallouise ». Depuis 2012, Google n'accorde presque plus de bonus de classement à ce type de domaine. L'avantage est ailleurs : le nom est facile à retenir, il donne envie de cliquer dans les résultats, et le domaine est déjà indexé et positionné. Le .com du même nom, exploité par Huttopia, ne pèse quasiment rien en référencement (≈ 16 visites/mois estimées). Le nouveau site garde une identité visuelle propre pour ne pas être confondu avec lui.</p>
+  <h3 style="margin-top:28px">Calendrier éditorial type</h3>
+  <div class="months">
+    <div class="month"><b>Octobre – décembre</b><p>Ouverture des stations, forfaits, enneigement, Noël en chalet, comparatif Puy-Saint-Vincent / Pelvoux.</p></div>
+    <div class="month"><b>Janvier – mars</b><p>Ski de fond en Vallouise, raquettes, vacances de février, préparer l'été dans les Écrins.</p></div>
+    <div class="month"><b>Avril – juin</b><p>Glacier Blanc, Pré de Madame Carle, escalade à Ailefroide, eaux vives, randonnées en famille.</p></div>
+    <div class="month"><b>Juillet – septembre</b><p>Été à Puy-Saint-Vincent, automne dans les Écrins, réserver tôt pour l'hiver.</p></div>
+  </div>
+</section>
+
+<section>
+  <span class="kicker">Retour sur investissement</span>
+  <h2>Ce que le site peut rapporter</h2>
+  <p>L'agence perçoit 28 % TTC du loyer (barème publié). Le loyer hebdomadaire moyen relevé sur les 41 annonces est d'environ 900 € (665 € pour un appartement, 1 580 € pour un chalet), soit environ <b>250 € d'honoraires par semaine réservée</b>. Scénarios à 12 mois, avec une hypothèse de 0,5 % de visites converties en réservation, à recaler sur les chiffres réels de l'agence :</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Scénario</th><th class="r">Visites / mois</th><th class="r">Réservations / an</th><th class="r">Honoraires / an</th></tr></thead>
+    <tbody>
+      <tr><td>Prudent</td><td class="r num">300</td><td class="r num">18</td><td class="r num">≈ 4 500 €</td></tr>
+      <tr><td>Central</td><td class="r num">700</td><td class="r num">42</td><td class="r num">≈ 10 500 €</td></tr>
+      <tr><td>Ambitieux</td><td class="r num">1 200</td><td class="r num">72</td><td class="r num">≈ 18 000 €</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">Le scénario central suppose de capter environ 10 % des recherches de réservation ciblées (≈ 2 800/mois en comptant les variantes) et 5 % des recherches d'information. Repère concret : une seule page sur chalet-vallouise.fr a produit 3 demandes en 3 mois. Une partie des réservations pourrait venir de vacanciers qui auraient de toute façon trouvé l'agence : le suivi des clics permettra de le mesurer.</p>
+</section>
+
+<section>
+  <span class="kicker">Proposition</span>
+  <h2>L'offre</h2>
+  <div class="cols">
+    <div class="card">
+      <span class="kicker">Mise en place</span>
+      <h3>Lancement du site</h3>
+      <div class="price">1 900 € <small>HT, une fois</small></div>
+      <ul>
+        <li>41 fiches réécrites, photos optimisées</li>
+        <li>Pages chalets, appartements, Vallouise, Pelvoux, Puy-Saint-Vincent</li>
+        <li>2 guides de lancement</li>
+        <li>Schema.org, sitemap, llms.txt, suivi des réservations</li>
+        <li>Mise en ligne en 2 semaines</li>
+      </ul>
+    </div>
+    <div class="card feature">
+      <span class="kicker">Mensuel · recommandé</span>
+      <h3>Croissance</h3>
+      <div class="price">390 € <small>HT / mois</small></div>
+      <ul>
+        <li>3 articles par mois</li>
+        <li>Mise à jour des annonces et des tarifs</li>
+        <li>Netlinking local, office de tourisme, partenaires</li>
+        <li>Suivi de la visibilité dans les IA</li>
+        <li>Compte rendu mensuel</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="kicker">Mensuel · variante</span>
+      <h3>Essentiel + résultats</h3>
+      <div class="price">190 € <small>HT / mois + 40 € par réservation</small></div>
+      <ul>
+        <li>1 article par mois et mise à jour des annonces</li>
+        <li>Compte rendu mensuel</li>
+        <li>40 € par réservation issue du site, mesurée par les clics tracés</li>
+      </ul>
+    </div>
+  </div>
+  <p>À 390 € par mois, l'offre est remboursée dès 19 réservations par an, soit le scénario prudent. Engagement proposé : 6 mois, puis sans engagement.</p>
+</section>
+
+<footer>
+  <p>Méthode et limites : les volumes de recherche et le trafic sont des estimations SE Ranking (base France, octobre 2026). Le trafic réel, le taux de conversion et la saisonnalité seront mesurés avec la Search Console et les statistiques de l'agence. Les tarifs ont été relevés le 5 octobre 2026 sur le site de l'agence pour des semaines de référence. Aucune donnée privée de l'agence n'a été utilisée.</p>
+</footer>
+</div>
+
+<script>
+(function () {
+  const months = ["2020-02","2020-03","2020-04","2020-05","2020-06","2020-07","2020-08","2020-09","2020-10","2020-11","2020-12","2021-01","2021-02","2021-03","2021-04","2021-05","2021-06","2021-07","2021-08","2021-09","2021-10","2021-11","2021-12","2022-01","2022-02","2022-03","2022-04","2022-05","2022-06","2022-07","2022-08","2022-09","2022-10","2022-11","2022-12","2023-01","2023-02","2023-03","2023-04","2023-05","2023-06","2023-07","2023-08","2023-09","2023-10","2023-11","2023-12","2024-01","2024-02","2024-03","2024-04","2024-05","2024-06","2024-07","2024-08","2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09","2026-10"];
+  const traffic = [22,40,55,66,77,89,96,100,209,223,236,239,233,246,230,228,218,218,256,375,386,390,348,327,290,289,289,null,289,285,281,350,397,407,385,477,537,497,379,377,410,447,458,450,444,438,466,474,349,237,224,222,228,243,253,277,282,289,294,309,345,353,347,331,321,245,274,233,267,325,309,278,278,278,310,253,230,242,180,195,208];
+  const MOIS = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+  const fmtM = (m) => { const [y, mo] = m.split('-'); return MOIS[+mo - 1] + ' ' + y; };
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (n, a = {}) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); return e; };
+
+  // Courbe de trafic
+  const host = document.getElementById('traffic');
+  const W = 900, H = 300, m = { t: 20, r: 20, b: 30, l: 44 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b, yMax = 600;
+  const x = (i) => m.l + (i / (months.length - 1)) * iw;
+  const y = (v) => m.t + ih - (v / yMax) * ih;
+  const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Trafic organique estimé de février 2020 à octobre 2026, pic de 537 visites en février 2023, 208 en octobre 2026' });
+  const g = el('g', { class: 'grid' });
+  [0, 200, 400, 600].forEach((v) => {
+    g.appendChild(el('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v) }));
+    const t = el('text', { x: m.l - 8, y: y(v) + 4, 'text-anchor': 'end' }); t.textContent = v; svg.appendChild(t);
+  });
+  svg.appendChild(g);
+  months.forEach((mo, i) => { if (mo.endsWith('-01')) { const t = el('text', { x: x(i), y: H - 8, 'text-anchor': 'middle' }); t.textContent = mo.slice(0, 4); svg.appendChild(t); } });
+  let d = '', area = '', started = false, first = 0;
+  traffic.forEach((v, i) => {
+    if (v == null) { started = false; return; }
+    d += (started ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1) + ' '; if (!started && !area) first = i; started = true;
+  });
+  const pts = traffic.map((v, i) => [i, v == null ? traffic[i - 1] : v]);
+  area = `M${x(0)} ${y(0)} ` + pts.map(([i, v]) => `L${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' ') + ` L${x(pts.length - 1)} ${y(0)} Z`;
+  svg.appendChild(el('path', { d: area, class: 'series-area' }));
+  svg.appendChild(el('path', { d, class: 'series-line' }));
+  const peak = 36, last = traffic.length - 1;
+  [[peak, 'Pic : 537'], [last, '208']].forEach(([i, label]) => {
+    svg.appendChild(el('circle', { cx: x(i), cy: y(traffic[i]), r: 4, class: 'dot' }));
+    const t = el('text', { x: x(i) + (i === last ? -8 : 0), y: y(traffic[i]) - 10, 'text-anchor': i === last ? 'end' : 'middle', class: 'anno' }); t.textContent = label; svg.appendChild(t);
+  });
+  const cross = el('line', { class: 'cross', y1: m.t, y2: m.t + ih, visibility: 'hidden' });
+  const hov = el('circle', { r: 4, class: 'dot', visibility: 'hidden' });
+  svg.appendChild(cross); svg.appendChild(hov);
+  const hit = el('rect', { x: m.l, y: m.t, width: iw, height: ih, fill: 'transparent', tabindex: 0 });
+  svg.appendChild(hit);
+  host.appendChild(svg);
+  const tip = document.createElement('div'); tip.className = 'tip'; tip.hidden = true;
+  const tv = document.createElement('b'); const tl = document.createElement('span'); tip.append(tv, tl);
+  host.parentElement.appendChild(tip);
+  let cur = last;
+  const show = (i) => {
+    cur = Math.max(0, Math.min(months.length - 1, i));
+    const v = traffic[cur];
+    cross.setAttribute('x1', x(cur)); cross.setAttribute('x2', x(cur)); cross.setAttribute('visibility', 'visible');
+    if (v != null) { hov.setAttribute('cx', x(cur)); hov.setAttribute('cy', y(v)); hov.setAttribute('visibility', 'visible'); } else hov.setAttribute('visibility', 'hidden');
+    tv.textContent = v == null ? 'donnée manquante' : v + ' visites';
+    tl.textContent = fmtM(months[cur]);
+    tip.hidden = false;
+    const box = svg.getBoundingClientRect(), fb = host.parentElement.getBoundingClientRect();
+    const px = box.left - fb.left + (x(cur) / W) * box.width;
+    const py = box.top - fb.top + ((v == null ? m.t : y(v)) / H) * box.height;
+    tip.style.left = Math.min(fb.width - tip.offsetWidth - 8, Math.max(8, px + 12)) + 'px';
+    tip.style.top = Math.max(8, py - 56) + 'px';
+  };
+  const hide = () => { tip.hidden = true; cross.setAttribute('visibility', 'hidden'); hov.setAttribute('visibility', 'hidden'); };
+  hit.addEventListener('pointermove', (e) => {
+    const r = svg.getBoundingClientRect(); const sx = ((e.clientX - r.left) / r.width) * W;
+    show(Math.round(((sx - m.l) / iw) * (months.length - 1)));
+  });
+  hit.addEventListener('pointerleave', hide);
+  hit.addEventListener('focus', () => show(cur));
+  hit.addEventListener('blur', hide);
+  hit.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
+
+  // Barres
+  const bars = (id, rows, unit, fmt) => {
+    const box = document.getElementById(id); const max = Math.max(...rows.map((r) => r.v));
+    rows.forEach((r) => {
+      const row = document.createElement('div'); row.className = 'bar-row';
+      const lab = document.createElement('div'); lab.className = 'label'; lab.textContent = r.name;
+      if (r.sub) { const s = document.createElement('small'); s.textContent = r.sub; lab.appendChild(s); }
+      const tr = document.createElement('div'); tr.className = 'bar-track';
+      const b = document.createElement('div'); b.className = 'bar' + (r.hl ? ' hl' : ''); b.style.width = Math.max(0.5, (r.v / max) * 82) + '%';
+      b.title = `${r.name} : ${fmt(r.v)} ${unit}`;
+      const val = document.createElement('span'); val.className = 'bar-val'; val.textContent = fmt(r.v) + (unit ? ' ' + unit : '');
+      tr.append(b, val); row.append(lab, tr); box.appendChild(row);
+    });
+  };
+  const n = (v) => v.toLocaleString('fr-FR');
+  bars('competitors', [
+    { name: 'montagne-immobilier.com', sub: 'Cimes et Neige, Puy-Saint-Vincent', v: 905 },
+    { name: 'vallouise-immobilier.com', sub: "l'agence", v: 208, hl: true },
+    { name: 'lesecrins-immobilier.com', sub: 'agence locale', v: 196 },
+    { name: 'location-vallouise.fr', sub: 'propriétaire', v: 18 },
+    { name: 'chalet-vallouise.com', sub: 'Huttopia', v: 16 },
+    { name: 'location-pelvoux.fr', sub: 'propriétaire', v: 16 },
+    { name: 'vallouise-locations.com', sub: 'propriétaire', v: 13 },
+  ], 'visites', n);
+  bars('ai', [
+    { name: 'chalet-montagne.com', sub: 'portail national', v: 88.3 },
+    { name: 'paysdesecrins.com', sub: 'office de tourisme', v: 10.8 },
+    { name: 'montagne-immobilier.com', sub: 'agence, Puy-Saint-Vincent', v: 0.42 },
+    { name: 'vallouise-immobilier.com', sub: "l'agence", v: 0.41, hl: true },
+    { name: 'lesecrins-immobilier.com', sub: 'agence locale', v: 0.05 },
+    { name: 'chalet-vallouise.com', sub: 'Huttopia', v: 0.02 },
+  ], '', (v) => v.toLocaleString('fr-FR', { maximumFractionDigits: 2 }) + ' %');
+
+  // Tableaux de mots-clés
+  const fill = (id, rows, cols) => {
+    const tb = document.querySelector('#' + id + ' tbody'); const max = Math.max(...rows.map((r) => r[1]));
+    rows.forEach((r) => {
+      const tr = document.createElement('tr');
+      const a = document.createElement('td'); a.textContent = r[0];
+      const b = document.createElement('td'); b.className = 'r';
+      const vd = document.createElement('div'); vd.className = 'vol';
+      const bar = document.createElement('i'); bar.style.width = Math.max(4, (r[1] / max) * 70) + 'px';
+      const num = document.createElement('span'); num.className = 'num'; num.textContent = n(r[1]);
+      vd.append(bar, num); b.appendChild(vd);
+      tr.append(a, b);
+      cols(r).forEach((c) => tr.appendChild(c));
+      tb.appendChild(tr);
+    });
+  };
+  const posCell = (p) => { const td = document.createElement('td'); const s = document.createElement('span'); s.className = 'pos ' + (p === null ? 'none' : p <= 3 ? 'top' : 'mid'); s.textContent = p === null ? 'hors top 100' : p === 1 ? '1re' : p + 'e'; td.appendChild(s); return td; };
+  const txt = (t) => { const td = document.createElement('td'); td.textContent = t; return td; };
+  fill('kw-trans', [
+    ['location puy saint vincent', 590, null, 'Puy-Saint-Vincent et alentours'],
+    ['gite hautes alpes', 260, null, 'Accueil + pages chalets'],
+    ['location chalet hautes alpes', 210, null, 'Chalets'],
+    ['location vallouise', 170, 1, 'Vallouise (2e place sur la page 1)'],
+    ['location vacances hautes alpes', 170, null, 'Accueil'],
+    ['airbnb puy saint vincent', 170, null, 'Puy-Saint-Vincent et alentours'],
+    ['chalet puy saint vincent', 140, null, 'Puy-Saint-Vincent et alentours'],
+    ['location appartement puy saint vincent', 140, null, 'Appartements skis aux pieds'],
+    ['gite vallouise', 110, 51, 'Vallouise'],
+    ['hebergement vallouise', 110, 52, 'Vallouise'],
+    ['location vallouise pelvoux', 90, null, 'Pelvoux'],
+    ['location chalet 10 personnes', 90, null, 'Chalets (filtre 10 personnes et +)'],
+    ['location chalet puy saint vincent', 90, null, 'Puy-Saint-Vincent et alentours'],
+    ['location vacances vallouise', 50, 1, 'Vallouise'],
+    ['location pelvoux', 40, 1, 'Pelvoux'],
+    ['location chalet vallouise', 30, 1, 'Chalets (remplace la page 3)'],
+  ], (r) => [posCell(r[2]), txt(r[3])]);
+  fill('kw-info', [
+    ['webcam puy saint vincent', 2400, 65, 'Page webcams et enneigement de la vallée'],
+    ['meteo vallouise', 720, 11, 'Météo et conditions, mise à jour'],
+    ['forfait ski puy saint vincent', 590, 8, 'Guide forfaits Puy-Saint-Vincent et Pelvoux'],
+    ['puy saint vincent 1600', 590, 28, 'Guide des quartiers 1400 / 1600 / 1800'],
+    ['webcam pelvoux vallouise', 480, 12, 'Page webcams et enneigement de la vallée'],
+    ['domaine skiable puy saint vincent', 390, 16, 'Comparatif des stations'],
+    ['neige puy saint vincent', 390, 16, 'Page webcams et enneigement de la vallée'],
+    ['glacier blanc', 330, 24, 'Randonnée du Glacier Blanc'],
+    ['navette puy saint vincent', 320, 8, 'Venir et circuler sans voiture'],
+    ['escalade ailefroide', 320, 7, "Guide d'Ailefroide"],
+    ['puy saint vincent ete', 260, 8, 'L\'été à Puy-Saint-Vincent'],
+    ['pelvoux ski', 260, 15, 'Comparatif des stations'],
+    ['randonnée vallouise', 170, 13, 'Que faire à Vallouise en été'],
+    ['vallouise ski de fond', 140, 6, 'Ski de fond en Vallouise'],
+    ['forfait pelvoux', 140, 11, 'Guide forfaits Puy-Saint-Vincent et Pelvoux'],
+    ['vallouise ete', 110, 11, 'Que faire à Vallouise en été'],
+    ['via ferrata vallouise', 110, 5, 'Que faire à Vallouise en été'],
+  ], (r) => [txt(r[2] + ' / 100'), txt(r[3])]);
+})();
+</script>

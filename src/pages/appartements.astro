@@ -1,0 +1,24 @@
+---
+import CategoryPage from '../components/CategoryPage.astro';
+import { apartments, cover, euro } from '../lib/listings';
+const min = Math.min(...apartments.map((l) => l.priceFrom ?? Infinity));
+const skiIn = apartments.filter((l) => l.skiInSkiOut);
+const palatin = apartments.filter((l) => l.ref.includes('PALATIN'));
+const faq = [
+  { q: 'Où louer un appartement skis aux pieds près de Vallouise ?', a: `${skiIn.length} appartements sont au pied des pistes de la station de Pelvoux-Vallouise, dont ${palatin.length} dans la résidence Le Palatin.` },
+  { q: 'Quel budget pour un appartement à la semaine ?', a: `Les appartements 4 personnes commencent à ${euro(min)} la semaine selon les tarifs relevés ; comptez davantage pendant les vacances scolaires d'hiver.` },
+  { q: 'Les appartements sont-ils adaptés aux familles ?', a: 'La plupart accueillent 4 à 6 personnes. Le détail des couchages (lits doubles, lits superposés, lit bébé) est indiqué sur chaque fiche.' },
+];
+---
+<CategoryPage
+  title={`Location appartement Vallouise et Pelvoux · skis aux pieds`}
+  description={`${apartments.length} appartements à louer à Vallouise et Pelvoux, de 4 à 8 personnes, dont ${skiIn.length} skis aux pieds. Tarifs à la semaine dès ${euro(min)} et réservation en ligne.`}
+  h1="Location d'appartements à Vallouise et Pelvoux"
+  eyebrow="Appartements"
+  lead={`${apartments.length} appartements de 4 à 8 personnes, au cœur du village de Vallouise ou skis aux pieds à Pelvoux.`}
+  path="/appartements/"
+  items={apartments}
+  image={cover('APPA VERSANT SUD')}
+  faq={faq}
+  showKind={false}
+/>

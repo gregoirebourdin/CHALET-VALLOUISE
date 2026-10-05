@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ListingCard from '../../components/ListingCard.astro';
+import Faq from '../../components/Faq.astro';
+import { getCollection, render } from 'astro:content';
+import { listings } from '../../lib/listings';
+import { breadcrumbLd, faqLd, articleLd } from '../../lib/schema';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((p) => ({ params: { slug: p.id }, props: { post: p } }));
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+const crumbs = [{ name: 'Accueil', href: '/' }, { name: 'Guides', href: '/guides/' }, { name: post.data.h1, href: `/guides/${post.id}/` }];
+const picks = ['CHAL LE CERF ROUGE', 'APPA PALATIN A12', 'CHAL LES TROLLS'].map((r) => listings.find((l) => l.ref === r)!).filter(Boolean);
+---
+<Base
+  title={post.data.title}
+  description={post.data.description}
+  type="article"
+  jsonLd={[breadcrumbLd(crumbs), articleLd({ title: post.data.h1, description: post.data.description, url: `/guides/${post.id}/`, updated: post.data.updated }), faqLd(post.data.faq)].filter(Boolean)}
+>
+  <article>
+    <div class="narrow">
+      <Breadcrumbs items={[crumbs[0], crumbs[1], { name: post.data.h1 }]} />
+      <header style="padding-block:28px 20px">
+        <span class="eyebrow">Guide</span>
+        <h1 style="font-size:clamp(2rem,4.6vw,3.3rem)">{post.data.h1}</h1>
+        {post.data.excerpt && <p class="lead">{post.data.excerpt}</p>}
+        <p class="small muted">Mis à jour le {post.data.updated.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+      </header>
+      <div class="prose"><Content /></div>
+      <div style="margin-top:40px"><Faq items={post.data.faq} /></div>
+      {post.data.sources.length > 0 && (
+        <details style="margin-top:28px" class="small muted">
+          <summary style="cursor:pointer">Sources</summary>
+          <ul>{post.data.sources.map((s) => <li><a href={s} rel="nofollow noopener">{new URL(s).hostname.replace('www.', '')}</a></li>)}</ul>
+        </details>
+      )}
+    </div>
+  </article>
+  <section class="section section--snow" style="margin-top:64px">
+    <div class="wrap">
+      <div class="section-head"><div><span class="eyebrow">Où dormir</span><h2>Nos logements dans la vallée</h2></div><a class="link-arrow" href="/locations/">Toutes les locations</a></div>
+      <div class="grid grid--3">{picks.map((l) => <ListingCard l={l} />)}</div>
+    </div>
+  </section>
+</Base>

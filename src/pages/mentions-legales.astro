@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../lib/site';
+---
+<Base title="Mentions légales · Chalet Vallouise" description="Mentions légales du site chalet-vallouise.fr.">
+  <div class="narrow prose" style="padding-block:48px 90px">
+    <h1 style="font-size:2.4rem">Mentions légales</h1>
+    <p><strong>À compléter à la signature du partenariat</strong> : éditeur du site, directeur de la publication, hébergeur, et informations professionnelles de l'agence partenaire (carte professionnelle, RCS, garantie financière).</p>
+    <h2>Hébergement</h2>
+    <p>Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis.</p>
+    <h2>Logements et réservations</h2>
+    <p>Les logements présentés sont gérés par {SITE.agency.name}, {SITE.agency.street}, {SITE.agency.postalCode} {SITE.agency.city}. Les réservations, contrats et paiements sont traités par l'agence. Les tarifs affichés sont indicatifs.</p>
+    <h2>Photographies</h2>
+    <p>Photographies des logements : {SITE.agency.name}.</p>
+  </div>
+</Base>

@@ -1,0 +1,193 @@
+---
+import Base from '../layouts/Base.astro';
+import ListingCard from '../components/ListingCard.astro';
+import Picture from '../components/Picture.astro';
+import Faq from '../components/Faq.astro';
+import { getCollection } from 'astro:content';
+import { listings, chalets, apartments, VILLAGES, inVillage, cover, euro } from '../lib/listings';
+import { SITE } from '../lib/site';
+import { agencyLd, websiteLd, faqLd, itemListLd } from '../lib/schema';
+
+const hero = cover('CHAL NAMASTE');
+const summer = cover('CHAL LES TROLLS');
+const palatin = listings.find((l) => l.ref === 'APPA PALATIN')?.photos[3] ?? cover('APPA PALATIN A12');
+const featured = ['CHAL NAMASTE', 'CHAL LE CERF ROUGE', 'CHAL ORCHIS VANILLE', 'CHAL LE GYPAETE', 'CHAL SCHMOES', 'CHAL LES TROLLS']
+  .map((r) => listings.find((l) => l.ref === r)!).filter(Boolean);
+const skiIn = apartments.filter((l) => l.skiInSkiOut);
+const minPrice = Math.min(...listings.map((l) => l.priceFrom ?? Infinity));
+const guides = (await getCollection('blog')).sort((a, b) => +b.data.updated - +a.data.updated).slice(0, 3);
+
+const faq = [
+  { q: 'Où louer un chalet à Vallouise ?', a: `Chalet Vallouise présente ${chalets.length} chalets à Vallouise, Pelvoux et Puy-Saint-Vincent, de 6 à 12 personnes, tous gérés par l'agence locale ${SITE.agency.name}. Les réservations se font en ligne, avec un acompte.` },
+  { q: 'Combien coûte une semaine de location à Vallouise ?', a: `Les tarifs relevés le ${SITE.priceCheckedOn} commencent à ${euro(minPrice)} la semaine pour un appartement 4 personnes et vont jusqu'à plus de 2 000 € pour les grands chalets en période de vacances scolaires.` },
+  { q: 'Peut-on loger skis aux pieds près de Vallouise ?', a: `Oui : ${skiIn.length} appartements, notamment dans la résidence Le Palatin, sont situés au pied des pistes de la station de Pelvoux-Vallouise. Le domaine de Puy-Saint-Vincent est à quelques minutes en voiture.` },
+  { q: 'Qui gère les logements ?', a: `Tous les logements sont gérés par ${SITE.agency.name}, agence installée à ${SITE.agency.city} (${SITE.agency.street}). Installée depuis ${SITE.agency.since}, elle assure la gestion des logements, l'accueil et le suivi du séjour.` },
+  { q: 'Que faire à Vallouise en été ?', a: 'Randonnée vers le Glacier Blanc ou le Pré de Madame Carle, escalade à Ailefroide, eaux vives sur la Gyronde, via ferrata, VTT : la vallée est l\'une des portes d\'entrée du Parc national des Écrins.' },
+];
+---
+<Base
+  title="Location chalet Vallouise · Chalets & appartements dans les Écrins"
+  description={`${listings.length} chalets et appartements de vacances à Vallouise, Pelvoux et Puy-Saint-Vincent. Photos, tarifs à la semaine et réservation en ligne auprès d'une agence locale.`}
+  image={hero ? `${hero.base}-1280.webp` : undefined}
+  preloadImage={hero ? `${hero.base}-1280.webp` : undefined}
+  jsonLd={[websiteLd(), agencyLd(), itemListLd(chalets, 'Chalets à louer en Vallouise'), faqLd(faq)].filter(Boolean)}
+>
+  <section class="hero">
+    <div class="hero-media"><Picture photo={hero} alt="Chalet en bois sous la neige à Pelvoux, vallée de la Vallouise" eager large sizes="100vw" /></div>
+    <div class="wrap hero-content">
+      <span class="eyebrow" style="color:#f0bf98">Vallouise · Pelvoux · Puy-Saint-Vincent</span>
+      <h1>Location de chalets et appartements à Vallouise</h1>
+      <p class="lead">{listings.length} logements sélectionnés au cœur du Parc national des Écrins, réservés directement auprès de l'agence du village.</p>
+      <form class="search" action="/locations/" method="get">
+        <label><span>Village</span>
+          <select name="village">
+            <option value="">Toute la vallée</option>
+            {VILLAGES.map((v) => <option value={v.name}>{v.name}</option>)}
+          </select>
+        </label>
+        <label><span>Voyageurs</span>
+          <select name="cap">
+            <option value="">Indifférent</option>
+            <option value="4">4 et +</option><option value="6">6 et +</option><option value="8">8 et +</option><option value="10">10 et +</option>
+          </select>
+        </label>
+        <label><span>Logement</span>
+          <select name="type">
+            <option value="">Tous</option><option value="chalet">Chalet</option><option value="appartement">Appartement</option>
+          </select>
+        </label>
+        <button class="btn btn--primary" type="submit">Rechercher</button>
+      </form>
+      <div class="hero-badges">
+        <span>Agence locale à Vallouise</span><span>Réservation en ligne avec acompte</span><span>Dès {euro(minPrice)} la semaine</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Nos chalets</span>
+          <h2>Des chalets pour toute la tribu</h2>
+          <p class="lead" style="margin:0">Jacuzzi, sauna, hammam, bain nordique ou cheminée : {chalets.length} chalets de 6 à 12 personnes.</p>
+        </div>
+        <a class="link-arrow" href="/chalets/">Voir les {chalets.length} chalets</a>
+      </div>
+      <div class="grid grid--3">{featured.map((l) => <ListingCard l={l} />)}</div>
+    </div>
+  </section>
+
+  <section class="section section--snow">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Trois villages, une vallée</span>
+          <h2>Où séjourner dans le Pays des Écrins ?</h2>
+        </div>
+      </div>
+      <div class="grid grid--3">
+        {VILLAGES.map((v) => (
+          <a class="village-card" href={`/${v.slug}/`}>
+            <Picture photo={cover(v.cover)} alt={`Location de vacances à ${v.name}`} sizes="(max-width: 700px) 100vw, 400px" />
+            <div>
+              <span class="count">{inVillage(v.name).length} logement{inVillage(v.name).length > 1 ? 's' : ''}</span>
+              <h3>{v.name}</h3>
+              <p>{v.blurb}</p>
+              <span class="link-arrow">Découvrir</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split">
+      <div class="split-media"><Picture photo={palatin} alt="Skieurs devant la résidence Le Palatin, au pied des pistes de Pelvoux" sizes="(max-width: 860px) 100vw, 600px" /></div>
+      <div>
+        <span class="eyebrow">Skis aux pieds</span>
+        <h2>Chaussez les skis devant la porte</h2>
+        <p class="lead">{skiIn.length} appartements au pied des pistes de Pelvoux-Vallouise, dont la résidence Le Palatin : l'idéal pour les familles avec de jeunes skieurs.</p>
+        <ul class="check-list">
+          <li>Appartements de 4 à 6 personnes</li>
+          <li>Station familiale, à quelques minutes du domaine de Puy-Saint-Vincent</li>
+          <li>Tarifs dès {euro(Math.min(...skiIn.map((l) => l.priceFrom ?? Infinity)))} la semaine</li>
+        </ul>
+        <a class="btn btn--dark" href="/locations/?tag=skis+aux+pieds">Voir les logements skis aux pieds</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--pine">
+    <div class="wrap">
+      <span class="eyebrow">Réserver en confiance</span>
+      <h2 style="max-width:20ch">Une agence du village, pas une plateforme</h2>
+      <p class="lead" style="margin-bottom:44px">Les logements sont gérés par {SITE.agency.name}, installée à Vallouise. Vous réservez en direct, avec un interlocuteur qui connaît chaque logement.</p>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></svg></div>
+          <h3>Depuis {SITE.agency.since}</h3><p>Une agence fondée par une native de Pelvoux, qui connaît chaque logement et chaque hameau de la vallée.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 11V8a5 5 0 0110 0v3M5 11h14v10H5z"/></svg></div>
+          <h3>Réservation en ligne</h3><p>Disponibilités à jour et paiement d'un acompte en ligne pour bloquer vos dates.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h10"/></svg></div>
+          <h3>Services à la carte</h3><p>Location de draps et serviettes, lit bébé, chaise haute, ménage de fin de séjour : on s'occupe de tout.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 7a4 4 0 11-8 0 4 4 0 018 0zM3 21a8 8 0 0116 0"/></svg></div>
+          <h3>Une équipe sur place</h3><p>Joignable {SITE.agency.hours}, et un dépannage dans la journée en cas de souci.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split split--rev">
+      <div class="split-media"><Picture photo={summer} alt="Chalet en bois face aux montagnes de la Vallouise en été" sizes="(max-width: 860px) 100vw, 600px" /></div>
+      <div>
+        <span class="eyebrow">L'été dans les Écrins</span>
+        <h2>La vallée des grands espaces</h2>
+        <p class="lead">Glacier Blanc, Pré de Madame Carle, falaises d'Ailefroide, eaux vives de la Gyronde : Vallouise est l'une des portes d'entrée du Parc national des Écrins.</p>
+        <p class="muted">En juillet et en août, la plupart de nos chalets restent disponibles à la semaine, souvent à des tarifs plus doux qu'en hiver.</p>
+        <a class="btn btn--ghost" href="/guides/">Lire nos guides</a>
+      </div>
+    </div>
+  </section>
+
+  {guides.length > 0 && (
+    <section class="section section--snow">
+      <div class="wrap">
+        <div class="section-head"><div><span class="eyebrow">Guides</span><h2>Préparer son séjour</h2></div><a class="link-arrow" href="/guides/">Tous les guides</a></div>
+        <div class="grid grid--3">
+          {guides.map((g) => (
+            <a class="card" href={`/guides/${g.id}/`}>
+              <div class="card-body" style="padding:26px">
+                <span class="eyebrow" style="margin:0">Guide</span>
+                <h3 class="card-title" style="font-size:1.4rem">{g.data.h1}</h3>
+                <p class="muted" style="margin:0">{g.data.excerpt ?? g.data.description}</p>
+                <span class="link-arrow" style="margin-top:auto;padding-top:14px">Lire</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="narrow"><Faq items={faq} /></div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="cta-band">
+        <div><h2>Trouvez votre logement</h2><p>{listings.length} chalets et appartements, de 4 à 12 personnes.</p></div>
+        <a class="btn btn--light" href="/locations/">Voir toutes les locations</a>
+      </div>
+    </div>
+  </section>
+</Base>

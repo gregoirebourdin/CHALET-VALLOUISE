@@ -1,0 +1,25 @@
+---
+import CategoryPage from '../components/CategoryPage.astro';
+import { chalets, cover, euro } from '../lib/listings';
+const min = Math.min(...chalets.map((l) => l.priceFrom ?? Infinity));
+const max = Math.max(...chalets.map((l) => l.capacity));
+const wellness = chalets.filter((l) => l.tags.some((t) => ['jacuzzi', 'sauna', 'hammam', 'bain nordique'].includes(t)));
+const faq = [
+  { q: 'Combien de chalets sont à louer à Vallouise et Pelvoux ?', a: `${chalets.length} chalets de 6 à ${max} personnes, situés à Vallouise, Pelvoux et Puy-Saint-Vincent, tous gérés par l'agence locale Vallouise Immobilier.` },
+  { q: 'Quel est le prix d\'un chalet à la semaine ?', a: `Les tarifs relevés commencent à ${euro(min)} la semaine hors vacances scolaires et dépassent 2 000 € pour les plus grands chalets pendant les vacances d'hiver.` },
+  { q: 'Y a-t-il des chalets avec jacuzzi ou sauna ?', a: `Oui, ${wellness.length} chalets disposent d'un espace bien-être : jacuzzi, sauna, hammam ou bain nordique selon les logements.` },
+  { q: 'Les chalets se louent-ils l\'été ?', a: 'Oui, tous les chalets se louent à la semaine en été, pour la randonnée, l\'escalade et les sports d\'eau vive dans le Parc national des Écrins.' },
+];
+---
+<CategoryPage
+  title={`Location chalet Vallouise et Pelvoux · ${chalets.length} chalets dans les Écrins`}
+  description={`${chalets.length} chalets à louer à Vallouise, Pelvoux et Puy-Saint-Vincent, de 6 à ${max} personnes : jacuzzi, sauna, cheminée, jardin. Tarifs à la semaine et réservation en ligne.`}
+  h1="Location de chalets à Vallouise et Pelvoux"
+  eyebrow="Chalets"
+  lead={`${chalets.length} chalets de 6 à ${max} personnes, des chalets d'architecte aux chalets familiaux avec jardin, au pied du massif des Écrins.`}
+  path="/chalets/"
+  items={chalets}
+  image={cover('CHAL ORCHIS VANILLE')}
+  faq={faq}
+  showKind={false}
+/>

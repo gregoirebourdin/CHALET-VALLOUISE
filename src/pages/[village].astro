@@ -1,0 +1,90 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ListingBrowser from '../components/ListingBrowser.astro';
+import Picture from '../components/Picture.astro';
+import Faq from '../components/Faq.astro';
+import { getCollection, render } from 'astro:content';
+import { VILLAGES, inVillage, listings, cover, euro, type Village } from '../lib/listings';
+import { breadcrumbLd, itemListLd, faqLd, articleLd } from '../lib/schema';
+
+export function getStaticPaths() {
+  return VILLAGES.map((v) => ({ params: { village: v.slug }, props: { v } }));
+}
+const { v } = Astro.props as { v: (typeof VILLAGES)[number] };
+const guide = (await getCollection('guides')).find((g) => g.data.village === v.name);
+const { Content } = guide ? await render(guide) : { Content: null };
+const here = inVillage(v.name as Village);
+// Puy-Saint-Vincent : un seul logement sur place, on montre aussi ceux des villages voisins (à quelques minutes).
+const items = here.length >= 6 ? here : [...here, ...listings.filter((l) => l.village !== v.name)];
+const min = Math.min(...here.map((l) => l.priceFrom ?? Infinity));
+const crumbs = [{ name: 'Accueil', href: '/' }, { name: v.name, href: `/${v.slug}/` }];
+const img = cover(v.cover);
+const title = guide?.data.title ?? `Location de vacances à ${v.name} · chalets et appartements`;
+const description = guide?.data.description ?? `${here.length} logements à louer à ${v.name}${Number.isFinite(min) ? `, dès ${euro(min)} la semaine` : ''}. Chalets et appartements dans le Parc national des Écrins.`;
+const h1 = guide?.data.h1 ?? `Location de vacances à ${v.name}`;
+const faq = guide?.data.faq ?? [];
+const others = VILLAGES.filter((o) => o.slug !== v.slug);
+---
+<Base
+  title={title}
+  description={description}
+  image={img ? `${img.base}-1280.webp` : undefined}
+  preloadImage={img ? `${img.base}-1280.webp` : undefined}
+  type="article"
+  jsonLd={[
+    breadcrumbLd(crumbs),
+    itemListLd(here, `Locations de vacances à ${v.name}`),
+    faqLd(faq),
+    guide ? articleLd({ title: h1, description, url: `/${v.slug}/`, updated: guide.data.updated, image: img ? `${img.base}-1280.webp` : undefined }) : null,
+  ].filter(Boolean)}
+>
+  <section class="page-hero">
+    <Picture photo={img} alt={`Location de vacances à ${v.name}`} eager large sizes="100vw" />
+    <div class="wrap">
+      <Breadcrumbs items={[crumbs[0], { name: v.name }]} />
+      <span class="eyebrow" style="color:#f0bf98">{v.name} · {v.altitude}</span>
+      <h1>{h1}</h1>
+      <p class="lead">{guide?.data.excerpt ?? v.blurb}</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:44px">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">{here.length} logement{here.length > 1 ? 's' : ''} à {v.name}</span>
+          <h2>{here.length >= 6 ? `Nos locations à ${v.name}` : `À ${v.name} et dans les villages voisins`}</h2>
+          {here.length < 6 && <p class="lead" style="margin:0">Vallouise et Pelvoux sont à quelques minutes de route de la station : élargissez votre recherche à toute la vallée.</p>}
+        </div>
+      </div>
+      <ListingBrowser items={items} showVillage={here.length < 6} />
+    </div>
+  </section>
+
+  {Content && (
+    <section class="section section--snow">
+      <div class="narrow prose">
+        <Content />
+        {guide!.data.updated && <p class="small muted" style="margin-top:32px">Mis à jour le {guide!.data.updated.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}.</p>}
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="narrow"><Faq items={faq} title={`Location à ${v.name} : vos questions`} /></div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="grid grid--3" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))">
+        {others.map((o) => (
+          <a class="village-card" href={`/${o.slug}/`} style="min-height:300px">
+            <Picture photo={cover(o.cover)} alt={`Location de vacances à ${o.name}`} sizes="(max-width: 700px) 100vw, 600px" />
+            <div><span class="count">Village voisin</span><h3>{o.name}</h3><p>{o.blurb}</p></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
