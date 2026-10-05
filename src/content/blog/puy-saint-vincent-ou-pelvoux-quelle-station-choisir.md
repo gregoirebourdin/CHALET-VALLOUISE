@@ -1,5 +1,5 @@
 ---
-title: "Puy-Saint-Vincent ou Pelvoux : quelle station de ski choisir ?"
+title: "Puy-Saint-Vincent ou Pelvoux : quelle station choisir ?"
 description: "Puy-Saint-Vincent ou Pelvoux-Vallouise ? Domaine, altitude, enneigement, forfaits 2026-2027 et profils : notre comparatif chiffré pour bien choisir."
 h1: "Puy-Saint-Vincent ou Pelvoux-Vallouise : quelle station choisir pour vos vacances au ski ?"
 excerpt: "75 km de pistes jusqu'à 2 750 m d'un côté, une station familiale à 28,50 € la journée de l'autre : le comparatif chiffré des deux stations de la Vallouise, profil par profil."

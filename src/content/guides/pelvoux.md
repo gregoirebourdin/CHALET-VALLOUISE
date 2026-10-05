@@ -1,5 +1,5 @@
 ---
-title: "Location Pelvoux : ski, forfaits et appartements au pied des pistes"
+title: "Location Pelvoux : ski au pied des pistes, forfaits et été"
 description: "Location à Pelvoux : appartements de la résidence Le Palatin en bord de piste et chalets. Station Pelvoux-Vallouise, forfaits 2026-2027, neige, été."
 h1: "Location de vacances à Pelvoux, station village des Écrins"
 excerpt: "Une station familiale de 25 km de pistes entre 1 250 et 2 300 m, un forfait journée adulte à 28,50 € en 2026-2027 et nos appartements de la résidence Le Palatin en bord de piste."
@@ -39,7 +39,7 @@ sources:
   - "https://www.openstreetmap.org/directions"
 ---
 
-Pelvoux est le village de ski de la Vallouise. La station Pelvoux-Vallouise propose 18 pistes et 25 km de glisse entre 1 250 et 2 300 m d'altitude, avec un forfait journée adulte à 28,50 € pour l'hiver 2026-2027. Vallouise Immobilier y loue plusieurs appartements de la résidence Le Palatin, en bord de piste, ainsi que des chalets dans le village.
+Pelvoux est la station-village de la Vallouise, au pied du Mont Pelvoux. Son domaine skiable propose 18 pistes et 25 km de glisse entre 1 250 et 2 300 m d'altitude, avec un forfait journée adulte à 28,50 € pour l'hiver 2026-2027. Vallouise Immobilier y loue plusieurs appartements de la résidence Le Palatin, en bord de piste, ainsi que des chalets dans le village.
 
 ## La station Pelvoux-Vallouise en chiffres
 
@@ -92,7 +92,7 @@ Bon à savoir :
 
 ## Enneigement à Pelvoux : à quoi s'attendre
 
-La station s'étage de 1 250 m, au front de neige, à 2 300 m au sommet du télésiège de la Crête. Concrètement :
+La station s'étage de 1 250 m, au front de neige, à 2 300 m au sommet du domaine. Concrètement :
 
 - **Le haut du domaine**, desservi par les télésièges de Préron et de la Crête, monte à 2 300 m : c'est là que la neige se conserve le mieux.
 - **Le bas de station et l'espace débutants**, vers 1 250 m, dépendent davantage des chutes de neige de l'hiver.
@@ -104,7 +104,7 @@ La station s'étage de 1 250 m, au front de neige, à 2 300 m au sommet du tél�
 
 Pelvoux forme avec Vallouise, depuis le 1er janvier 2017, la commune de Vallouise-Pelvoux, qui compte 1 138 habitants (2023). La commune est labellisée « Villages d'alpinisme ».
 
-Pelvoux est une succession de hameaux le long du Gyr : **Le Poët, Le Sarret, Le Fangeas, Saint-Antoine, Les Claux, Chambran et Ailefroide**. Jusqu'en 1893, le village s'appelait « La Pisse », du nom de la cascade de l'Eychauda. Les moqueries ont eu raison de ce nom, remplacé par celui du Mont Pelvoux (3 946 m).
+Pelvoux est une succession de hameaux : **Le Poët, Le Sarret, Le Fangeas, Saint-Antoine, Les Claux, Chambran et Ailefroide**. Jusqu'en 1893, le village s'appelait « La Pisse », du nom de la cascade de l'Eychauda. Les moqueries ont eu raison de ce nom, remplacé par celui du Mont Pelvoux (3 946 m).
 
 À voir en vous promenant :
 
@@ -142,7 +142,7 @@ En 2026, le domaine d'altitude a ouvert du mardi 7 juillet au vendredi 28 août.
 - **Escalade à Ailefroide** : environ 750 blocs du V0 au 8A+, des grandes voies et des couennes.
 - **Rafting et kayak** sur le Gyr et la Gyronde, **piscine municipale** au pied des pistes.
 
-**Info crues 2026** : les crues des 27 et 28 août 2026 ont fortement endommagé la vallée. La route d'Ailefroide au Pré de Madame Carle a été emportée sur plusieurs portions et reste fermée après Ailefroide. Le Pré de Madame Carle et le Glacier Blanc restent accessibles à pied depuis Ailefroide par le sentier de la Poire. Le Parc national, la préfecture et les collectivités travaillent à un schéma d'accès, avec un premier document attendu d'ici décembre 2026 pour préparer l'été 2027. Nous mettrons cette page à jour dès que les modalités seront connues.
+**Info crues 2026** : les crues des 27 et 28 août 2026 ont fortement endommagé la vallée. La route d'Ailefroide au Pré de Madame Carle a été emportée sur plusieurs portions et reste fermée après Ailefroide. Selon le Parc national (début septembre 2026), le Pré de Madame Carle et le Glacier Blanc restent accessibles à pied depuis Ailefroide par le sentier de la Poire. Le Parc national, la préfecture et les collectivités travaillent à un nouveau schéma d'accès, avec l'objectif d'un premier schéma directeur d'ici décembre 2026 pour préparer l'été 2027. Nous mettrons cette page à jour dès que les modalités seront connues.
 
 ## Comment venir à Pelvoux
 

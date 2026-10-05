@@ -57,7 +57,7 @@ Puy-Saint-Vincent est une station familiale des Hautes-Alpes, à l'entrée du Pa
 | Ski nocturne | mardis des vacances scolaires, 17 h-19 h, piste éclairée de 2,7 km |
 | Gare la plus proche | L'Argentière-les-Écrins, à environ 8 km |
 
-Le domaine est orienté nord-ouest et plus de la moitié se trouve au-dessus de 2 000 m, ce qui explique sa bonne réputation d'enneigement dans les Alpes du Sud. La neige naturelle est complétée par un réseau de neige de culture.
+Le domaine est orienté nord-ouest et plus de la moitié se trouve au-dessus de 2 000 m : l'office de tourisme y promet une neige de qualité de décembre à avril. La neige naturelle est complétée par un réseau de neige de culture.
 
 ### Pour qui ?
 
