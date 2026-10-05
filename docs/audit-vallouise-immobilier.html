@@ -128,6 +128,8 @@ footer { color: var(--ink-3); font-size: .86rem; padding-top: 28px; border-top: 
   <span class="kicker">Synthèse</span>
   <h2>Ce qu'il faut retenir</h2>
   <ul class="verdict">
+    <li><span class="chip crit">Urgent</span><span>Le site n'a plus de statistiques depuis 2023 : il utilise encore l'ancien Google Analytics (UA-62584479-1), arrêté par Google. L'agence ne peut pas savoir combien de visiteurs elle reçoit ni d'où ils viennent.</span></li>
+    <li><span class="chip crit">Urgent</span><span>Le bouton « Reserver » des annonces ouvre un formulaire où le champ « Référence » arrive vide : le vacancier doit retrouver et retaper la référence du logement avant d'envoyer sa demande.</span></li>
     <li><span class="chip good">Acquis</span><span>1<sup>re</sup> place sur « location vallouise » (170 recherches/mois), « location vacances vallouise », « location pelvoux » et « location chalet vallouise ». Le cœur de marque tient.</span></li>
     <li><span class="chip crit">Manque</span><span>Absent du top 100 sur « location puy saint vincent » (590/mois) et les recherches proches (≈ 1 100 recherches/mois), comme sur « location chalet hautes alpes » ou « gite hautes alpes ». Une agence concurrente y est 1<sup>re</sup> et capte environ 4 fois plus de trafic.</span></li>
     <li><span class="chip crit">Manque</span><span>Aucun contenu d'information (météo, enneigement, forfaits, randonnées, été) alors que ces recherches pèsent plusieurs milliers de visites par mois et alimentent les réponses des IA.</span></li>
@@ -184,12 +186,31 @@ footer { color: var(--ink-3); font-size: .86rem; padding-top: 28px; border-top: 
 </section>
 
 <section>
+  <span class="kicker">Potentiel</span>
+  <h2>Plus de 10 000 recherches par mois à aller chercher</h2>
+  <p>Au-delà des recherches de réservation, cinq familles de recherches peu concurrencées amènent des vacanciers qui préparent leur séjour dans la vallée. Volumes mensuels en France (SE Ranking), variantes regroupées.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Famille</th><th>Exemples de recherches</th><th class="r">Recherches / mois</th><th>Ce qu'on publie</th></tr></thead>
+    <tbody>
+      <tr><td>Webcams, neige, météo</td><td>webcam puy saint vincent (2 400), webcam pelvoux vallouise (480), météo vallouise (720), neige puy saint vincent (390)</td><td class="r num">≈ 4 000</td><td>Une page webcams et enneigement de la vallée, consultée chaque jour pendant le séjour</td></tr>
+      <tr><td>Forfaits et stations</td><td>forfait ski puy saint vincent (590), puy saint vincent 1600 (590), domaine skiable (390), navette (320), piscine (260)</td><td class="r num">≈ 3 500</td><td>Guides forfaits 2026-2027, quartiers de Puy-Saint-Vincent, venir sans voiture</td></tr>
+      <tr><td>Écrins et montagne</td><td>mont pelvoux pointe puiseux (590), barre des écrins (410), parc national des écrins (360), glacier blanc (330), escalade ailefroide (320)</td><td class="r num">≈ 3 000</td><td>Randonnées, sommets, Ailefroide, l'été dans les Écrins</td></tr>
+      <tr><td>Envies et moments</td><td>gîte grand groupe (590), chalet avec jacuzzi (210), location ski dernière minute (260), location chalet noël (170), nouvel an (110)</td><td class="r num">≈ 2 000</td><td>Pages chalets jacuzzi et sauna, grands groupes, Noël, dernière minute</td></tr>
+      <tr><td>Propriétaires</td><td>conciergerie serre chevalier (140, 2,14 € le clic en publicité), conciergerie puy saint vincent (50), conciergerie hautes alpes (jusqu'à 210 l'hiver)</td><td class="r num">≈ 300</td><td>Une page « Confier votre bien » qui envoie les propriétaires vers l'agence</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><p><b>La page « dernière minute »</b> : le site peut afficher automatiquement les semaines encore libres dans les quatre semaines à venir, à partir du calendrier de l'agence. Chaque semaine vide remplie est un revenu qui aurait été perdu.</p></div>
+</section>
+
+<section>
   <span class="kicker">Audit technique</span>
   <h2>Ce qui freine le site actuel</h2>
   <p>Crawl de 181 pages (score de santé SE Ranking : 84/100), vérifié à la main sur les pages clés. Ces corrections peuvent être faites sur le site actuel, en option.</p>
   <div class="table-wrap"><table>
     <thead><tr><th>Priorité</th><th>Constat</th><th>Impact</th></tr></thead>
     <tbody>
+      <tr><td><span class="chip crit">Haute</span></td><td>Statistiques arrêtées : le code Google Analytics du site (UA-62584479-1) est l'ancien format, que Google ne traite plus depuis 2023.</td><td>Aucune mesure du trafic ni des demandes depuis 2023.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>Formulaire de demande de réservation ouvert avec le champ « Référence » vide.</td><td>Friction au moment de réserver, demandes incomplètes ou abandonnées.</td></tr>
       <tr><td><span class="chip crit">Haute</span></td><td>Même meta description sur toutes les annonces (109 doublons, 111 trop longues).</td><td>Google réécrit les extraits, le taux de clic baisse.</td></tr>
       <tr><td><span class="chip crit">Haute</span></td><td>Aucun balisage schema.org sur les 41 annonces (capacité, prix, photos, adresse).</td><td>Pas de résultats enrichis, données illisibles pour les IA.</td></tr>
       <tr><td><span class="chip crit">Haute</span></td><td>H1 des annonces au format « Appartement - Vallouise - Réf : APPA CHAMBONNETTEA22 » ; H1 de l'accueil : « Accueil ».</td><td>Le titre principal ne contient aucun mot-clé utile.</td></tr>
@@ -209,17 +230,20 @@ footer { color: var(--ink-3); font-size: .86rem; padding-top: 28px; border-top: 
   <span class="kicker">Stratégie</span>
   <h2>Un second site, chalet-vallouise.fr, qui renvoie tout vers l'agence</h2>
   <div class="callout"><p><b>Maquette en ligne :</b> <a href="https://chalet-vallouise-demo.vercel.app/">chalet-vallouise-demo.vercel.app</a>. Elle contient les 41 annonces, les pages villages et les guides. Elle n'est pas indexée par Google tant que le partenariat n'est pas validé.</p></div>
-  <p>Le site actuel reste tel quel. Le nouveau site présente les 41 locations sous une marque distincte, avec un contenu entièrement réécrit (pas de contenu dupliqué), et chaque bouton « Réserver » mène au calendrier et au paiement en ligne de l'agence, avec un suivi de chaque clic.</p>
+  <p>Le site actuel reste tel quel. Le nouveau site présente les 41 locations sous une marque distincte, avec un contenu entièrement réécrit (pas de contenu dupliqué), et chaque demande de réservation arrive dans le formulaire de l'agence, déjà remplie.</p>
   <ol class="steps">
     <li><span><b>Occuper deux places sur la page 1</b>Sur « location vallouise » et « location chalet vallouise », l'agence et chalet-vallouise.fr peuvent apparaître côte à côte et prendre les places des portails nationaux. Les deux renvoient vers l'agence.</span></li>
     <li><span><b>Conquérir Puy-Saint-Vincent et les Hautes-Alpes</b>Une page « Location à Puy-Saint-Vincent et aux alentours » honnête (un chalet sur place, le reste à quelques minutes), plus des pages chalets, appartements et skis aux pieds pour les recherches « Hautes-Alpes » et « chalet 10 personnes ».</span></li>
     <li><span><b>Publier les contenus que personne ne fait</b>Météo et enneigement, forfaits, comparatif des stations, randonnées, été dans les Écrins : 2 à 4 articles par mois, chacun relié aux logements.</span></li>
     <li><span><b>Devenir la source citée par les IA</b>Réponses directes, tableaux, FAQ, schema.org VacationRental et FAQPage, fichier llms.txt, informations identiques partout (adresse, téléphone, ancienneté).</span></li>
     <li><span><b>Renforcer l'autorité locale</b>Référencement sur le site de l'office de tourisme Pays des Écrins (2<sup>e</sup> source citée par les IA sur la vallée), partenaires (écoles de ski, guides), fiche Google Business Profile.</span></li>
-    <li><span><b>Mesurer chaque mois</b>Search Console, statistiques de visite et clics sur « Réserver » tracés, envoyés dans un compte rendu mensuel.</span></li>
+    <li><span><b>Recruter des propriétaires</b>Une page « Confier votre bien » capte les propriétaires de la vallée qui cherchent une conciergerie ou une gestion locative, et les envoie vers l'agence.</span></li>
+    <li><span><b>Mesurer chaque mois</b>Statistiques rebranchées sur le site de l'agence, Search Console, et chaque demande venue de chalet-vallouise.fr identifiée, dans un compte rendu mensuel.</span></li>
   </ol>
   <h3 style="margin-top:28px">Le nom de domaine</h3>
   <p>chalet-vallouise.fr reprend mot pour mot la recherche « chalet vallouise ». Depuis 2012, Google n'accorde presque plus de bonus de classement à ce type de domaine. L'avantage est ailleurs : le nom est facile à retenir, il donne envie de cliquer dans les résultats, et le domaine est déjà indexé et positionné. Le .com du même nom, exploité par Huttopia, ne pèse quasiment rien en référencement (≈ 16 visites/mois estimées). Le nouveau site garde une identité visuelle propre pour ne pas être confondu avec lui.</p>
+  <h3 style="margin-top:28px">Comment chaque réservation est attribuée</h3>
+  <p>Le bouton de chalet-vallouise.fr ouvre le formulaire de demande de l'agence prérempli avec la référence du logement, les dates choisies et la mention « Demande envoyée via Chalet Vallouise ». L'agence reçoit ses demandes comme aujourd'hui, et voit immédiatement celles qui viennent du site. Chaque mois, la liste des réservations confirmées portant cette mention sert de base au compte rendu. Le site de l'agence n'est pas modifié.</p>
   <h3 style="margin-top:28px">Calendrier éditorial type</h3>
   <div class="months">
     <div class="month"><b>Octobre – décembre</b><p>Ouverture des stations, forfaits, enneigement, Noël en chalet, comparatif Puy-Saint-Vincent / Pelvoux.</p></div>
@@ -241,49 +265,57 @@ footer { color: var(--ink-3); font-size: .86rem; padding-top: 28px; border-top: 
       <tr><td>Ambitieux</td><td class="r num">1 200</td><td class="r num">72</td><td class="r num">≈ 18 000 €</td></tr>
     </tbody>
   </table></div>
+  <div class="callout"><p><b>Un seul propriétaire de plus paie l'abonnement.</b> Un chalet loué 12 semaines par an au tarif moyen relevé (≈ 1 580 € la semaine) rapporte environ 5 300 € d'honoraires par an à l'agence, et chaque année tant que le mandat dure.</p></div>
   <p class="meta">Le scénario central suppose de capter environ 10 % des recherches de réservation ciblées (≈ 2 800/mois en comptant les variantes) et 5 % des recherches d'information. Repère concret : une seule page sur chalet-vallouise.fr a produit 3 demandes en 3 mois. Une partie des réservations pourrait venir de vacanciers qui auraient de toute façon trouvé l'agence : le suivi des clics permettra de le mesurer.</p>
 </section>
 
 <section>
   <span class="kicker">Proposition</span>
   <h2>L'offre</h2>
+  <p>Une mise en place, puis un abonnement mensuel au choix. Dans les deux cas : statistiques rebranchées sur le site de l'agence, compte rendu mensuel, et exclusivité sur la vallée.</p>
   <div class="cols">
     <div class="card">
       <span class="kicker">Mise en place</span>
       <h3>Lancement du site</h3>
-      <div class="price">1 900 € <small>HT, une fois</small></div>
+      <div class="price">1 490 € <small>HT, une fois</small></div>
+      <p style="margin:0 0 10px">Au lieu de 1 900 €, pour une signature avant le 31 octobre : le site est alors en ligne et indexé avant les recherches de Noël et de février.</p>
       <ul>
         <li>41 fiches réécrites, photos optimisées</li>
-        <li>Pages chalets, appartements, Vallouise, Pelvoux, Puy-Saint-Vincent</li>
-        <li>2 guides de lancement</li>
-        <li>Schema.org, sitemap, llms.txt, suivi des réservations</li>
+        <li>Pages chalets, appartements, villages, propriétaires</li>
+        <li>Demandes de réservation préremplies et tracées</li>
+        <li>Google Analytics 4 et Search Console sur le site de l'agence</li>
         <li>Mise en ligne en 2 semaines</li>
       </ul>
     </div>
     <div class="card feature">
-      <span class="kicker">Mensuel · recommandé</span>
-      <h3>Croissance</h3>
+      <span class="kicker">Formule 1 · fixe</span>
+      <h3>Abonnement</h3>
       <div class="price">390 € <small>HT / mois</small></div>
       <ul>
-        <li>3 articles par mois</li>
+        <li>3 contenus par mois (guides, pages saison)</li>
         <li>Mise à jour des annonces et des tarifs</li>
+        <li>Page dernière minute et pages Noël, février, été</li>
         <li>Netlinking local, office de tourisme, partenaires</li>
         <li>Suivi de la visibilité dans les IA</li>
-        <li>Compte rendu mensuel</li>
       </ul>
     </div>
     <div class="card">
-      <span class="kicker">Mensuel · variante</span>
-      <h3>Essentiel + résultats</h3>
-      <div class="price">190 € <small>HT / mois + 40 € par réservation</small></div>
+      <span class="kicker">Formule 2 · partagée</span>
+      <h3>Partenariat</h3>
+      <div class="price">190 € <small>HT / mois + 5 % du loyer</small></div>
       <ul>
-        <li>1 article par mois et mise à jour des annonces</li>
-        <li>Compte rendu mensuel</li>
-        <li>40 € par réservation issue du site, mesurée par les clics tracés</li>
+        <li>Mêmes services que l'abonnement</li>
+        <li>5 % du loyer de chaque réservation venue du site, soit environ 45 € pour un appartement et 80 € pour un chalet</li>
+        <li>À comparer aux 15 à 18 % prélevés par les grandes plateformes</li>
       </ul>
     </div>
   </div>
-  <p>À 390 € par mois, l'offre est remboursée dès 19 réservations par an, soit le scénario prudent. Engagement proposé : 6 mois, puis sans engagement.</p>
+  <ul class="verdict">
+    <li><span class="chip good">Rentable</span><span>L'abonnement à 390 € par mois est couvert par environ 19 réservations par an, ou par un seul nouveau propriétaire de chalet.</span></li>
+    <li><span class="chip good">Garantie</span><span>Si le site transmet moins de 15 demandes de réservation dans ses 6 premiers mois en ligne, l'agence peut arrêter sans frais.</span></li>
+    <li><span class="chip info">Exclusivité</span><span>Une seule agence partenaire dans la vallée de la Vallouise pendant toute la durée du contrat.</span></li>
+    <li><span class="chip info">Engagement</span><span>12 mois, puis mois par mois.</span></li>
+  </ul>
 </section>
 
 <footer>
