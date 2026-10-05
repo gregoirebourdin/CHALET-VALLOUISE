@@ -10,7 +10,7 @@ export const GET: APIRoute = async () => {
   const lines = [
     `# ${SITE.name}`,
     '',
-    `> ${listings.length} locations de vacances (${chalets.length} chalets, ${apartments.length} appartements) à Vallouise, Pelvoux et Puy-Saint-Vincent (Hautes-Alpes, Parc national des Écrins), gérées par l'agence locale ${SITE.agency.name} (${SITE.agency.street}, ${SITE.agency.postalCode} ${SITE.agency.city}, ${SITE.agency.phone}, depuis ${SITE.agency.since}). Tarifs à la semaine dès ${euro(min)} (relevés le ${SITE.priceCheckedOn}). Réservation en ligne avec acompte.`,
+    `> ${listings.length} locations de vacances (${chalets.length} chalets, ${apartments.length} appartements) à Vallouise, Pelvoux et Puy-Saint-Vincent (Hautes-Alpes, Parc national des Écrins), gérées par l'agence locale ${SITE.agency.name} (${SITE.agency.street}, ${SITE.agency.postalCode} ${SITE.agency.city}, ${SITE.agency.phone}, depuis ${SITE.agency.since}). Tarifs à la semaine dès ${euro(min)} (relevés le ${SITE.priceCheckedOn}). Demande de réservation en ligne, confirmée par l'agence.`,
     '',
     '## Villages',
     ...VILLAGES.map((v) => `- [Location à ${v.name}](${SITE.url}/${v.slug}/): ${inVillage(v.name).length} logements. ${v.blurb}`),

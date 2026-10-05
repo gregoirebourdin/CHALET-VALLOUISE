@@ -31,6 +31,7 @@ export interface Listing {
   latlng: [number, number] | null; photos: Photo[]; remotePhotos: string[];
   prices: { key: string; label: string; amount: number | null }[]; priceFrom: number | null;
   bookingUrl: string;
+  requestUrl: string;
 }
 
 export const PRICE_WEEKS: { key: string; label: string; season: 'hiver' | 'ete' }[] = [
@@ -40,6 +41,13 @@ export const PRICE_WEEKS: { key: string; label: string; season: 'hiver' | 'ete' 
   { key: 'ete_juillet', label: 'Semaine du 17 juil. 2027', season: 'ete' },
   { key: 'ete_aout', label: 'Semaine du 7 août 2027', season: 'ete' },
 ];
+
+// Formulaire de demande de l'agence, prérempli par l'URL (référence, dates, message).
+// Le message porte la mention de source : chaque demande reçue par l'agence est attribuable.
+export const REQUEST_MESSAGE = 'Demande envoyée via Chalet Vallouise. Bonjour, je souhaite réserver ce logement aux dates indiquées.';
+const REQUEST_BASE = 'https://www.vallouise-immobilier.com/reservation/fillform-5';
+export const requestUrl = (ref: string, from?: string, to?: string) =>
+  `${REQUEST_BASE}-field28-${encodeURIComponent(ref)}${from && to ? `-field29-${from}-field30-${to}` : ''}-field27-${encodeURIComponent(REQUEST_MESSAGE)}`;
 
 const titleCase = (s: string) => s.toLowerCase().replace(/(^|[\s'-])(\p{L})/gu, (_m, p, c) => p + c.toUpperCase());
 const slugify = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -59,7 +67,7 @@ function build(r: RawListing): Listing {
     ref: r.ref, slug, kind, village,
     name: c?.name ?? fallbackName,
     seoTitle: c?.seoTitle ?? `${fallbackName} à ${village} · ${capacity} personnes`,
-    metaDescription: c?.metaDescription ?? `${fallbackName} pour ${capacity} personnes à ${village}, dans le Parc national des Écrins. Photos, équipements et réservation en ligne.`,
+    metaDescription: c?.metaDescription ?? `${fallbackName} pour ${capacity} personnes à ${village}, dans le Parc national des Écrins. Photos, équipements et demande de réservation.`,
     headline: c?.headline ?? '',
     intro: c?.intro ?? [],
     highlights: c?.highlights ?? [],
@@ -82,6 +90,7 @@ function build(r: RawListing): Listing {
     prices,
     priceFrom: amounts.length ? Math.min(...amounts) : null,
     bookingUrl: `${r.url}?${UTM(slug)}`,
+    requestUrl: requestUrl(r.ref),
   };
 }
 

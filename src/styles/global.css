@@ -287,3 +287,9 @@ p { margin: 0 0 1em; }
 
 .gallery .gallery-all { position: absolute; right: 16px; bottom: 16px; display: inline-flex; padding: 11px 18px; background: #fff; color: var(--ink); border-radius: 999px; font: 600 .9rem/1 var(--sans); box-shadow: var(--shadow); grid-row: auto; }
 .gallery .gallery-all:hover { background: var(--snow); }
+
+.request { display: grid; gap: 10px; }
+.request-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.request-dates label { display: grid; gap: 4px; border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; }
+.request-dates span { font: 600 .7rem/1 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--stone-2); }
+.request-dates input { border: 0; font: 500 .95rem/1.2 var(--sans); color: var(--ink); background: transparent; padding: 0; min-width: 0; width: 100%; }

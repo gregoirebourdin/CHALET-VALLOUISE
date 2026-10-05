@@ -123,8 +123,15 @@ const extras = [
             ))}
           </tbody>
         </table>
-        <a class="btn btn--primary btn--block" href={l.bookingUrl} rel="noopener" data-track="reserver">Voir les disponibilités et réserver</a>
-        <p class="note">Tarifs à la semaine relevés le {SITE.priceCheckedOn}, à titre indicatif (— : semaine déjà réservée ou tarif non publié). Réservation et paiement sécurisés sur le site de l'agence.</p>
+        <form class="request" data-request data-ref={l.ref} action={l.requestUrl}>
+          <div class="request-dates">
+            <label><span>Arrivée</span><input type="date" name="from" id="req-from" /></label>
+            <label><span>Départ</span><input type="date" name="to" id="req-to" /></label>
+          </div>
+          <button class="btn btn--primary btn--block" type="submit">Demander ces dates à l'agence</button>
+        </form>
+        <a class="link-arrow small" style="margin-top:12px" href={l.bookingUrl} rel="noopener">Voir le calendrier des disponibilités</a>
+        <p class="note">Tarifs à la semaine relevés le {SITE.priceCheckedOn}, à titre indicatif (— : semaine déjà réservée ou tarif non publié). Votre demande est transmise directement à l'agence, qui vous confirme les dates.</p>
         <div class="booking-agency">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1z"/></svg>
           <div>Géré par <strong>{SITE.agency.name}</strong>, agence à Vallouise depuis {SITE.agency.since}.<br /><a href={SITE.agency.phoneHref}>{SITE.agency.phone}</a> · réf. {l.ref}</div>
@@ -142,7 +149,7 @@ const extras = [
 
   <div class="mobile-cta">
     <div>{l.priceFrom ? <><strong>{euro(l.priceFrom)}</strong> <span class="small muted">/ sem.</span></> : <strong>Sur demande</strong>}</div>
-    <a class="btn btn--primary" href={l.bookingUrl} rel="noopener">Réserver</a>
+    <a class="btn btn--primary" href={l.requestUrl} rel="noopener">Demander à réserver</a>
   </div>
 
   <dialog class="lightbox" data-lightbox aria-label={`Photos de ${l.name}`}>
@@ -159,6 +166,15 @@ const extras = [
 </Base>
 
 <script>
+  import { requestUrl } from '../../lib/listings';
+  const req = document.querySelector<HTMLFormElement>('[data-request]');
+  req?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fmt = (v: string) => (v ? v.split('-').reverse().join('.') : '');
+    const from = fmt((req.querySelector('#req-from') as HTMLInputElement).value);
+    const to = fmt((req.querySelector('#req-to') as HTMLInputElement).value);
+    window.location.href = requestUrl(req.dataset.ref ?? '', from || undefined, to || undefined);
+  });
   const dlg = document.querySelector<HTMLDialogElement>('[data-lightbox]');
   const img = dlg?.querySelector<HTMLImageElement>('[data-full]');
   const counter = dlg?.querySelector('[data-counter]');

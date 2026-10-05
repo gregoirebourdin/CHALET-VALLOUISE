@@ -18,7 +18,7 @@ const minPrice = Math.min(...listings.map((l) => l.priceFrom ?? Infinity));
 const guides = (await getCollection('blog')).sort((a, b) => +b.data.updated - +a.data.updated).slice(0, 3);
 
 const faq = [
-  { q: 'Où louer un chalet à Vallouise ?', a: `Chalet Vallouise présente ${chalets.length} chalets à Vallouise, Pelvoux et Puy-Saint-Vincent, de 6 à 12 personnes, tous gérés par l'agence locale ${SITE.agency.name}. Les réservations se font en ligne, avec un acompte.` },
+  { q: 'Où louer un chalet à Vallouise ?', a: `Chalet Vallouise présente ${chalets.length} chalets à Vallouise, Pelvoux et Puy-Saint-Vincent, de 6 à 12 personnes, tous gérés par l'agence locale ${SITE.agency.name}. La demande de réservation se fait en ligne, puis l'agence confirme les dates.` },
   { q: 'Combien coûte une semaine de location à Vallouise ?', a: `Les tarifs relevés le ${SITE.priceCheckedOn} commencent à ${euro(minPrice)} la semaine pour un appartement 4 personnes et vont jusqu'à plus de 2 000 € pour les grands chalets en période de vacances scolaires.` },
   { q: 'Peut-on loger skis aux pieds près de Vallouise ?', a: `Oui : ${skiIn.length} appartements, notamment dans la résidence Le Palatin, sont situés au pied des pistes de la station de Pelvoux-Vallouise. Le domaine de Puy-Saint-Vincent est à quelques minutes en voiture.` },
   { q: 'Qui gère les logements ?', a: `Tous les logements sont gérés par ${SITE.agency.name}, agence installée à ${SITE.agency.city} (${SITE.agency.street}). Installée depuis ${SITE.agency.since}, elle assure la gestion des logements, l'accueil et le suivi du séjour.` },
@@ -27,7 +27,7 @@ const faq = [
 ---
 <Base
   title="Location chalet Vallouise · Chalets & appartements dans les Écrins"
-  description={`${listings.length} chalets et appartements de vacances à Vallouise, Pelvoux et Puy-Saint-Vincent. Photos, tarifs à la semaine et réservation en ligne auprès d'une agence locale.`}
+  description={`${listings.length} chalets et appartements de vacances à Vallouise, Pelvoux et Puy-Saint-Vincent. Photos, tarifs à la semaine et demande de réservation auprès d'une agence locale.`}
   image={hero ? `${hero.base}-1280.webp` : undefined}
   preloadImage={hero ? `${hero.base}-1280.webp` : undefined}
   jsonLd={[websiteLd(), agencyLd(), itemListLd(chalets, 'Chalets à louer en Vallouise'), faqLd(faq)].filter(Boolean)}
@@ -59,7 +59,7 @@ const faq = [
         <button class="btn btn--primary" type="submit">Rechercher</button>
       </form>
       <div class="hero-badges">
-        <span>Agence locale à Vallouise</span><span>Réservation en ligne avec acompte</span><span>Dès {euro(minPrice)} la semaine</span>
+        <span>Agence locale à Vallouise</span><span>Demande de réservation en ligne</span><span>Dès {euro(minPrice)} la semaine</span>
       </div>
     </div>
   </section>
@@ -131,7 +131,7 @@ const faq = [
         </div>
         <div class="feature">
           <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 11V8a5 5 0 0110 0v3M5 11h14v10H5z"/></svg></div>
-          <h3>Réservation en ligne</h3><p>Disponibilités à jour et paiement d'un acompte en ligne pour bloquer vos dates.</p>
+          <h3>Demande en ligne</h3><p>Calendrier des disponibilités pour chaque logement et demande de réservation en ligne, confirmée par l'agence.</p>
         </div>
         <div class="feature">
           <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h10"/></svg></div>

@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Picture from '../components/Picture.astro';
+import Faq from '../components/Faq.astro';
+import { SITE, UTM } from '../lib/site';
+import { listings, chalets, apartments, cover } from '../lib/listings';
+import { breadcrumbLd, faqLd, agencyLd } from '../lib/schema';
+const crumbs = [{ name: 'Accueil', href: '/' }, { name: 'Propriétaires', href: '/proprietaires/' }];
+const img = cover('CHAL LE MELEZE');
+const contact = `${SITE.agency.url}contact/?${UTM('proprietaires', 'mandat')}`;
+const faq = [
+  { q: 'Quels logements l\'agence peut-elle gérer ?', a: `Des chalets et des appartements à Vallouise, Pelvoux, Puy-Saint-Vincent et dans les villages voisins. L'agence gère aujourd'hui ${listings.length} locations de vacances, du studio au grand chalet de 12 personnes.` },
+  { q: 'Que fait l\'agence pour les vacanciers ?', a: 'Accueil, location de draps et de serviettes, lit bébé et chaise haute, ménage de fin de séjour, cadeau de bienvenue et dépannage dans la journée en cas de problème.' },
+  { q: 'Où mon logement sera-t-il présenté ?', a: 'Sur le site de l\'agence, vallouise-immobilier.com, et sur Chalet Vallouise, avec une fiche détaillée, des photos et un lien direct de demande de réservation.' },
+  { q: 'Comment obtenir une estimation ?', a: `Contactez l'agence au ${SITE.agency.phone}, ${SITE.agency.hours}, ou passez au ${SITE.agency.street} à Vallouise.` },
+];
+---
+<Base
+  title="Confier son chalet en location saisonnière à Vallouise · Propriétaires"
+  description={`Propriétaire à Vallouise, Pelvoux ou Puy-Saint-Vincent ? Confiez la location saisonnière de votre chalet ou appartement à une agence locale installée depuis ${SITE.agency.since}.`}
+  image={img ? `${img.base}-1280.webp` : undefined}
+  jsonLd={[breadcrumbLd(crumbs), agencyLd(), faqLd(faq)].filter(Boolean)}
+>
+  <section class="page-hero">
+    <Picture photo={img} alt="Chalet en location saisonnière à Pelvoux" eager large sizes="100vw" />
+    <div class="wrap">
+      <Breadcrumbs items={[crumbs[0], { name: crumbs[1].name }]} />
+      <span class="eyebrow" style="color:#f0bf98">Propriétaires</span>
+      <h1>Confiez la location de votre chalet à une agence de la vallée</h1>
+      <p class="lead">Vous avez un chalet ou un appartement à Vallouise, Pelvoux ou Puy-Saint-Vincent ? {SITE.agency.name} s'occupe de tout, des réservations à l'accueil des vacanciers.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow">Gestion locative saisonnière</span>
+        <h2>Louer sans y passer vos week-ends</h2>
+        <ul class="check-list">
+          <li>Une agence installée à Vallouise depuis {SITE.agency.since}, fondée par une native de Pelvoux</li>
+          <li>Votre logement présenté sur deux sites, avec une fiche détaillée et des photos</li>
+          <li>Demandes de réservation, contrats et suivi des séjours pris en charge</li>
+          <li>Linge, ménage, cadeau de bienvenue et dépannage dans la journée</li>
+          <li>Une équipe joignable {SITE.agency.hours}</li>
+        </ul>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn btn--primary" href={contact} rel="noopener">Demander une estimation</a>
+          <a class="btn btn--ghost" href={SITE.agency.phoneHref}>{SITE.agency.phone}</a>
+        </div>
+      </div>
+      <div class="split-media"><Picture photo={cover('CHAL LES NEYZETS')} alt="Chalet géré par l'agence à Vallouise" sizes="(max-width: 860px) 100vw, 600px" /></div>
+    </div>
+  </section>
+  <section class="section section--snow">
+    <div class="wrap">
+      <div class="stats">
+        <div class="stat"><b>{listings.length}</b><span>locations de vacances gérées</span></div>
+        <div class="stat"><b>{chalets.length}</b><span>chalets, de 6 à 12 personnes</span></div>
+        <div class="stat"><b>{apartments.length}</b><span>appartements, dont la résidence Le Palatin</span></div>
+        <div class="stat"><b>{SITE.agency.since}</b><span>année d'installation à Vallouise</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="narrow"><Faq items={faq} title="Propriétaires : vos questions" /></div>
+  </section>
+</Base>
