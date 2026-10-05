@@ -96,7 +96,7 @@ export const apartments = listings.filter((l) => l.kind === 'appartement');
 export const inVillage = (v: Village) => listings.filter((l) => l.village === v);
 
 export const VILLAGES: { name: Village; slug: string; altitude: string; blurb: string; cover: string }[] = [
-  { name: 'Vallouise', slug: 'vallouise', altitude: '1 167 m', blurb: 'Village historique, commerces, ski de fond et départ des grandes randonnées des Écrins.', cover: 'CHAL LES TROLLS' },
+  { name: 'Vallouise', slug: 'vallouise', altitude: '1 165 m', blurb: 'Village historique, commerces, ski de fond et départ des grandes randonnées des Écrins.', cover: 'CHAL LES TROLLS' },
   { name: 'Pelvoux', slug: 'pelvoux', altitude: '1 250 m', blurb: 'Station-village familiale au pied du massif, avec plusieurs appartements skis aux pieds.', cover: 'CHAL LE GYPAETE' },
   { name: 'Puy-Saint-Vincent', slug: 'puy-saint-vincent', altitude: '1 400 – 1 800 m', blurb: 'Le grand domaine skiable de la vallée, à quelques minutes de Vallouise et Pelvoux.', cover: 'CHAL SCHMOES' },
 ];
