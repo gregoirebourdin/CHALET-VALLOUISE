@@ -74,10 +74,10 @@ footer { color: var(--muted); font-size: .86rem; border-top: 1px solid var(--lin
 </style>
 <div class="wrap">
 <header class="top">
-  <span class="sign">N94 → D1091 · Briançonnais</span>
+  <span class="sign">D994E → N94 → D1091 · Briançonnais</span>
   <h1>Tournée Briançon</h1>
-  <p class="lede">Onze entreprises à gros panier dont le site les dessert, dans l’ordre de la route depuis L’Argentière-la-Bessée jusqu’au Monêtier. Pour chacune : qui demander, ce qui cloche, la phrase d’accroche et un aperçu de page d’accueil à montrer sur ton téléphone.</p>
-  <p class="lede">Locaux vérifiés pour sept d’entre elles. Trois sont à appeler avant de passer (artisan seul, bureau sans horaires, dépôt de chantier). Degril est à Gap.</p>
+  <p class="lede">Douze entreprises dont le site les dessert, dans l’ordre de la route : Vallouise d’abord, puis de L’Argentière-la-Bessée jusqu’au Monêtier. Pour chacune : qui demander, ce qui cloche, la phrase d’accroche et un aperçu de page d’accueil à montrer sur ton téléphone.</p>
+  <p class="lede">Locaux vérifiés pour sept d’entre elles. Quatre sont à appeler avant de passer (Alphand hors saison, un artisan seul, un bureau sans horaires, un dépôt de chantier). Degril est à Gap.</p>
   <div class="how">
     <div><b>Sur place, 2 minutes</b><p>Tu montres le haut de page et un seul constat. Tu ne vends rien : tu proposes de revenir avec la page d’accueil complète.</p></div>
     <div><b>« La semaine prochaine »</b><p>Rendez-vous sous 3 à 5 jours. Tu fais la page complète pour lui seul, puis au rendez-vous : la page, deux chiffres, l’offre.</p></div>
@@ -87,8 +87,37 @@ footer { color: var(--muted); font-size: .86rem; border-top: 1px solid var(--lin
   <div class="script"><span>Script d’ouverture</span><p>« Bonjour, je m’appelle Grégoire, je suis de L’Argentière. J’aide les entreprises de la vallée à avoir un site à la hauteur de leur travail. J’ai préparé un premier aperçu de votre page d’accueil, je peux vous le montrer ? Ça prend deux minutes, et si ça vous plaît on se cale 15 minutes, sans aucun engagement. »</p></div>
 </header>
 <ol class="route">
-    <li class="stop" id="roche">
+    <li class="stop" id="alphand">
       <div class="rail"><span class="n">1</span></div>
+      <article>
+        <div class="where"><span class="road">D994E</span>Vallouise</div>
+        <h2>Brasserie Alphand</h2>
+        <p class="sector">Micro-brasserie artisanale, bar et restaurant</p>
+        <div class="grid">
+          <div class="facts">
+            <dl>
+              <dt>Panier</dt><dd><span class="pill ">Design</span> Pas de SEO : ils veulent seulement un beau site</dd>
+              <dt>Demander</dt><dd>Lionel Alphand (brasserie) ou Delphine Alphand (restaurant) · brasserie depuis 1998 · restaurant (SAS Delys) depuis 2018</dd>
+              <dt>Adresse</dt><dd>Place du village, 05290 Vallouise (brasserie : 23 venelle du Poilu)</dd>
+              <dt>Locaux</dt><dd><span class="pill call">Appeler avant</span> Restaurant place du village, brasserie venelle du Poilu. Bar ouvert de mi-juin à mi-septembre, restaurant de fin juin à fin août : en octobre, appelle avant pour savoir qui est là.</dd>
+              <dt>Téléphone</dt><dd><span class="sel">04 92 23 20 00</span></dd>
+              <dt>Google</dt><dd>Hors sujet : ils ne veulent pas de SEO. Ne parle que du design (et du piratage).</dd>
+            </dl>
+            <h3>Ce que j’ai vu sur leur site</h3>
+            <ul class="seen"><li>Site piraté : deux scripts cachés sur l’accueil interrogent un contrat sur la blockchain Polygon pour obtenir une adresse, puis chargent un programme extérieur chez chaque visiteur (technique dite « EtherHiding », souvent utilisée pour afficher de faux messages qui piègent les visiteurs).</li><li>Titres en Montserrat majuscules, sans rapport avec leur logo calligraphié.</li><li>Photos HD du restaurant ajoutées en juin et juillet 2026, peu exploitées : le restaurant n’arrive qu’après la longue liste des bières.</li></ul>
+            <blockquote>« Vous avez fait de très belles photos du restaurant cette année ; je vous ai préparé un accueil qui leur rend justice. »</blockquote>
+            <p class="tip">Commence par le piratage, calmement : « j’ai vu un code anormal sur votre site, il faut le faire nettoyer, que vous travailliez avec moi ou pas ». N’ouvre pas leur site devant eux : montre la fiche.</p>
+          </div>
+          <a class="shots" href="p/alphand.html" aria-label="Ouvrir la fiche à montrer à Brasserie Alphand">
+            <img class="d" src="img/alphand-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à Brasserie Alphand" loading="lazy">
+            <img class="m" src="img/alphand-m.jpg" alt="Aperçu téléphone" loading="lazy">
+            <span class="open">Ouvrir la fiche à montrer →</span>
+          </a>
+        </div>
+      </article>
+    </li>
+    <li class="stop" id="roche">
+      <div class="rail"><span class="n">2</span></div>
       <article>
         <div class="where"><span class="road">N94</span>L’Argentière-la-Bessée</div>
         <h2>Atelier de Roche</h2>
@@ -117,7 +146,7 @@ footer { color: var(--muted); font-size: .86rem; border-top: 1px solid var(--lin
       </article>
     </li>
     <li class="stop" id="alpesalu">
-      <div class="rail"><span class="n">2</span></div>
+      <div class="rail"><span class="n">3</span></div>
       <article>
         <div class="where"><span class="road">N94</span>L’Argentière-la-Bessée</div>
         <h2>Alpes Alu</h2>
@@ -146,7 +175,7 @@ footer { color: var(--muted); font-size: .86rem; border-top: 1px solid var(--lin
       </article>
     </li>
     <li class="stop" id="herisson">
-      <div class="rail"><span class="n">3</span></div>
+      <div class="rail"><span class="n">4</span></div>
       <article>
         <div class="where"><span class="road">N94</span>Prelles · Saint-Martin-de-Queyrières</div>
         <h2>Le Hérisson Vert</h2>
@@ -175,7 +204,7 @@ footer { color: var(--muted); font-size: .86rem; border-top: 1px solid var(--lin
       </article>
     </li>
     <li class="stop" id="tendances">
-      <div class="rail"><span class="n">4</span></div>
+      <div class="rail"><span class="n">5</span></div>
       <article>
         <div class="where"><span class="road">N94</span>Briançon</div>
         <h2>Tendances Cuisines</h2>
@@ -204,7 +233,7 @@ footer { color: var(--muted); font-size: .86rem; border-top: 1px solid var(--lin
       </article>
     </li>
     <li class="stop" id="mccuisine">
-      <div class="rail"><span class="n">5</span></div>
+      <div class="rail"><span class="n">6</span></div>
       <article>
         <div class="where"><span class="road">N94</span>Briançon</div>
         <h2>MC Menuisier Cuisiniste</h2>
@@ -233,7 +262,7 @@ footer { color: var(--muted); font-size: .86rem; border-top: 1px solid var(--lin
       </article>
     </li>
     <li class="stop" id="hmrenov">
-      <div class="rail"><span class="n">6</span></div>
+      <div class="rail"><span class="n">7</span></div>
       <article>
         <div class="where"><span class="road">N94</span>Briançon</div>
         <h2>HM Rénovation</h2>
@@ -262,7 +291,7 @@ footer { color: var(--muted); font-size: .86rem; border-top: 1px solid var(--lin
       </article>
     </li>
     <li class="stop" id="lagence">
-      <div class="rail"><span class="n">7</span></div>
+      <div class="rail"><span class="n">8</span></div>
       <article>
         <div class="where"><span class="road">N94</span>Briançon</div>
         <h2>L’Agence</h2>
@@ -291,7 +320,7 @@ footer { color: var(--muted); font-size: .86rem; border-top: 1px solid var(--lin
       </article>
     </li>
     <li class="stop" id="payan">
-      <div class="rail"><span class="n">8</span></div>
+      <div class="rail"><span class="n">9</span></div>
       <article>
         <div class="where"><span class="road">D1091</span>Saint-Chaffrey</div>
         <h2>Payan-Ferrero</h2>
@@ -320,7 +349,7 @@ footer { color: var(--muted); font-size: .86rem; border-top: 1px solid var(--lin
       </article>
     </li>
     <li class="stop" id="declic">
-      <div class="rail"><span class="n">9</span></div>
+      <div class="rail"><span class="n">10</span></div>
       <article>
         <div class="where"><span class="road">D1091</span>Saint-Chaffrey</div>
         <h2>Declic Immobilier</h2>
@@ -349,7 +378,7 @@ footer { color: var(--muted); font-size: .86rem; border-top: 1px solid var(--lin
       </article>
     </li>
     <li class="stop" id="guglielmetti">
-      <div class="rail"><span class="n">10</span></div>
+      <div class="rail"><span class="n">11</span></div>
       <article>
         <div class="where"><span class="road">D1091</span>Le Monêtier-les-Bains</div>
         <h2>Entreprise Guglielmetti</h2>
@@ -378,7 +407,7 @@ footer { color: var(--muted); font-size: .86rem; border-top: 1px solid var(--lin
       </article>
     </li>
     <li class="stop" id="degril">
-      <div class="rail"><span class="n">11</span></div>
+      <div class="rail"><span class="n">12</span></div>
       <article>
         <div class="where"><span class="road gap">Gap</span>Gap (siège)</div>
         <h2>Degril</h2>

@@ -4,7 +4,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-:root { --bg: #f6f6f3; --surface: #ffffff; --fg: #17201c; --muted: #5f6b66; --line: #dcdfdb; --accent: #0b6b4c;
+:root { --bg: #f6f6f3; --surface: #ffffff; --fg: #17201c; --muted: #5f6b66; --line: #dcdfdb; --accent: #0b6b4c; --alert: #a3341c; --alert-bg: #fbefe9; --alert-line: #efcfc3;
   --display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif; --body: 'Manrope', system-ui, sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace; color-scheme: light; }
 * { box-sizing: border-box; }
 html { padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px); background: var(--bg); }
@@ -32,6 +32,9 @@ h2 { font: 700 1.35rem/1.15 var(--display); margin: 0 0 12px; }
 .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 16px 14px; min-width: 0; }
 .stat b { display: block; font: 750 clamp(1.8rem, 4.5vw, 2.5rem)/1 var(--display); letter-spacing: -.02em; color: var(--accent); font-variant-numeric: tabular-nums; margin-bottom: 8px; }
 .stat span { display: block; font-size: .92rem; color: var(--fg); }
+.alert { background: var(--alert-bg); border: 1px solid var(--alert-line); border-left: 4px solid var(--alert); border-radius: 12px; padding: 18px 20px; }
+.alert h2 { color: var(--alert); margin-bottom: 8px; }
+.alert p { margin: 0; max-width: 64ch; }
 .src { color: var(--muted); font-size: .8rem; margin: 10px 0 0; max-width: 70ch; }
 .offer { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; }
 .offer p { margin: 0 0 12px; max-width: 62ch; }
@@ -55,6 +58,7 @@ h2 { font: 700 1.35rem/1.15 var(--display); margin: 0 0 12px; }
   <figure class="screen"><img src="../img/guglielmetti-d.jpg" alt="Aperçu de la page d’accueil sur ordinateur"></figure>
   <figure class="phone"><img src="../img/guglielmetti-m.jpg" alt="Aperçu de la page d’accueil sur téléphone"></figure>
 </div>
+
 
 <section>
   <h2>Ce que j’ai remarqué sur votre site</h2>
