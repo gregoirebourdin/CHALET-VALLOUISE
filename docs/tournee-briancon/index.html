@@ -41,6 +41,17 @@ article { min-width: 0; padding-bottom: 40px; }
 .where { display: flex; align-items: center; gap: 10px; color: var(--muted); font: 500 .8rem/1 var(--mono); letter-spacing: .04em; margin: 8px 0 8px; }
 .road { background: var(--cartouche); color: #fff; font: 700 .72rem/1 var(--mono); padding: 4px 6px; border-radius: 3px; }
 .road.gap { background: var(--muted); }
+.reserve .n { background: var(--surface); color: var(--route); border: 2px dashed var(--route); font-size: .8rem; }
+.rtag { font: 700 .68rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--route); border: 1px dashed var(--route); padding: 4px 6px; border-radius: 3px; }
+.day { margin: 30px 0 0; }
+.day h3 { font-size: 1.05rem; margin: 0 0 10px; }
+.tbl { overflow-x: auto; }
+.day table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: .93rem; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.day th, .day td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.day th { font: 600 .7rem/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.day td:first-child { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.day tr:last-child td { border-bottom: 0; }
+.day .note { color: var(--muted); font-size: .9rem; margin: 10px 0 0; max-width: 70ch; }
 h2 { font-size: clamp(1.45rem, 3.4vw, 1.9rem); font-weight: 700; }
 .sector { margin: 4px 0 16px; color: var(--muted); }
 .grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 22px; align-items: start; }
@@ -77,12 +88,30 @@ footer { color: var(--muted); font-size: .86rem; border-top: 1px solid var(--lin
   <span class="sign">D994E → N94 → D1091 · Briançonnais</span>
   <h1>Tournée Briançon</h1>
   <p class="lede">Douze entreprises dont le site les dessert, dans l’ordre de la route : Vallouise d’abord, puis de L’Argentière-la-Bessée jusqu’au Monêtier. Pour chacune : qui demander, ce qui cloche, la phrase d’accroche et un aperçu de page d’accueil à montrer sur ton téléphone.</p>
-  <p class="lede">Locaux vérifiés pour sept d’entre elles. Quatre sont à appeler avant de passer (Alphand hors saison, un artisan seul, un bureau sans horaires, un dépôt de chantier). Degril est à Gap.</p>
+  <p class="lede">Locaux vérifiés pour sept d’entre elles. Quatre sont à appeler avant de passer (Alphand hors saison, un artisan seul, un bureau sans horaires, un dépôt de chantier). Degril est à Gap. En plus, trois réserves à Villeneuve (R1 à R3), à quelques minutes à pied l’une de l’autre, pour remplacer les absents.</p>
   <div class="how">
     <div><b>Sur place, 2 minutes</b><p>Tu montres le haut de page et un seul constat. Tu ne vends rien : tu proposes de revenir avec la page d’accueil complète.</p></div>
     <div><b>« La semaine prochaine »</b><p>Rendez-vous sous 3 à 5 jours. Tu fais la page complète pour lui seul, puis au rendez-vous : la page, deux chiffres, l’offre.</p></div>
     <div><b>« Allez-y, je vous écoute »</b><p>Dix minutes avec sa fiche : aperçu, constats, chiffres Google. Tes deux questions, puis : « je reviens jeudi avec la page complète ».</p></div>
     <div><b>« Envoyez-moi un mail »</b><p>Le soir même : un mail avec le lien de sa fiche. Relances à J+3 et J+10.</p></div>
+  </div>
+  <div class="day">
+    <h3>Demain, jeudi 8 octobre</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Heure</th><th>Où</th><th>Qui</th></tr></thead>
+      <tbody>
+        <tr><td>8 h 00</td><td>Vallouise</td><td>1 · Alphand (après un coup de fil)</td></tr>
+        <tr><td>8 h 45</td><td>L’Argentière, Sablonnières</td><td>2 · Atelier de Roche, 3 · Alpes Alu</td></tr>
+        <tr><td>9 h 45</td><td>Prelles</td><td>4 · Le Hérisson Vert</td></tr>
+        <tr><td>10 h 15 – 12 h</td><td>Briançon</td><td>5 · Tendances et 6 · MC (même zone), 7 · HM Rénovation, 8 · L’Agence</td></tr>
+        <tr><td>12 h – 14 h</td><td>Pause</td><td>Notes et mails du jour</td></tr>
+        <tr><td>14 h 00</td><td>Saint-Chaffrey</td><td>9 · Payan-Ferrero, 10 · Declic</td></tr>
+        <tr><td>15 h 00</td><td>Villeneuve</td><td>Réserves R1 à R3, selon les absents du matin</td></tr>
+        <tr><td>16 h 00</td><td>Le Monêtier</td><td>11 · Guglielmetti (les équipes rentrent au dépôt)</td></tr>
+        <tr><td>18 h 00</td><td>L’Argentière</td><td>Boulot, si Carole prend 18 h (32 rue du Vernet) : pars du Monêtier vers 17 h 15</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Si Carole prend 11 h 45 : Vallouise, L’Argentière et Prelles le matin, Boulot à 11 h 45, puis Briançon, Saint-Chaffrey, Villeneuve et le Monêtier l’après-midi. Vers 8 h 30, appelle MC, HM et Guglielmetti. Degril (Gap) n’est pas pour demain.</p>
   </div>
   <div class="script"><span>Script d’ouverture</span><p>« Bonjour, je m’appelle Grégoire, je suis de L’Argentière. J’aide les entreprises de la vallée à avoir un site à la hauteur de leur travail. J’ai préparé un premier aperçu de votre page d’accueil, je peux vous le montrer ? Ça prend deux minutes, et si ça vous plaît on se cale 15 minutes, sans aucun engagement. »</p></div>
 </header>
@@ -372,6 +401,93 @@ footer { color: var(--muted); font-size: .86rem; border-top: 1px solid var(--lin
           <a class="shots" href="p/declic.html" aria-label="Ouvrir la fiche à montrer à Declic Immobilier">
             <img class="d" src="img/declic-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à Declic Immobilier" loading="lazy">
             <img class="m" src="img/declic-m.jpg" alt="Aperçu téléphone" loading="lazy">
+            <span class="open">Ouvrir la fiche à montrer →</span>
+          </a>
+        </div>
+      </article>
+    </li>
+    <li class="stop reserve" id="josephine">
+      <div class="rail"><span class="n">R1</span></div>
+      <article>
+        <div class="where"><span class="road">D1091</span>La Salle-les-Alpes · Villeneuve<span class="rtag">Réserve</span></div>
+        <h2>Joséphine Immobilier</h2>
+        <p class="sector">Location de vacances et vente d’appartements et de chalets</p>
+        <div class="grid">
+          <div class="facts">
+            <dl>
+              <dt>Panier</dt><dd><span class="pill hi">Très élevé</span> Ventes de chalets et gestion de locations</dd>
+              <dt>Demander</dt><dd>Giuseppina Loridon, gérante · agence créée en 2009 · 25 ans sur la station</dd>
+              <dt>Adresse</dt><dd>46 route du Bez, 05240 La Salle-les-Alpes</dd>
+              <dt>Locaux</dt><dd><span class="pill ok">Vérifiés</span> Agence au 46 route du Bez, à Villeneuve. Du lundi au samedi, 9 h – 19 h (PagesJaunes).</dd>
+              <dt>Téléphone</dt><dd><span class="sel">06 37 61 89 50</span></dd>
+              <dt>Google</dt><dd>3e sur « agence immobilière serre chevalier » (320/mois), et elle paie aussi de la publicité Google.</dd>
+            </dl>
+            <h3>Ce que j’ai vu sur leur site</h3>
+            <ul class="seen"><li>Site sous Drupal 7, qui ne reçoit plus de mises à jour de sécurité depuis janvier 2025.</li><li>Le code contient encore un bandeau d’avertissement prévu pour Internet Explorer 7 (navigateur de 2006).</li><li>Pas de titre principal (H1) sur l’accueil.</li></ul>
+            <blockquote>« Vous êtes 3e sur Google à Serre Chevalier ; il ne manque qu’un site à la hauteur de vos chalets. »</blockquote>
+            <p class="tip">Elle paie déjà de la publicité Google : un site qui convainc mieux rend chaque clic plus rentable.</p>
+          </div>
+          <a class="shots" href="p/josephine.html" aria-label="Ouvrir la fiche à montrer à Joséphine Immobilier">
+            <img class="d" src="img/josephine-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à Joséphine Immobilier" loading="lazy">
+            <img class="m" src="img/josephine-m.jpg" alt="Aperçu téléphone" loading="lazy">
+            <span class="open">Ouvrir la fiche à montrer →</span>
+          </a>
+        </div>
+      </article>
+    </li>
+    <li class="stop reserve" id="malet">
+      <div class="rail"><span class="n">R2</span></div>
+      <article>
+        <div class="where"><span class="road">D1091</span>La Salle-les-Alpes · Villeneuve<span class="rtag">Réserve</span></div>
+        <h2>Malet Immobilier</h2>
+        <p class="sector">Transaction, location et gestion</p>
+        <div class="grid">
+          <div class="facts">
+            <dl>
+              <dt>Panier</dt><dd><span class="pill hi">Très élevé</span> Biens affichés jusqu’à 832 500 €</dd>
+              <dt>Demander</dt><dd>Jean-Yves Malet, président · agence fondée en 1972 · adhérente FNAIM</dd>
+              <dt>Adresse</dt><dd>30 rue de la Guisane, 05240 La Salle-les-Alpes</dd>
+              <dt>Locaux</dt><dd><span class="pill ok">Vérifiés</span> Agence au 30 rue de la Guisane, à Villeneuve. Du lundi au samedi, 9 h 30 – 12 h et 14 h 30 – 19 h.</dd>
+              <dt>Téléphone</dt><dd><span class="sel">04 92 24 99 99</span></dd>
+              <dt>Google</dt><dd>13e sur « agence immobilière serre chevalier » (320/mois).</dd>
+            </dl>
+            <h3>Ce que j’ai vu sur leur site</h3>
+            <ul class="seen"><li>Dans Google, l’accueil s’affiche sous le titre « Malet immo ».</li><li>Site sur un modèle La Boîte Immo, partagé par beaucoup d’agences.</li><li>L’histoire de l’agence depuis 1972 n’arrive qu’après le moteur de recherche et les annonces.</li></ul>
+            <blockquote>« Plus de cinquante ans à Serre Chevalier, et dans Google votre site s’appelle « Malet immo ». »</blockquote>
+            <p class="tip">Agence historique : parle d’image et de transmission, pas de technique.</p>
+          </div>
+          <a class="shots" href="p/malet.html" aria-label="Ouvrir la fiche à montrer à Malet Immobilier">
+            <img class="d" src="img/malet-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à Malet Immobilier" loading="lazy">
+            <img class="m" src="img/malet-m.jpg" alt="Aperçu téléphone" loading="lazy">
+            <span class="open">Ouvrir la fiche à montrer →</span>
+          </a>
+        </div>
+      </article>
+    </li>
+    <li class="stop reserve" id="mvbc">
+      <div class="rail"><span class="n">R3</span></div>
+      <article>
+        <div class="where"><span class="road">D1091</span>La Salle-les-Alpes · Villeneuve<span class="rtag">Réserve</span></div>
+        <h2>Mountain View Base Camp</h2>
+        <p class="sector">Concept store : café, boutique déco et ski, agence immobilière</p>
+        <div class="grid">
+          <div class="facts">
+            <dl>
+              <dt>Panier</dt><dd><span class="pill ">Élevé</span> Ventes et locations de vacances, plus le café et la boutique</dd>
+              <dt>Demander</dt><dd>Sébastien Brunel, président · ex-Immobilière de l’Aigle</dd>
+              <dt>Adresse</dt><dd>5 place de l’Aravet, 05240 La Salle-les-Alpes</dd>
+              <dt>Locaux</dt><dd><span class="pill call">Appeler avant</span> Concept store au 5 place de l’Aravet. Leur site indique « hors saison sur rendez-vous uniquement » : appelle avant.</dd>
+              <dt>Téléphone</dt><dd><span class="sel">04 92 24 95 81</span></dd>
+              <dt>Google</dt><dd>38e sur « agence immobilière serre chevalier ».</dd>
+            </dl>
+            <h3>Ce que j’ai vu sur leur site</h3>
+            <ul class="seen"><li>Dans Google, l’accueil s’appelle encore « l’Immobilière de l’Aigle ».</li><li>Sur téléphone, les lignes du grand titre se chevauchent.</li><li>Le café et la boutique n’apparaissent pas sur l’accueil ; les photos sont génériques (cerf, gypaète, télésiège).</li></ul>
+            <blockquote>« Vous êtes devenus Mountain View Base Camp ; votre site s’appelle encore « l’Immobilière de l’Aigle ». »</blockquote>
+            <p class="tip">Changement de nom en cours : c’est le meilleur moment pour proposer un nouveau site.</p>
+          </div>
+          <a class="shots" href="p/mvbc.html" aria-label="Ouvrir la fiche à montrer à Mountain View Base Camp">
+            <img class="d" src="img/mvbc-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à Mountain View Base Camp" loading="lazy">
+            <img class="m" src="img/mvbc-m.jpg" alt="Aperçu téléphone" loading="lazy">
             <span class="open">Ouvrir la fiche à montrer →</span>
           </a>
         </div>

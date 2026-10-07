@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Malet Immobilier · aperçu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root { --bg: #f6f6f3; --surface: #ffffff; --fg: #17201c; --muted: #5f6b66; --line: #dcdfdb; --accent: #0b6b4c; --alert: #a3341c; --alert-bg: #fbefe9; --alert-line: #efcfc3;
+  --display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif; --body: 'Manrope', system-ui, sans-serif; --mono: 'JetBrains Mono', ui-monospace, monospace; color-scheme: light; }
+* { box-sizing: border-box; }
+html { padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px); background: var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 16px/1.55 var(--body); padding: 0 16px; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; }
+.wrap { max-width: 980px; margin: 0 auto; padding-block: 28px 64px; }
+.for { font: 500 .74rem/1.5 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 750 clamp(2rem, 7vw, 3.2rem)/1.02 var(--display); letter-spacing: -.015em; margin: 10px 0 10px; text-wrap: balance; }
+.sub { color: var(--muted); margin: 0 0 26px; max-width: 54ch; }
+.duo { display: grid; grid-template-columns: minmax(0, 1fr) 30%; gap: 18px; align-items: start; }
+.screen { margin: 0; background: #0e1110; border-radius: 14px; padding: 10px; box-shadow: 0 30px 60px -30px rgba(0,0,0,.35); }
+.screen img { display: block; width: 100%; border-radius: 6px; }
+.phone { margin: 0; background: #0e1110; border-radius: 30px; padding: 9px; box-shadow: 0 30px 60px -30px rgba(0,0,0,.35); }
+.phone img { display: block; width: 100%; border-radius: 22px; }
+.note { color: var(--muted); font-size: .86rem; margin: 12px 0 0; }
+section { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 28px; }
+h2 { font: 700 1.35rem/1.15 var(--display); margin: 0 0 12px; }
+.today { display: grid; grid-template-columns: minmax(0, 1fr) 26%; gap: 22px; align-items: start; }
+.today ul { margin: 0; padding-left: 1.1em; }
+.today li { margin-bottom: 8px; }
+.avant { margin: 0; }
+.avant img { display: block; width: 100%; border-radius: 16px; border: 1px solid var(--line); }
+.avant figcaption { font: 500 .7rem/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+.stats { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 12px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 16px 14px; min-width: 0; }
+.stat b { display: block; font: 750 clamp(1.8rem, 4.5vw, 2.5rem)/1 var(--display); letter-spacing: -.02em; color: var(--accent); font-variant-numeric: tabular-nums; margin-bottom: 8px; }
+.stat span { display: block; font-size: .92rem; color: var(--fg); }
+.alert { background: var(--alert-bg); border: 1px solid var(--alert-line); border-left: 4px solid var(--alert); border-radius: 12px; padding: 18px 20px; }
+.alert h2 { color: var(--alert); margin-bottom: 8px; }
+.alert p { margin: 0; max-width: 64ch; }
+.src { color: var(--muted); font-size: .8rem; margin: 10px 0 0; max-width: 70ch; }
+.offer { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; }
+.offer p { margin: 0 0 12px; max-width: 62ch; }
+.btn { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; font-weight: 600; padding: 13px 20px; border-radius: 999px; margin-top: 4px; }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.sig { color: var(--muted); font-size: .9rem; margin-top: 14px; }
+@media (max-width: 680px) {
+  .duo { grid-template-columns: 1fr; }
+  .phone { max-width: 300px; margin: 0 auto; order: -1; }
+  .today { grid-template-columns: 1fr; }
+  .avant { max-width: 220px; }
+  .stats { grid-template-columns: 1fr; gap: 8px; }
+  .stat { display: grid; grid-template-columns: 86px 1fr; align-items: baseline; gap: 12px; padding: 12px 14px; }
+  .stat b { margin: 0; font-size: 1.7rem; }
+}
+</style></head><body><div class="wrap">
+<span class="for">Préparé pour Malet Immobilier · octobre 2026</span>
+<h1>Votre future page d’accueil</h1>
+<p class="sub">Un premier aperçu, réalisé avec les photos et les informations de votre site actuel.</p>
+<div class="duo">
+  <figure class="screen"><img src="../img/malet-d.jpg" alt="Aperçu de la page d’accueil sur ordinateur"></figure>
+  <figure class="phone"><img src="../img/malet-m.jpg" alt="Aperçu de la page d’accueil sur téléphone"></figure>
+</div>
+<p class="note">La photo vient de l’une de vos annonces ; dans la version finale, nous la choisirions ensemble.</p>
+
+<section>
+  <h2>Ce que j’ai remarqué sur votre site</h2>
+  <div class="today"><ul><li>Dans Google, votre page d’accueil s’affiche sous le titre « Malet immo ».</li><li>Votre site ressemble à ceux de beaucoup d’autres agences.</li><li>Votre histoire depuis 1972 n’arrive qu’après les annonces.</li></ul><figure class="avant"><img src="../img/malet-avant.jpg" alt="Votre site aujourd’hui sur téléphone"><figcaption>Votre site aujourd’hui, sur téléphone</figcaption></figure></div>
+</section>
+<section>
+  <h2>Sur Google aujourd’hui</h2>
+  <div class="stats" style="--n: 3"><div class="stat"><b>13e</b><span>sur « agence immobilière serre chevalier » (320 recherches par mois)</span></div><div class="stat"><b>≈ 370</b><span>visites par mois venues de Google</span></div><div class="stat"><b>208</b><span>recherches sur lesquelles vous apparaissez</span></div></div>
+  <p class="src">Estimations SE Ranking, recherches Google en France, octobre 2026. Les petites recherches locales ne sont pas toutes mesurées : les visites réelles peuvent être un peu plus élevées.</p>
+</section>
+<section>
+  <div class="offer">
+    <h2>Quinze minutes, sans aucun engagement</h2>
+    <p>Je vous montre la version complète de cette page et ce que vous pourriez gagner sur Google. Si elle vous plaît, elle est à vous : vous pouvez la confier à votre prestataire actuel, ou nous pouvons continuer ensemble.</p>
+    <a class="btn" href="https://cal.com/gregoire-bourdin/15min" target="_blank" rel="noopener">Choisir un créneau de 15 minutes</a>
+    <p class="sig">Grégoire Bourdin · L’Argentière-la-Bessée</p>
+  </div>
+</section>
+</div></body></html>
