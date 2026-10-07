@@ -1,0 +1,347 @@
+<title>Audit Chalets Lombard Vasina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout : dossier d'audit, une colonne de lecture (≈ 980 px), tableaux et graphiques pleine largeur de colonne */
+:root {
+  --bg: #f4f6f7; --surface: #ffffff; --ink: #13202a; --ink-2: #4a5965; --ink-3: #6f7d88; --line: #dbe2e7;
+  --accent: #1d5f86; --accent-soft: #e2edf4; --series: #2a78d6; --neutral-bar: #b7c1c9;
+  --crit: #b8372d; --crit-soft: #f8e4e1; --warn: #9a6512; --warn-soft: #f7ecd8; --good: #2c7a4b; --good-soft: #e0f0e6;
+  --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e161c; --surface: #152029; --ink: #e7edf1; --ink-2: #a7b6c1; --ink-3: #8394a1; --line: #263540;
+  --accent: #79b6dc; --accent-soft: #1a2d3a; --series: #3987e5; --neutral-bar: #4b5a65;
+  --crit: #ec7d72; --crit-soft: #3a1f1d; --warn: #dcab55; --warn-soft: #362a14; --good: #6cc08c; --good-soft: #17301f; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0e161c; --surface: #152029; --ink: #e7edf1; --ink-2: #a7b6c1; --ink-3: #8394a1; --line: #263540;
+  --accent: #79b6dc; --accent-soft: #1a2d3a; --series: #3987e5; --neutral-bar: #4b5a65;
+  --crit: #ec7d72; --crit-soft: #3a1f1d; --warn: #dcab55; --warn-soft: #362a14; --good: #6cc08c; --good-soft: #17301f; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--body); margin: 0; padding: 0 16px; }
+.doc { max-width: 980px; margin: 0 auto; padding-block: 48px 96px; }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -0.01em; line-height: 1.15; text-wrap: balance; margin: 0 0 .5em; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; }
+h2 { font-size: clamp(1.45rem, 3vw, 1.9rem); font-weight: 600; }
+h3 { font-size: 1.12rem; font-weight: 600; }
+p { margin: 0 0 1em; max-width: 68ch; }
+a { color: var(--accent); }
+.kicker { font: 600 .74rem/1.2 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; display: block; }
+.meta { color: var(--ink-3); font-size: .92rem; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+section { padding-block: 44px; border-top: 1px solid var(--line); }
+header.top { padding-bottom: 36px; }
+.lede { font-size: 1.18rem; color: var(--ink-2); max-width: 64ch; }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 28px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; min-width: 0; }
+.tile b { display: block; font: 500 1.7rem/1.1 var(--mono); font-variant-numeric: tabular-nums; margin-bottom: 4px; }
+.tile span { font-size: .88rem; color: var(--ink-2); }
+
+.verdict { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+.verdict li { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font: 600 .72rem/1 var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; white-space: nowrap; }
+.chip.crit { background: var(--crit-soft); color: var(--crit); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.chip.good { background: var(--good-soft); color: var(--good); }
+.chip.info { background: var(--accent-soft); color: var(--accent); }
+
+.figure { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 20px 14px; margin: 22px 0; position: relative; min-width: 0; }
+.figure h3 { margin-bottom: 2px; }
+.figure .meta { margin: 0 0 12px; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart text { fill: var(--ink-3); font: 12px var(--body); }
+.chart .grid line { stroke: var(--line); stroke-width: 1; }
+.chart .series-line { fill: none; stroke: var(--series); stroke-width: 2; stroke-linejoin: round; }
+.chart .series-area { fill: var(--series); opacity: .1; }
+.chart .cross { stroke: var(--ink-3); stroke-width: 1; }
+.chart .dot { fill: var(--series); stroke: var(--surface); stroke-width: 2; }
+.chart .anno { fill: var(--ink-2); font-weight: 600; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 6px 20px rgba(0,0,0,.12); border-radius: 8px; padding: 8px 10px; font-size: .85rem; white-space: nowrap; }
+.tip b { font: 500 1rem var(--mono); display: block; }
+
+.bars { display: grid; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: minmax(120px, 230px) 1fr; gap: 14px; align-items: center; }
+.bar-row .label { font-size: .95rem; min-width: 0; overflow-wrap: anywhere; }
+.bar-row .label small { display: block; color: var(--ink-3); font-size: .8rem; }
+.bar-track { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.bar { height: 14px; border-radius: 0 4px 4px 0; background: var(--neutral-bar); min-width: 3px; }
+.bar.hl { background: var(--series); }
+.bar-val { font: 500 .9rem var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+@media (max-width: 560px) { .bar-row { grid-template-columns: 1fr; gap: 4px; } }
+
+.table-wrap { overflow-x: auto; margin: 18px 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .94rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 .74rem/1.2 var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); background: var(--bg); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.r, th.r { text-align: right; }
+.vol { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.vol i { display: inline-block; height: 8px; border-radius: 0 3px 3px 0; background: var(--series); opacity: .75; }
+.pos { font: 500 .85rem var(--mono); padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+.pos.top { background: var(--good-soft); color: var(--good); }
+.pos.mid { background: var(--warn-soft); color: var(--warn); }
+.pos.none { background: var(--crit-soft); color: var(--crit); }
+
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 18px 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; min-width: 0; }
+.card h3 { margin-bottom: 6px; }
+.card p, .card li { font-size: .95rem; color: var(--ink-2); }
+.card ul { margin: 0; padding-left: 1.1em; }
+.card.feature { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.price { font: 500 1.6rem/1.1 var(--mono); color: var(--ink); margin: 6px 0 10px; }
+.price small { font: 400 .9rem var(--body); color: var(--ink-3); }
+
+.callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 20px; margin: 18px 0; }
+.callout p:last-child { margin: 0; }
+.steps { counter-reset: s; list-style: none; padding: 0; margin: 18px 0; display: grid; gap: 14px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 12px; }
+.steps li::before { content: counter(s); font: 600 .9rem/34px var(--mono); text-align: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); }
+.steps b { display: block; }
+.months { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.month { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; }
+.month b { font-family: var(--display); font-size: .95rem; }
+.month p { font-size: .92rem; color: var(--ink-2); margin: 4px 0 0; }
+footer { color: var(--ink-3); font-size: .86rem; padding-top: 28px; border-top: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<style>
+.vs { width: 100%; }
+.vs td.l, .vs th.l { background: var(--accent-soft); }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: .88rem; color: var(--ink-2); margin: 0 0 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 18px; height: 3px; border-radius: 2px; display: inline-block; }
+.chart .series-2 { fill: none; stroke: var(--series-2); stroke-width: 2; stroke-linejoin: round; }
+.chart .dot2 { fill: var(--series-2); stroke: var(--surface); stroke-width: 2; }
+.quote { border-left: 3px solid var(--accent); padding: 10px 16px; margin: 12px 0; background: var(--surface); border-radius: 0 10px 10px 0; font-size: .95rem; color: var(--ink-2); }
+.quote b { color: var(--ink); }
+:root { --series-2: #eb6834; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --series-2: #d95926; } }
+:root[data-theme="dark"] { --series-2: #d95926; }
+</style>
+<div class="doc">
+<header class="top">
+  <span class="kicker">Audit SEO &amp; GEO · 7 octobre 2026</span>
+  <h1>Chalets Lombard Vasina : 800 chalets construits, mais un site que Google et les IA voient à peine</h1>
+  <p class="lede">Lombard Vasina tient la 2<sup>e</sup> place sur « constructeur chalet hautes alpes » et la 5<sup>e</sup> sur « chalet à vendre serre chevalier ». En dehors de ces deux recherches, l'entreprise est absente : prix, rénovation, savoir-faire poteau-poutre, acheteurs britanniques, réponses des IA. Chalets Bayrou capte 4 fois plus de visites et se fait citer par l'IA de Google à sa place.</p>
+  <p class="meta">Sources : SE Ranking (base France et Royaume-Uni, octobre 2026), crawl de 60 pages du site, relevés Google du 7 octobre 2026. Le trafic indiqué est une estimation d'outil ; les vrais chiffres sont dans le Google Analytics 4 déjà installé sur le site.</p>
+  <div class="tiles">
+    <div class="tile"><b>≈ 126</b><span>visites Google / mois, contre ≈ 500 pour Chalets Bayrou</span></div>
+    <div class="tile"><b>−61 %</b><span>de trafic depuis mars 2026 (324 → 126)</span></div>
+    <div class="tile"><b>25 / 6</b><span>citations dans les réponses IA : Bayrou / Lombard</span></div>
+    <div class="tile"><b>≈ 5 600</b><span>recherches mensuelles sur le métier où Lombard n'est pas en 1<sup>re</sup> page</span></div>
+    <div class="tile"><b>77 / 100</b><span>score de santé technique du site</span></div>
+  </div>
+</header>
+
+<section>
+  <span class="kicker">Synthèse</span>
+  <h2>Ce qu'il faut retenir</h2>
+  <ul class="verdict">
+    <li><span class="chip good">Acquis</span><span>2<sup>e</sup> sur « constructeur chalet hautes alpes » (Bayrou est 24<sup>e</sup>), 5<sup>e</sup> sur « chalet à vendre serre chevalier » (Bayrou absent), et citée par l'IA de Google sur « vente chalet serre chevalier ».</span></li>
+    <li><span class="chip crit">Manque</span><span>Quand on demande à Google « construction chalet bois alpes du sud » ou « constructeur de chalet de montagne en bois », son IA recommande Chalets Bayrou, Alpes Bois Conception ou Alp'Ecrins Construction. Jamais Lombard Vasina.</span></li>
+    <li><span class="chip crit">Manque</span><span>Aucune page ne répond aux questions de budget (« combien coûte un chalet en bois », « construire un chalet prix »…), soit environ 490 recherches par mois sans réponse locale.</span></li>
+    <li><span class="chip crit">Manque</span><span>La version anglaise du site existe, mais ses titres et descriptions dans Google sont restés en français : elle ne peut pas sortir sur les ≈ 990 recherches mensuelles d'acheteurs britanniques (« chalet for sale france », « property for sale french alps »…).</span></li>
+    <li><span class="chip warn">Fragile</span><span>Le trafic Google estimé est passé de 324 visites par mois en mars à 126 aujourd'hui, et les mots-clés dans le top 5 de 61 à 45.</span></li>
+    <li><span class="chip warn">Technique</span><span>Une page « MODELE EXEMPLE » publiée et indexée, la page rénovation à l'adresse « /www-chalets-lombard-fr-renovation-chalet/ », 52 titres en double, 52 images sans texte alternatif.</span></li>
+  </ul>
+</section>
+
+<section>
+  <span class="kicker">Face à Chalets Bayrou</span>
+  <h2>Ce que Bayrou fait mieux, chiffres à l'appui</h2>
+  <div class="table-wrap"><table class="vs">
+    <thead><tr><th>Indicateur</th><th class="r l">Lombard Vasina</th><th class="r">Chalets Bayrou</th><th>Écart</th></tr></thead>
+    <tbody>
+      <tr><td>Visites Google / mois (estimation)</td><td class="r num l">126</td><td class="r num">500</td><td>× 4</td></tr>
+      <tr><td>Mots-clés positionnés</td><td class="r num l">140</td><td class="r num">683</td><td>× 5</td></tr>
+      <tr><td>Mots-clés dans le top 5</td><td class="r num l">45</td><td class="r num">124</td><td>× 2,8</td></tr>
+      <tr><td>Recherches sur le nom de l'entreprise / mois</td><td class="r num l">≈ 270</td><td class="r num">≈ 590</td><td>× 2,2</td></tr>
+      <tr><td>Sites qui font un lien vers le site</td><td class="r num l">42</td><td class="r num">144</td><td>× 3,4</td></tr>
+      <tr><td>Autorité du domaine (SE Ranking, sur 100)</td><td class="r num l">43</td><td class="r num">52</td><td>+ 9</td></tr>
+      <tr><td>Citations dans les réponses IA (Google, ChatGPT, Gemini…)</td><td class="r num l">6</td><td class="r num">25</td><td>× 4</td></tr>
+      <tr><td>« rénovation chalet » (140 recherches/mois avec la variante)</td><td class="r num l">absent</td><td class="r num">1<sup>er</sup></td><td>—</td></tr>
+      <tr><td>« maison en bois de luxe »</td><td class="r num l">absent</td><td class="r num">2<sup>e</sup></td><td>—</td></tr>
+      <tr><td>« constructeur chalet hautes alpes »</td><td class="r num l">2<sup>e</sup></td><td class="r num">24<sup>e</sup></td><td>avantage Lombard</td></tr>
+      <tr><td>« chalet à vendre serre chevalier »</td><td class="r num l">5<sup>e</sup></td><td class="r num">absent</td><td>avantage Lombard</td></tr>
+    </tbody>
+  </table></div>
+  <div class="figure">
+    <h3>Visites Google estimées par mois</h3>
+    <p class="meta">Base France, juillet 2024 (début des données pour le site Lombard actuel) – octobre 2026 · source SE Ranking</p>
+    <div class="legend"><span><i style="background:var(--series)"></i>Lombard Vasina</span><span><i style="background:var(--series-2)"></i>Chalets Bayrou</span></div>
+    <div class="chart" id="traffic"></div>
+  </div>
+  <p>Bayrou aussi a perdu du trafic en 2026 (−70 % depuis son pic de février), mais il part de beaucoup plus haut. Son avance vient de trois choses concrètes :</p>
+  <ul>
+    <li><b>Il parle à toute la clientèle haut de gamme</b>, pas seulement aux Hautes-Alpes : pages « maisons bois de luxe », « chalet traditionnel ou contemporain », Savoie, Suisse, Megève, résidences de tourisme.</li>
+    <li><b>Il a une page rénovation propre</b>, 1<sup>re</sup> sur « rénovation chalet ». Celle de Lombard est plus complète (2 300 mots), mais son adresse et son positionnement la rendent invisible.</li>
+    <li><b>Il a un article de fond</b>, « votre constructeur chalet en bois, chalet luxe montagne », mis à jour en avril 2026. C'est exactement la page que l'IA de Google cite sur « chalet bois montagne luxe ».</li>
+  </ul>
+</section>
+
+<section>
+  <span class="kicker">GEO · moteurs de réponse IA</span>
+  <h2>L'IA de Google recommande les concurrents</h2>
+  <p>Questions réelles posées à Google, relevées par SE Ranking : sur chacune, l'IA cite Chalets Bayrou et ne mentionne jamais Lombard Vasina.</p>
+  <div class="quote"><b>« construction chalet bois alpes du sud »</b> : la liste « Entreprises spécialisées » de l'IA cite Alpes Bois Conception (Briançon), Chalets Bayrou, Constructions Chauvin et Alp'Ecrins Construction.</div>
+  <div class="quote"><b>« constructeur de chalet de montagne en bois »</b> : l'IA cite Constructions Chauvin, STMB Construction, Chalets Bayrou, Grosset Janin, Chalet Pro et Cuny Construction.</div>
+  <div class="quote"><b>« constructeur chalet bois et pierre »</b> : « Groupe Dunoyer et Chalets Bayrou sont également connus pour leurs réalisations de chalets bois, souvent sur-mesure et intégrant des éléments en pierre. »</div>
+  <div class="quote"><b>« constructeur maison montagne »</b> et <b>« chalet bois montagne luxe »</b> : Chalets Bayrou est cité, Lombard Vasina non.</div>
+  <p>Au total, Bayrou est cité dans 19 réponses de l'IA de Google, Lombard dans 5, dont deux seulement concernent son métier (« vente chalet serre chevalier » et sa variante). Les IA citent les pages qui répondent directement à une question, avec des chiffres, des étapes et des exemples. Le site Lombard présente bien l'entreprise, mais ne répond à aucune question.</p>
+</section>
+
+<section>
+  <span class="kicker">Opportunités</span>
+  <h2>Plus de 6 000 recherches par mois sur le métier de Lombard</h2>
+  <p>Volumes mensuels moyens (SE Ranking). « Lombard » donne la position actuelle de chalets-lombard.fr dans Google quand elle est connue. Lombard n'est en première page que sur « chalet montagne bois » et sur la vente de chalets à Serre Chevalier : il reste environ 5 600 recherches par mois à conquérir.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Famille</th><th>Recherches</th><th class="r">Vol. / mois</th><th>Lombard</th><th>Contenu à créer</th></tr></thead>
+    <tbody>
+      <tr><td>Budget</td><td>construire un chalet prix (110), combien coûte un chalet en bois (110), prix chalet bois habitable (110), prix construction chalet bois (90), prix chalet montagne (70)</td><td class="r num">≈ 490</td><td>25<sup>e</sup> au mieux</td><td>Guide « Prix d'un chalet bois sur-mesure dans les Hautes-Alpes en 2027 »</td></tr>
+      <tr><td>Savoir-faire</td><td>chalet bois et pierre (210), chalet sur mesure (210), chalet de luxe (200), maison poteau poutre (140), chalet poteau poutre (90), chalet haut de gamme (70)</td><td class="r num">≈ 920</td><td>17<sup>e</sup>–23<sup>e</sup> sur poteau-poutre</td><td>Pages poteau-poutre, mélèze et pierre, chalet haut de gamme, avec réalisations</td></tr>
+      <tr><td>Construction</td><td>chalet montagne bois (480), constructeur maison bois (470), constructeur chalet bois (320), chalet madrier (320), constructeur chalet haute savoie (170)</td><td class="r num">≈ 1 760</td><td>6<sup>e</sup> sur « chalet montagne bois »</td><td>Renforcer la page constructeur, page Alpes du Nord</td></tr>
+      <tr><td>Rénovation</td><td>rénovation chalet (70 + 70), extension chalet bois (90), rénovation chalet bois (50), extension chalet (40), agrandissement chalet (30)</td><td class="r num">≈ 350</td><td>absent</td><td>Remettre la page rénovation à une bonne adresse, études de cas avant / après</td></tr>
+      <tr><td>Achat (VEFA)</td><td>chalet à vendre (590), achat chalet montagne (390), acheter un chalet (210), immobilier serre chevalier (210), vente chalet montagne (170), chalet à vendre serre chevalier (110 + 140)</td><td class="r num">≈ 1 820</td><td>5<sup>e</sup> sur Serre Chevalier</td><td>Guide « acheter un chalet neuf à Serre Chevalier », VEFA, fiscalité LMNP</td></tr>
+      <tr><td>Acheteurs britanniques</td><td>property for sale french alps (260), chalet for sale france (260), ski chalet for sale france (210), chalet for sale alps (140), ski property for sale france (70)</td><td class="r num">≈ 990</td><td>titres restés en français</td><td>Traduire titres et descriptions, page « New-build chalets in Serre Chevalier »</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><p><b>Les pages par ville ne visent presque personne.</b> Les pages « constructeur chalet » Briançon, Serre Chevalier, Vallouise, Puy-Saint-Vincent et Montgenèvre ciblent des recherches que presque personne ne tape : 20 par mois pour Briançon, trop peu pour être mesurées ailleurs. Les familles ci-dessus pèsent plus de 6 000 recherches par mois.</p></div>
+</section>
+
+<section>
+  <span class="kicker">Audit technique</span>
+  <h2>Ce qui freine le site</h2>
+  <p>Crawl de 60 pages (score de santé SE Ranking : 77/100), vérifié à la main.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Priorité</th><th>Constat</th><th>Impact</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip crit">Haute</span></td><td>Version anglaise : contenu traduit, mais titres et descriptions restés en français sur toutes les pages (52 titres en double), balises de langue en erreur.</td><td>Invisible pour les acheteurs étrangers, pages FR et EN en concurrence.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>Page « MODELE EXEMPLE » (/projets/) publiée, sans titre H1, présente dans le sitemap.</td><td>Page vide indexée, image peu professionnelle.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>Page rénovation à l'adresse « /www-chalets-lombard-fr-renovation-chalet/ ».</td><td>Adresse sans mot-clé ; Bayrou est 1<sup>er</sup> sur « rénovation chalet ».</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Pages par ville centrées sur des recherches quasi inexistantes.</td><td>Effort de contenu qui ne rapporte pas de visites.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>52 images sans texte alternatif, 2 images cassées, 10 images trop lourdes ; pages de 250 à 400 Ko de HTML (slider).</td><td>Pages lentes sur mobile, aucune visibilité dans Google Images.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>46 descriptions en double, 6 manquantes, 4 pages sans H1 (dont Contact).</td><td>Extraits peu attractifs dans Google.</td></tr>
+      <tr><td><span class="chip info">Faible</span></td><td>Aucun article ni guide ; le sitemap n'est pas déclaré dans le robots.txt.</td><td>Rien à citer pour les IA, découverte plus lente.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">Points positifs : HTTPS, Google Analytics 4 installé, données structurées Organization et LocalBusiness, anciennes adresses bien redirigées, pages villes de 1 100 à 2 000 mots.</p>
+</section>
+
+<section>
+  <span class="kicker">Stratégie</span>
+  <h2>Reprendre la place de référence dans les Hautes-Alpes, puis au-delà</h2>
+  <ol class="steps">
+    <li><span><b>Corriger en 2 semaines</b>Titres et descriptions anglais, balises de langue, page « MODELE EXEMPLE », adresse de la page rénovation, images, descriptions.</span></li>
+    <li><span><b>Répondre aux questions que posent les clients</b>Un guide prix, des pages poteau-poutre, mélèze et pierre, haut de gamme, rénovation et extension, achat en VEFA, avec les réalisations Lombard comme preuves.</span></li>
+    <li><span><b>Être recommandé par les IA</b>Réponses directes et chiffrées, FAQ, données structurées, et une présence cohérente partout (presse, annuaires professionnels, partenaires architectes).</span></li>
+    <li><span><b>Aller chercher les acheteurs étrangers</b>Version anglaise optimisée pour les chalets neufs de Serre Chevalier, là où la concurrence est quasi nulle (difficulté ≤ 11/100).</span></li>
+    <li><span><b>Mesurer chaque mois</b>Visites, demandes de contact, positions et citations IA dans un compte rendu mensuel.</span></li>
+  </ol>
+  <div class="callout"><p><b>Ordre de grandeur :</b> un seul chantier de chalet sur-mesure ou une seule vente en VEFA représente plusieurs centaines de milliers d'euros. À Serre Chevalier, les chalets se vendent de 583 000 € à plus de 6 M€, selon la fourchette reprise par Google à partir de Belles Demeures. Un client de plus par an finance largement plusieurs années de référencement.</p></div>
+</section>
+
+<section>
+  <span class="kicker">Proposition</span>
+  <h2>L'offre</h2>
+  <div class="cols">
+    <div class="card">
+      <span class="kicker">Mise en place</span>
+      <h3>Remise à niveau</h3>
+      <div class="price">2 400 € <small>HT, une fois</small></div>
+      <ul>
+        <li>Toutes les corrections techniques ci-dessus</li>
+        <li>Version anglaise optimisée (titres, descriptions, langue)</li>
+        <li>Guide prix et page poteau-poutre, mélèze et pierre</li>
+        <li>Suivi des demandes de contact dans Google Analytics</li>
+      </ul>
+    </div>
+    <div class="card feature">
+      <span class="kicker">Chaque mois</span>
+      <h3>Abonnement</h3>
+      <div class="price">690 € <small>HT / mois</small></div>
+      <ul>
+        <li>4 contenus par mois en français et en anglais</li>
+        <li>Pages réalisations optimisées et études de cas</li>
+        <li>Liens depuis la presse, les partenaires et les annuaires du bâtiment</li>
+        <li>Suivi des citations dans les IA</li>
+        <li>Compte rendu mensuel des visites et des demandes</li>
+      </ul>
+    </div>
+  </div>
+  <ul class="verdict">
+    <li><span class="chip good">Rentable</span><span>Un seul projet signé grâce au site rembourse plusieurs années d'abonnement.</span></li>
+    <li><span class="chip info">Engagement</span><span>12 mois, puis mois par mois.</span></li>
+  </ul>
+</section>
+
+<footer>
+  <p>Méthode et limites : volumes de recherche, trafic, liens et citations IA sont des estimations SE Ranking (bases France et Royaume-Uni, octobre 2026). Positions relevées dans Google le 7 octobre 2026, sur ordinateur, en France. Le trafic réel et les demandes de contact se lisent dans le Google Analytics 4 du site. Aucune donnée privée de l'entreprise n'a été utilisée.</p>
+</footer>
+</div>
+
+<script>
+(function () {
+  const months = ["2024-07","2024-08","2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09","2026-10"];
+  const lombard = [0,0,1,21,63,87,133,154,141,169,17,159,153,166,200,161,192,230,247,324,324,260,267,170,209,113,149,126];
+  const bayrou = [1046,991,934,935,996,739,1634,1518,1498,1493,939,1524,1533,1595,1562,1478,1658,1678,1534,1680,1169,911,1331,1041,1017,938,726,500];
+  const MOIS = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+  const fmtM = (m) => { const [y, mo] = m.split('-'); return MOIS[+mo - 1] + ' ' + y; };
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (n, a = {}) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); return e; };
+  const host = document.getElementById('traffic');
+  const W = 900, H = 300, m = { t: 20, r: 110, b: 30, l: 50 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b, yMax = 1800;
+  const x = (i) => m.l + (i / (months.length - 1)) * iw;
+  const y = (v) => m.t + ih - (v / yMax) * ih;
+  const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Visites Google estimées par mois : Chalets Bayrou de 1 046 à 500, Lombard Vasina de 0 à 126, de juillet 2024 à octobre 2026' });
+  const g = el('g', { class: 'grid' });
+  [0, 600, 1200, 1800].forEach((v) => {
+    g.appendChild(el('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v) }));
+    const t = el('text', { x: m.l - 8, y: y(v) + 4, 'text-anchor': 'end' }); t.textContent = v.toLocaleString('fr-FR'); svg.appendChild(t);
+  });
+  svg.appendChild(g);
+  months.forEach((mo, i) => { if (mo.endsWith('-01') || i === 0) { const t = el('text', { x: x(i), y: H - 8, 'text-anchor': 'middle' }); t.textContent = mo.endsWith('-01') ? mo.slice(0, 4) : ''; svg.appendChild(t); } });
+  const path = (arr) => arr.map((v, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ');
+  svg.appendChild(el('path', { d: path(bayrou), class: 'series-2' }));
+  svg.appendChild(el('path', { d: path(lombard), class: 'series-line' }));
+  const last = months.length - 1;
+  [[bayrou, 'dot2', 'Bayrou 500'], [lombard, 'dot', 'Lombard 126']].forEach(([arr, cls, label]) => {
+    svg.appendChild(el('circle', { cx: x(last), cy: y(arr[last]), r: 4, class: cls }));
+    const t = el('text', { x: x(last) + 8, y: y(arr[last]) + 4, class: 'anno' }); t.textContent = label; svg.appendChild(t);
+  });
+  const cross = el('line', { class: 'cross', y1: m.t, y2: m.t + ih, visibility: 'hidden' });
+  const h1 = el('circle', { r: 4, class: 'dot', visibility: 'hidden' });
+  const h2 = el('circle', { r: 4, class: 'dot2', visibility: 'hidden' });
+  svg.append(cross, h1, h2);
+  const hit = el('rect', { x: m.l, y: m.t, width: iw, height: ih, fill: 'transparent', tabindex: 0 });
+  svg.appendChild(hit);
+  host.appendChild(svg);
+  const tip = document.createElement('div'); tip.className = 'tip'; tip.hidden = true;
+  host.parentElement.appendChild(tip);
+  let cur = last;
+  const show = (i) => {
+    cur = Math.max(0, Math.min(last, i));
+    [[h1, lombard], [h2, bayrou]].forEach(([c, arr]) => { c.setAttribute('cx', x(cur)); c.setAttribute('cy', y(arr[cur])); c.setAttribute('visibility', 'visible'); });
+    cross.setAttribute('x1', x(cur)); cross.setAttribute('x2', x(cur)); cross.setAttribute('visibility', 'visible');
+    tip.replaceChildren();
+    const head = document.createElement('span'); head.textContent = fmtM(months[cur]); head.style.cssText = 'display:block;color:var(--ink-3);font-size:.8rem';
+    const r1 = document.createElement('b'); r1.textContent = lombard[cur] + ' Lombard';
+    const r2 = document.createElement('b'); r2.textContent = bayrou[cur] + ' Bayrou';
+    tip.append(head, r1, r2); tip.hidden = false;
+    const box = svg.getBoundingClientRect(), fb = host.parentElement.getBoundingClientRect();
+    const px = box.left - fb.left + (x(cur) / W) * box.width;
+    tip.style.left = Math.min(fb.width - tip.offsetWidth - 8, Math.max(8, px + 12)) + 'px';
+    tip.style.top = (box.top - fb.top + 10) + 'px';
+  };
+  const hide = () => { tip.hidden = true; [cross, h1, h2].forEach((e) => e.setAttribute('visibility', 'hidden')); };
+  hit.addEventListener('pointermove', (e) => { const r = svg.getBoundingClientRect(); const sx = ((e.clientX - r.left) / r.width) * W; show(Math.round(((sx - m.l) / iw) * last)); });
+  hit.addEventListener('pointerleave', hide);
+  hit.addEventListener('focus', () => show(cur));
+  hit.addEventListener('blur', hide);
+  hit.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
+})();
+</script>
