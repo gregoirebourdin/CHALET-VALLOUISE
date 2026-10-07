@@ -1,0 +1,376 @@
+<title>Audit Boulot SARL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout : dossier d'audit, une colonne de lecture (≈ 980 px), tableaux et graphiques pleine largeur de colonne */
+:root {
+  --bg: #f4f6f7; --surface: #ffffff; --ink: #13202a; --ink-2: #4a5965; --ink-3: #6f7d88; --line: #dbe2e7;
+  --accent: #1d5f86; --accent-soft: #e2edf4; --series: #2a78d6; --neutral-bar: #b7c1c9;
+  --crit: #b8372d; --crit-soft: #f8e4e1; --warn: #9a6512; --warn-soft: #f7ecd8; --good: #2c7a4b; --good-soft: #e0f0e6;
+  --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e161c; --surface: #152029; --ink: #e7edf1; --ink-2: #a7b6c1; --ink-3: #8394a1; --line: #263540;
+  --accent: #79b6dc; --accent-soft: #1a2d3a; --series: #3987e5; --neutral-bar: #4b5a65;
+  --crit: #ec7d72; --crit-soft: #3a1f1d; --warn: #dcab55; --warn-soft: #362a14; --good: #6cc08c; --good-soft: #17301f; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0e161c; --surface: #152029; --ink: #e7edf1; --ink-2: #a7b6c1; --ink-3: #8394a1; --line: #263540;
+  --accent: #79b6dc; --accent-soft: #1a2d3a; --series: #3987e5; --neutral-bar: #4b5a65;
+  --crit: #ec7d72; --crit-soft: #3a1f1d; --warn: #dcab55; --warn-soft: #362a14; --good: #6cc08c; --good-soft: #17301f; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--body); margin: 0; padding: 0 16px; }
+.doc { max-width: 980px; margin: 0 auto; padding-block: 48px 96px; }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -0.01em; line-height: 1.15; text-wrap: balance; margin: 0 0 .5em; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; }
+h2 { font-size: clamp(1.45rem, 3vw, 1.9rem); font-weight: 600; }
+h3 { font-size: 1.12rem; font-weight: 600; }
+p { margin: 0 0 1em; max-width: 68ch; }
+a { color: var(--accent); }
+.kicker { font: 600 .74rem/1.2 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; display: block; }
+.meta { color: var(--ink-3); font-size: .92rem; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+section { padding-block: 44px; border-top: 1px solid var(--line); }
+header.top { padding-bottom: 36px; }
+.lede { font-size: 1.18rem; color: var(--ink-2); max-width: 64ch; }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 28px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; min-width: 0; }
+.tile b { display: block; font: 500 1.7rem/1.1 var(--mono); font-variant-numeric: tabular-nums; margin-bottom: 4px; }
+.tile span { font-size: .88rem; color: var(--ink-2); }
+
+.verdict { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+.verdict li { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font: 600 .72rem/1 var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; white-space: nowrap; }
+.chip.crit { background: var(--crit-soft); color: var(--crit); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.chip.good { background: var(--good-soft); color: var(--good); }
+.chip.info { background: var(--accent-soft); color: var(--accent); }
+
+.figure { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 20px 14px; margin: 22px 0; position: relative; min-width: 0; }
+.figure h3 { margin-bottom: 2px; }
+.figure .meta { margin: 0 0 12px; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart text { fill: var(--ink-3); font: 12px var(--body); }
+.chart .grid line { stroke: var(--line); stroke-width: 1; }
+.chart .series-line { fill: none; stroke: var(--series); stroke-width: 2; stroke-linejoin: round; }
+.chart .series-area { fill: var(--series); opacity: .1; }
+.chart .cross { stroke: var(--ink-3); stroke-width: 1; }
+.chart .dot { fill: var(--series); stroke: var(--surface); stroke-width: 2; }
+.chart .anno { fill: var(--ink-2); font-weight: 600; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 6px 20px rgba(0,0,0,.12); border-radius: 8px; padding: 8px 10px; font-size: .85rem; white-space: nowrap; }
+.tip b { font: 500 1rem var(--mono); display: block; }
+
+.bars { display: grid; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: minmax(120px, 230px) 1fr; gap: 14px; align-items: center; }
+.bar-row .label { font-size: .95rem; min-width: 0; overflow-wrap: anywhere; }
+.bar-row .label small { display: block; color: var(--ink-3); font-size: .8rem; }
+.bar-track { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.bar { height: 14px; border-radius: 0 4px 4px 0; background: var(--neutral-bar); min-width: 3px; }
+.bar.hl { background: var(--series); }
+.bar-val { font: 500 .9rem var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+@media (max-width: 560px) { .bar-row { grid-template-columns: 1fr; gap: 4px; } }
+
+.table-wrap { overflow-x: auto; margin: 18px 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .94rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 .74rem/1.2 var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); background: var(--bg); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.r, th.r { text-align: right; }
+.vol { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.vol i { display: inline-block; height: 8px; border-radius: 0 3px 3px 0; background: var(--series); opacity: .75; }
+.pos { font: 500 .85rem var(--mono); padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+.pos.top { background: var(--good-soft); color: var(--good); }
+.pos.mid { background: var(--warn-soft); color: var(--warn); }
+.pos.none { background: var(--crit-soft); color: var(--crit); }
+
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 18px 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; min-width: 0; }
+.card h3 { margin-bottom: 6px; }
+.card p, .card li { font-size: .95rem; color: var(--ink-2); }
+.card ul { margin: 0; padding-left: 1.1em; }
+.card.feature { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.price { font: 500 1.6rem/1.1 var(--mono); color: var(--ink); margin: 6px 0 10px; }
+.price small { font: 400 .9rem var(--body); color: var(--ink-3); }
+
+.callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 20px; margin: 18px 0; }
+.callout p:last-child { margin: 0; }
+.steps { counter-reset: s; list-style: none; padding: 0; margin: 18px 0; display: grid; gap: 14px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 12px; }
+.steps li::before { content: counter(s); font: 600 .9rem/34px var(--mono); text-align: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); }
+.steps b { display: block; }
+.months { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.month { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; }
+.month b { font-family: var(--display); font-size: .95rem; }
+.month p { font-size: .92rem; color: var(--ink-2); margin: 4px 0 0; }
+footer { color: var(--ink-3); font-size: .86rem; padding-top: 28px; border-top: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<style>
+.vs { width: 100%; }
+.vs td.l, .vs th.l { background: var(--accent-soft); }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: .88rem; color: var(--ink-2); margin: 0 0 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 18px; height: 3px; border-radius: 2px; display: inline-block; }
+.chart .series-2 { fill: none; stroke: var(--series-2); stroke-width: 2; stroke-linejoin: round; }
+.chart .dot2 { fill: var(--series-2); stroke: var(--surface); stroke-width: 2; }
+.quote { border-left: 3px solid var(--accent); padding: 10px 16px; margin: 12px 0; background: var(--surface); border-radius: 0 10px 10px 0; font-size: .95rem; color: var(--ink-2); }
+.quote b { color: var(--ink); }
+:root { --series-2: #eb6834; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --series-2: #d95926; } }
+:root[data-theme="dark"] { --series-2: #d95926; }
+</style>
+<style>
+.chart .series-3 { fill: none; stroke: var(--series-3); stroke-width: 2; stroke-linejoin: round; }
+.chart .dot3 { fill: var(--series-3); stroke: var(--surface); stroke-width: 2; }
+.chart .series-line { stroke-width: 2.5; }
+td.na { color: var(--ink-3); }
+:root { --series-3: #8a63c9; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --series-3: #a585e0; } }
+:root[data-theme="dark"] { --series-3: #a585e0; }
+</style>
+<div class="doc">
+<header class="top">
+  <span class="kicker">Audit SEO &amp; GEO · 7 octobre 2026</span>
+  <h1>Boulot SARL : 60 ans de charpente, mais 16 visites Google par mois</h1>
+  <p class="lede">Depuis 1962, Boulot fait ce que ni Lombard Vasina ni Chalets Bayrou ne font : charpente, couverture, menuiserie, rénovation énergétique et kits taillés sur sa propre machine Hundegger. Sur Google, l'entreprise reçoit pourtant 8 fois moins de visites que Lombard et 31 fois moins que Bayrou. Elle est 86<sup>e</sup> sur « charpentier hautes alpes », 38<sup>e</sup> sur « chalet en kit », et aucune IA ne la cite par son nom.</p>
+  <p class="meta">Sources : SE Ranking (base France, octobre 2026), lecture des 17 pages du site et crawl de 55 adresses, relevés Google du 7 octobre 2026. Le trafic indiqué est une estimation d'outil : le site n'a plus de statistiques de visites depuis l'arrêt de l'ancien Google Analytics, en juillet 2023.</p>
+  <div class="tiles">
+    <div class="tile"><b>≈ 16</b><span>visites Google / mois, contre ≈ 126 pour Lombard et ≈ 500 pour Bayrou</span></div>
+    <div class="tile"><b>−72 %</b><span>de trafic depuis octobre 2024 (58 → 16)</span></div>
+    <div class="tile"><b>2 / 5 / 19</b><span>citations dans l'IA de Google : Boulot / Lombard / Bayrou</span></div>
+    <div class="tile"><b>≈ 6 600</b><span>recherches mensuelles sur les métiers de Boulot, sans lui en 1<sup>re</sup> page</span></div>
+    <div class="tile"><b>76 / 100</b><span>score de santé technique du site</span></div>
+  </div>
+</header>
+
+<section>
+  <span class="kicker">Synthèse</span>
+  <h2>Ce qu'il faut retenir</h2>
+  <ul class="verdict">
+    <li><span class="chip good">Acquis</span><span>1<sup>er</sup> sur son nom. Présent dans la liste Google Maps sur « constructeur chalet hautes alpes » (6<sup>e</sup>, Lombard 4<sup>e</sup>, Bayrou absent). 11<sup>e</sup> sur « chalet poteau poutre », devant Lombard (23<sup>e</sup>). Et des atouts qu'aucun des deux autres n'a : Compagnons depuis trois générations, RGE, Bois des Alpes, centre de taille Hundegger.</span></li>
+    <li><span class="chip crit">Manque</span><span>Sur « charpentier hautes alpes », Boulot est 86<sup>e</sup> et absent de la carte Google, où figurent 9 autres charpentiers. MT Charpente, installée à L'Argentière-la-Bessée comme Boulot, est 25<sup>e</sup> avec une page par commune.</span></li>
+    <li><span class="chip crit">Manque</span><span>Sur « chalet en kit » (410 recherches/mois), la 1<sup>re</sup> page n'affiche que des vendeurs nationaux de kits. Boulot, qui taille ses kits dans les Hautes-Alpes et les livre dans toute la France, est 38<sup>e</sup> avec une page de 103 mots.</span></li>
+    <li><span class="chip crit">Manque</span><span>L'IA de Google cite Boulot 2 fois, sur des questions hors sujet (« maison poteau », « plan de maquette de maison en bois »), sans jamais le nommer. Bayrou est cité 19 fois, Lombard 5.</span></li>
+    <li><span class="chip warn">Fragile</span><span>Le trafic estimé est passé de 58 visites par mois à l'automne 2024 à 16 aujourd'hui, et les mots-clés dans le top 5 de 50 (juillet 2025) à 23.</span></li>
+    <li><span class="chip warn">Technique</span><span>Aucun titre H1 sur aucune page, pages métier de 42 à 129 mots, 3 pages vides dans le sitemap, pas de balise mobile, et plus aucune statistique de visites depuis 2023.</span></li>
+  </ul>
+</section>
+
+<section>
+  <span class="kicker">Face à Lombard Vasina et Chalets Bayrou</span>
+  <h2>Le plus ancien des trois est le moins visible</h2>
+  <div class="table-wrap"><table class="vs">
+    <thead><tr><th>Indicateur</th><th class="r l">Boulot</th><th class="r">Lombard Vasina</th><th class="r">Chalets Bayrou</th></tr></thead>
+    <tbody>
+      <tr><td>Visites Google / mois (estimation)</td><td class="r num l">16</td><td class="r num">126</td><td class="r num">500</td></tr>
+      <tr><td>Mots-clés positionnés</td><td class="r num l">192</td><td class="r num">140</td><td class="r num">683</td></tr>
+      <tr><td>Mots-clés dans le top 5</td><td class="r num l">23</td><td class="r num">45</td><td class="r num">124</td></tr>
+      <tr><td>Sites qui font un lien vers le site</td><td class="r num l">241</td><td class="r num">42</td><td class="r num">144</td></tr>
+      <tr><td>Autorité du domaine (SE Ranking, sur 100)</td><td class="r num l">13</td><td class="r num">43</td><td class="r num">52</td></tr>
+      <tr><td>Citations dans l'IA de Google</td><td class="r num l">2</td><td class="r num">5</td><td class="r num">19</td></tr>
+      <tr><td>Balise d'affichage mobile</td><td class="r l">non</td><td class="r">oui</td><td class="r">oui</td></tr>
+      <tr><td>Statistiques de visites</td><td class="r l">arrêtées en 2023</td><td class="r">Google Analytics 4</td><td class="r">Google Analytics 4</td></tr>
+      <tr><td>« constructeur chalet hautes alpes »</td><td class="r num l">17<sup>e</sup></td><td class="r num">2<sup>e</sup></td><td class="r num">24<sup>e</sup></td></tr>
+      <tr><td>Liste Google Maps sur cette recherche</td><td class="r num l">6<sup>e</sup></td><td class="r num">4<sup>e</sup></td><td class="r">absent</td></tr>
+      <tr><td>« chalet poteau poutre »</td><td class="r num l">11<sup>e</sup></td><td class="r num">23<sup>e</sup></td><td class="r na">—</td></tr>
+      <tr><td>« charpentier hautes alpes »</td><td class="r num l">86<sup>e</sup></td><td class="r">absent</td><td class="r">absent</td></tr>
+      <tr><td>« chalet en kit »</td><td class="r num l">38<sup>e</sup></td><td class="r">absent</td><td class="r">absent</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">« absent » : hors des 100 premiers résultats Google le 7 octobre 2026. « — » : non relevé.</p>
+  <div class="figure">
+    <h3>Visites Google estimées par mois</h3>
+    <p class="meta">Base France, juillet 2024 – octobre 2026 · source SE Ranking</p>
+    <div class="legend"><span><i style="background:var(--series)"></i>Boulot</span><span><i style="background:var(--series-2)"></i>Lombard Vasina</span><span><i style="background:var(--series-3)"></i>Chalets Bayrou</span></div>
+    <div class="chart" id="traffic"></div>
+  </div>
+  <p>Boulot a 241 sites qui pointent vers lui, plus que Lombard et Bayrou, mais une autorité de 13 sur 100 : ce sont surtout des annuaires sans valeur. L'écart vient de ce que les deux autres ont construit sur leur site :</p>
+  <ul>
+    <li><b>Lombard répète un seul message</b>, « constructeur chalet bois 05 », dans ses titres, ses textes et sa fiche Google : il est 2<sup>e</sup>. Chez Boulot, quatre pages se disputent la même recherche (17<sup>e</sup>, 36<sup>e</sup>, 79<sup>e</sup> et 85<sup>e</sup>) et aucune ne gagne.</li>
+    <li><b>Bayrou publie des pages longues par type de projet</b> (luxe, rénovation, traditionnel ou contemporain) et un article de fond mis à jour en 2026 : 683 mots-clés et 19 citations dans l'IA de Google.</li>
+    <li><b>Les pages métier de Boulot sont presque vides</b> : menuiserie 42 mots, couverture 70, charpente 88, rénovation 89, kit 103, poteau-poutre 129. Les pages par ville de Lombard en font de 1 100 à 2 000.</li>
+  </ul>
+  <div class="callout"><p><b>Le terrain que les deux autres ne prennent pas.</b> Lombard et Bayrou ne vendent que des chalets. Sur la charpente, la couverture, la menuiserie et le kit, ils n'apparaissent pas. Ces places sont prises par d'autres : Bonnefont (Chorges) 2<sup>e</sup>, Kempf (Chorges) 4<sup>e</sup> et Dautremer (Gap) 6<sup>e</sup> sur « charpentier hautes alpes ». C'est là que Boulot peut gagner le plus vite.</p></div>
+</section>
+
+<section>
+  <span class="kicker">GEO · moteurs de réponse IA</span>
+  <h2>Les IA connaissent le site, mais n'ont rien à citer</h2>
+  <p>Questions réelles posées à Google, relevées par SE Ranking :</p>
+  <div class="quote"><b>« maison poteau »</b> : la page poteau-poutre de Boulot fait partie des 23 sources, mais la réponse parle surtout de maisons sur pilotis et ne nomme aucune entreprise.</div>
+  <div class="quote"><b>« plan de maquette de maison en bois »</b> : la même page, 1 source sur 44, pour une question sans rapport avec ses clients.</div>
+  <div class="quote"><b>« construction chalet bois alpes du sud »</b> : l'IA cite Alpes Bois Conception (Briançon), Chalets Bayrou, Constructions Chauvin et Alp'Ecrins Construction. Ni Boulot, ni Lombard.</div>
+  <div class="quote"><b>« constructeur de chalet de montagne en bois »</b> : l'IA cite Constructions Chauvin, STMB Construction, Chalets Bayrou, Grosset Janin, Chalet Pro et Cuny Construction.</div>
+  <div class="figure">
+    <h3>Citations dans les réponses de l'IA de Google</h3>
+    <p class="meta">Base France, octobre 2026 · source SE Ranking</p>
+    <div class="bars">
+      <div class="bar-row"><span class="label">Chalets Bayrou</span><span class="bar-track"><span class="bar" style="width:76%"></span><span class="bar-val">19</span></span></div>
+      <div class="bar-row"><span class="label">Lombard Vasina</span><span class="bar-track"><span class="bar" style="width:20%"></span><span class="bar-val">5</span></span></div>
+      <div class="bar-row"><span class="label">Boulot<small>jamais nommé dans la réponse</small></span><span class="bar-track"><span class="bar hl" style="width:8%"></span><span class="bar-val">2</span></span></div>
+    </div>
+  </div>
+  <p>Les IA citent les pages qui répondent à une question avec des chiffres, des étapes et des exemples. Boulot a ces réponses : prix d'un kit, délais, certification Bois des Alpes, aides liées au label RGE, taille sur machine Hundegger. Elles ne sont écrites nulle part. Google affiche déjà les questions que se posent les clients : « Quel est le prix d'un chalet en kit ? », « Quels sont les inconvénients d'une maison en kit ? », « Quel est le prix moyen pour construire un chalet dans les Hautes-Alpes ? ».</p>
+</section>
+
+<section>
+  <span class="kicker">Opportunités</span>
+  <h2>Environ 6 600 recherches par mois sur les métiers de Boulot</h2>
+  <p>Volumes mensuels moyens (SE Ranking). La colonne « Boulot » donne sa position actuelle dans Google quand elle est connue. Boulot n'est en première page sur aucune de ces familles.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Famille</th><th>Recherches</th><th class="r">Vol. / mois</th><th>Boulot</th><th>Contenu à créer</th></tr></thead>
+    <tbody>
+      <tr><td>Kit</td><td>chalet en kit (410), kit ossature bois (390), charpente kit (260), maison bois en kit prix (210), chalet bois habitable kit (140), chalet en kit prix (40), charpente en kit prix (30)</td><td class="r num">≈ 1 480</td><td>38<sup>e</sup> sur « chalet en kit » ; Lombard et Bayrou absents</td><td>Catalogue de kits avec prix indicatifs, guide « chalet en kit habitable : prix, permis, étapes »</td></tr>
+      <tr><td>Charpente, couverture, menuiserie</td><td>couvreur gap (480), menuisier gap (210), charpentier gap (140), menuisier embrun (70), charpentier hautes alpes (30), charpentier 05 (30), menuisier hautes alpes (30)</td><td class="r num">≈ 990</td><td>86<sup>e</sup> sur « charpentier hautes alpes »</td><td>Une page complète par métier et par secteur, avec chantiers réels ; fiche Google complète</td></tr>
+      <tr><td>Prix et travaux</td><td>extension bois prix (210), prix charpente bois (140), charpente traditionnelle prix (140), extension maison bois (100), refaire charpente prix (70), prix couverture toiture m2 (40), isolation par l'extérieur bois (40)</td><td class="r num">≈ 740</td><td>absent</td><td>Guides prix chiffrés pour les Hautes-Alpes : charpente, toiture, extension, isolation RGE</td></tr>
+      <tr><td>Poteau-poutre et menuiserie</td><td>escalier bois sur mesure (590), balcon bois (590, très saisonnier), maison poteau poutre (140), chalet poteau poutre (90)</td><td class="r num">≈ 1 410</td><td>11<sup>e</sup> sur « chalet poteau poutre » (Lombard 23<sup>e</sup>)</td><td>Page poteau-poutre complète avec réalisations, pages escaliers et balcons</td></tr>
+      <tr><td>Construction de chalets</td><td>chalet montagne bois (480), constructeur maison bois (470), constructeur chalet bois (320), chalet bois et pierre (210), constructeur chalet hautes alpes (40), questions de prix d'un chalet (≈ 490)</td><td class="r num">≈ 2 010</td><td>17<sup>e</sup> (Lombard 2<sup>e</sup>, Bayrou 24<sup>e</sup>)</td><td>Une seule page « constructeur chalet » forte, 60 ans de réalisations, guide prix</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><p><b>Les recherches locales se font sur Gap.</b> « couvreur gap », « menuisier gap » et « charpentier gap » pèsent 830 recherches par mois ; Briançon et Embrun sont trop peu tapés pour être mesurés. La carte Google favorise les entreprises installées à Gap, mais les résultats classiques restent ouverts à une page de secteur bien construite. Sur « couvreur gap », les annonceurs paient 4,30 € le clic : c'est ce que coûte ce trafic quand on l'achète.</p></div>
+</section>
+
+<section>
+  <span class="kicker">Audit technique</span>
+  <h2>Ce qui freine le site</h2>
+  <p>Crawl de 55 adresses (score de santé SE Ranking : 76/100), vérifié à la main sur les 17 pages du site.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Priorité</th><th>Constat</th><th>Impact</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip crit">Haute</span></td><td>Aucune page n'a de titre H1 ni de sous-titre H2 : les titres visibles sont de simples paragraphes mis en forme.</td><td>Google ne sait pas quel est le sujet principal de chaque page.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>Pages métier de 42 à 129 mots (menuiserie, couverture, charpente, rénovation, kit, poteau-poutre).</td><td>Trop peu de texte pour être classé ; rien à citer pour les IA.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>Seul l'ancien Google Analytics est installé ; Google l'a arrêté en juillet 2023.</td><td>Aucun moyen de savoir combien de visites et de demandes vient du site.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>3 pages vides dans le sitemap : /toiture, /lentreprise et /construction-bois (1 à 2 mots).</td><td>Pages sans contenu proposées à Google.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Pas de balise viewport : sur téléphone, le site s'affiche comme une page d'ordinateur de 980 px réduite à l'écran. De grandes polices compensent, mais les outils de Google le signalent.</td><td>Critère de base de l'indexation mobile non respecté.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Le numéro de téléphone n'apparaît que sur l'accueil et la page contact, et n'est cliquable nulle part.</td><td>Sur mobile, le visiteur prêt à appeler doit chercher le numéro.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>47 titres en double, 28 descriptions manquantes et 22 en double sur les adresses explorées.</td><td>Extraits peu attractifs dans Google.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Bandeau cookies en anglais, dont le texte apparaît dans l'extrait Google de la revue de presse (« Close. Cookies management panel… »).</td><td>Image peu soignée dès les résultats de recherche.</td></tr>
+      <tr><td><span class="chip info">Faible</span></td><td>Aucune donnée structurée (entreprise, adresse, avis) ; 4 pages orphelines, 1 chaîne de redirections.</td><td>Moins d'informations comprises par Google et les IA.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">Points positifs : HTTPS, balises canoniques, titres de pages riches en mots-clés, photos de chantiers avec textes alternatifs, page « Qui sommes-nous » de 700 mots.</p>
+</section>
+
+<section>
+  <span class="kicker">Stratégie</span>
+  <h2>Devenir le charpentier de référence de la haute vallée, et vendre le kit dans toute la France</h2>
+  <ol class="steps">
+    <li><span><b>Corriger en 2 semaines</b>Titres H1 et sous-titres, balise mobile, pages vides, descriptions, bandeau cookies en français, Google Analytics 4 avec suivi des appels et des demandes, fiche Google complète (photos, services, avis).</span></li>
+    <li><span><b>Prendre les recherches de métier</b>Une page complète par métier (charpente, couverture, menuiserie, rénovation énergétique RGE) et par secteur (Briançon, Vallouise, Embrun, Serre Chevalier, Gap), avec de vrais chantiers.</span></li>
+    <li><span><b>Faire du kit un produit national</b>Catalogue avec prix indicatifs, guide « chalet en kit habitable », et un argument que les vendeurs de kits importés n'ont pas : taillé dans les Hautes-Alpes sur machine Hundegger, en bois certifié Bois des Alpes.</span></li>
+    <li><span><b>Être cité par les IA</b>Guides prix chiffrés (charpente, toiture, extension, chalet), FAQ, données structurées, et une présence cohérente partout (presse, Qualibat, Bois des Alpes, partenaires).</span></li>
+    <li><span><b>Mesurer chaque mois</b>Visites, appels, demandes de devis, positions et citations IA dans un compte rendu mensuel.</span></li>
+  </ol>
+  <div class="callout"><p><b>Ordre de grandeur :</b> une charpente, une toiture ou un kit se chiffrent en dizaines de milliers d'euros, un chalet complet en centaines de milliers. Le site n'a besoin d'apporter qu'un ou deux chantiers de plus par an pour être rentable.</p></div>
+</section>
+
+<section>
+  <span class="kicker">Proposition</span>
+  <h2>L'offre</h2>
+  <div class="cols">
+    <div class="card">
+      <span class="kicker">Mise en place</span>
+      <h3>Remise à niveau</h3>
+      <div class="price">2 400 € <small>HT, une fois</small></div>
+      <ul>
+        <li>Toutes les corrections techniques ci-dessus</li>
+        <li>Réécriture des 6 pages métier</li>
+        <li>Fiche Google complète</li>
+        <li>Google Analytics 4 avec suivi des appels et des demandes</li>
+      </ul>
+    </div>
+    <div class="card feature">
+      <span class="kicker">Chaque mois</span>
+      <h3>Abonnement</h3>
+      <div class="price">690 € <small>HT / mois</small></div>
+      <ul>
+        <li>4 contenus par mois : pages de secteur, guides prix, réalisations</li>
+        <li>Catalogue kits et page Hundegger</li>
+        <li>Liens depuis la presse locale, les labels et les partenaires</li>
+        <li>Suivi des citations dans les IA</li>
+        <li>Compte rendu mensuel des visites et des demandes</li>
+      </ul>
+    </div>
+  </div>
+  <ul class="verdict">
+    <li><span class="chip good">Rentable</span><span>Un ou deux chantiers de plus par an grâce au site couvrent l'abonnement ; le compte rendu mensuel permet de le vérifier.</span></li>
+    <li><span class="chip info">Engagement</span><span>12 mois, puis mois par mois.</span></li>
+    <li><span class="chip info">Accès</span><span>Corrections faites dans le site actuel, avec son prestataire ; si l'outil ne le permet pas, refonte sur devis séparé.</span></li>
+  </ul>
+</section>
+
+<footer>
+  <p>Méthode et limites : volumes de recherche, trafic, liens et citations IA sont des estimations SE Ranking (base France, octobre 2026). Positions relevées dans Google le 7 octobre 2026, sur ordinateur, en France. Le site n'ayant plus de statistiques depuis 2023, le trafic réel n'est pas connu. Aucune donnée privée de l'entreprise n'a été utilisée.</p>
+</footer>
+</div>
+
+<script>
+(function () {
+  const months = ["2024-07","2024-08","2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09","2026-10"];
+  const boulot = [52,57,58,58,57,40,45,46,44,28,28,29,31,21,22,21,22,22,23,27,27,31,28,24,28,18,19,16];
+  const lombard = [0,0,1,21,63,87,133,154,141,169,17,159,153,166,200,161,192,230,247,324,324,260,267,170,209,113,149,126];
+  const bayrou = [1046,991,934,935,996,739,1634,1518,1498,1493,939,1524,1533,1595,1562,1478,1658,1678,1534,1680,1169,911,1331,1041,1017,938,726,500];
+  const SERIES = [
+    { name: 'Boulot', data: boulot, line: 'series-line', dot: 'dot' },
+    { name: 'Lombard', data: lombard, line: 'series-2', dot: 'dot2' },
+    { name: 'Bayrou', data: bayrou, line: 'series-3', dot: 'dot3' },
+  ];
+  const MOIS = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+  const fmtM = (m) => { const [y, mo] = m.split('-'); return MOIS[+mo - 1] + ' ' + y; };
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (n, a = {}) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); return e; };
+  const host = document.getElementById('traffic');
+  const W = 900, H = 300, m = { t: 20, r: 110, b: 30, l: 50 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b, yMax = 1800;
+  const x = (i) => m.l + (i / (months.length - 1)) * iw;
+  const y = (v) => m.t + ih - (v / yMax) * ih;
+  const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Visites Google estimées par mois, juillet 2024 à octobre 2026 : Chalets Bayrou de 1 046 à 500, Lombard Vasina de 0 à 126, Boulot de 52 à 16' });
+  const g = el('g', { class: 'grid' });
+  [0, 600, 1200, 1800].forEach((v) => {
+    g.appendChild(el('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v) }));
+    const t = el('text', { x: m.l - 8, y: y(v) + 4, 'text-anchor': 'end' }); t.textContent = v.toLocaleString('fr-FR'); svg.appendChild(t);
+  });
+  svg.appendChild(g);
+  months.forEach((mo, i) => { if (mo.endsWith('-01')) { const t = el('text', { x: x(i), y: H - 8, 'text-anchor': 'middle' }); t.textContent = mo.slice(0, 4); svg.appendChild(t); } });
+  const path = (arr) => arr.map((v, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ');
+  [...SERIES].reverse().forEach((s) => svg.appendChild(el('path', { d: path(s.data), class: s.line })));
+  const last = months.length - 1;
+  SERIES.forEach((s) => {
+    svg.appendChild(el('circle', { cx: x(last), cy: y(s.data[last]), r: 4, class: s.dot }));
+    const ly = s.name === 'Boulot' ? y(s.data[last]) + 9 : y(s.data[last]) + 2;
+    const t = el('text', { x: x(last) + 8, y: ly, class: 'anno' }); t.textContent = s.name + ' ' + s.data[last]; svg.appendChild(t);
+  });
+  const cross = el('line', { class: 'cross', y1: m.t, y2: m.t + ih, visibility: 'hidden' });
+  const hov = SERIES.map((s) => el('circle', { r: 4, class: s.dot, visibility: 'hidden' }));
+  svg.append(cross, ...hov);
+  const hit = el('rect', { x: m.l, y: m.t, width: iw, height: ih, fill: 'transparent', tabindex: 0 });
+  svg.appendChild(hit);
+  host.appendChild(svg);
+  const tip = document.createElement('div'); tip.className = 'tip'; tip.hidden = true;
+  host.parentElement.appendChild(tip);
+  let cur = last;
+  const show = (i) => {
+    cur = Math.max(0, Math.min(last, i));
+    SERIES.forEach((s, k) => { hov[k].setAttribute('cx', x(cur)); hov[k].setAttribute('cy', y(s.data[cur])); hov[k].setAttribute('visibility', 'visible'); });
+    cross.setAttribute('x1', x(cur)); cross.setAttribute('x2', x(cur)); cross.setAttribute('visibility', 'visible');
+    tip.replaceChildren();
+    const head = document.createElement('span'); head.textContent = fmtM(months[cur]); head.style.cssText = 'display:block;color:var(--ink-3);font-size:.8rem';
+    tip.append(head);
+    SERIES.forEach((s) => { const r = document.createElement('b'); r.textContent = s.data[cur] + ' ' + s.name; tip.append(r); });
+    tip.hidden = false;
+    const box = svg.getBoundingClientRect(), fb = host.parentElement.getBoundingClientRect();
+    const px = box.left - fb.left + (x(cur) / W) * box.width;
+    tip.style.left = Math.min(fb.width - tip.offsetWidth - 8, Math.max(8, px + 12)) + 'px';
+    tip.style.top = (box.top - fb.top + 10) + 'px';
+  };
+  const hide = () => { tip.hidden = true; [cross, ...hov].forEach((e) => e.setAttribute('visibility', 'hidden')); };
+  hit.addEventListener('pointermove', (e) => { const r = svg.getBoundingClientRect(); const sx = ((e.clientX - r.left) / r.width) * W; show(Math.round(((sx - m.l) / iw) * last)); });
+  hit.addEventListener('pointerleave', hide);
+  hit.addEventListener('focus', () => show(cur));
+  hit.addEventListener('blur', hide);
+  hit.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
+})();
+</script>
