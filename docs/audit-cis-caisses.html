@@ -1,0 +1,357 @@
+<title>Audit CIS Caisses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout : dossier d'audit, une colonne de lecture (≈ 980 px), tableaux et graphiques pleine largeur de colonne */
+:root {
+  --bg: #f4f6f7; --surface: #ffffff; --ink: #13202a; --ink-2: #4a5965; --ink-3: #6f7d88; --line: #dbe2e7;
+  --accent: #1d5f86; --accent-soft: #e2edf4; --series: #2a78d6; --neutral-bar: #b7c1c9;
+  --crit: #b8372d; --crit-soft: #f8e4e1; --warn: #9a6512; --warn-soft: #f7ecd8; --good: #2c7a4b; --good-soft: #e0f0e6;
+  --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e161c; --surface: #152029; --ink: #e7edf1; --ink-2: #a7b6c1; --ink-3: #8394a1; --line: #263540;
+  --accent: #79b6dc; --accent-soft: #1a2d3a; --series: #3987e5; --neutral-bar: #4b5a65;
+  --crit: #ec7d72; --crit-soft: #3a1f1d; --warn: #dcab55; --warn-soft: #362a14; --good: #6cc08c; --good-soft: #17301f; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0e161c; --surface: #152029; --ink: #e7edf1; --ink-2: #a7b6c1; --ink-3: #8394a1; --line: #263540;
+  --accent: #79b6dc; --accent-soft: #1a2d3a; --series: #3987e5; --neutral-bar: #4b5a65;
+  --crit: #ec7d72; --crit-soft: #3a1f1d; --warn: #dcab55; --warn-soft: #362a14; --good: #6cc08c; --good-soft: #17301f; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--body); margin: 0; padding: 0 16px; }
+.doc { max-width: 980px; margin: 0 auto; padding-block: 48px 96px; }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -0.01em; line-height: 1.15; text-wrap: balance; margin: 0 0 .5em; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; }
+h2 { font-size: clamp(1.45rem, 3vw, 1.9rem); font-weight: 600; }
+h3 { font-size: 1.12rem; font-weight: 600; }
+p { margin: 0 0 1em; max-width: 68ch; }
+a { color: var(--accent); }
+.kicker { font: 600 .74rem/1.2 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; display: block; }
+.meta { color: var(--ink-3); font-size: .92rem; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+section { padding-block: 44px; border-top: 1px solid var(--line); }
+header.top { padding-bottom: 36px; }
+.lede { font-size: 1.18rem; color: var(--ink-2); max-width: 64ch; }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 28px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; min-width: 0; }
+.tile b { display: block; font: 500 1.7rem/1.1 var(--mono); font-variant-numeric: tabular-nums; margin-bottom: 4px; }
+.tile span { font-size: .88rem; color: var(--ink-2); }
+
+.verdict { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+.verdict li { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font: 600 .72rem/1 var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; white-space: nowrap; }
+.chip.crit { background: var(--crit-soft); color: var(--crit); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.chip.good { background: var(--good-soft); color: var(--good); }
+.chip.info { background: var(--accent-soft); color: var(--accent); }
+
+.figure { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 20px 14px; margin: 22px 0; position: relative; min-width: 0; }
+.figure h3 { margin-bottom: 2px; }
+.figure .meta { margin: 0 0 12px; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart text { fill: var(--ink-3); font: 12px var(--body); }
+.chart .grid line { stroke: var(--line); stroke-width: 1; }
+.chart .series-line { fill: none; stroke: var(--series); stroke-width: 2; stroke-linejoin: round; }
+.chart .series-area { fill: var(--series); opacity: .1; }
+.chart .cross { stroke: var(--ink-3); stroke-width: 1; }
+.chart .dot { fill: var(--series); stroke: var(--surface); stroke-width: 2; }
+.chart .anno { fill: var(--ink-2); font-weight: 600; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 6px 20px rgba(0,0,0,.12); border-radius: 8px; padding: 8px 10px; font-size: .85rem; white-space: nowrap; }
+.tip b { font: 500 1rem var(--mono); display: block; }
+
+.bars { display: grid; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: minmax(120px, 230px) 1fr; gap: 14px; align-items: center; }
+.bar-row .label { font-size: .95rem; min-width: 0; overflow-wrap: anywhere; }
+.bar-row .label small { display: block; color: var(--ink-3); font-size: .8rem; }
+.bar-track { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.bar { height: 14px; border-radius: 0 4px 4px 0; background: var(--neutral-bar); min-width: 3px; }
+.bar.hl { background: var(--series); }
+.bar-val { font: 500 .9rem var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+@media (max-width: 560px) { .bar-row { grid-template-columns: 1fr; gap: 4px; } }
+
+.table-wrap { overflow-x: auto; margin: 18px 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .94rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 .74rem/1.2 var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); background: var(--bg); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.r, th.r { text-align: right; }
+.vol { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.vol i { display: inline-block; height: 8px; border-radius: 0 3px 3px 0; background: var(--series); opacity: .75; }
+.pos { font: 500 .85rem var(--mono); padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+.pos.top { background: var(--good-soft); color: var(--good); }
+.pos.mid { background: var(--warn-soft); color: var(--warn); }
+.pos.none { background: var(--crit-soft); color: var(--crit); }
+
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 18px 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; min-width: 0; }
+.card h3 { margin-bottom: 6px; }
+.card p, .card li { font-size: .95rem; color: var(--ink-2); }
+.card ul { margin: 0; padding-left: 1.1em; }
+.card.feature { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.price { font: 500 1.6rem/1.1 var(--mono); color: var(--ink); margin: 6px 0 10px; }
+.price small { font: 400 .9rem var(--body); color: var(--ink-3); }
+
+.callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 20px; margin: 18px 0; }
+.callout p:last-child { margin: 0; }
+.steps { counter-reset: s; list-style: none; padding: 0; margin: 18px 0; display: grid; gap: 14px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 12px; }
+.steps li::before { content: counter(s); font: 600 .9rem/34px var(--mono); text-align: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); }
+.steps b { display: block; }
+.months { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.month { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; }
+.month b { font-family: var(--display); font-size: .95rem; }
+.month p { font-size: .92rem; color: var(--ink-2); margin: 4px 0 0; }
+footer { color: var(--ink-3); font-size: .86rem; padding-top: 28px; border-top: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<style>
+.vs { width: 100%; }
+.vs td.l, .vs th.l { background: var(--accent-soft); }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: .88rem; color: var(--ink-2); margin: 0 0 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 18px; height: 3px; border-radius: 2px; display: inline-block; }
+.chart .series-2 { fill: none; stroke: var(--series-2); stroke-width: 2; stroke-linejoin: round; }
+.chart .dot2 { fill: var(--series-2); stroke: var(--surface); stroke-width: 2; }
+.quote { border-left: 3px solid var(--accent); padding: 10px 16px; margin: 12px 0; background: var(--surface); border-radius: 0 10px 10px 0; font-size: .95rem; color: var(--ink-2); }
+.quote b { color: var(--ink); }
+:root { --series-2: #eb6834; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --series-2: #d95926; } }
+:root[data-theme="dark"] { --series-2: #d95926; }
+</style>
+<style>
+.chart .series-3 { fill: none; stroke: var(--series-3); stroke-width: 2; stroke-linejoin: round; }
+.chart .dot3 { fill: var(--series-3); stroke: var(--surface); stroke-width: 2; }
+.chart .series-line { stroke-width: 2.5; }
+td.na { color: var(--ink-3); }
+:root { --series-3: #8a63c9; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --series-3: #a585e0; } }
+:root[data-theme="dark"] { --series-3: #a585e0; }
+</style>
+<style>
+.answer { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 18px; }
+.answer .card b.big { display: block; font: 600 1.25rem/1.2 var(--display); margin: 4px 0 6px; color: var(--ink); }
+</style>
+<div class="doc">
+<header class="top">
+  <span class="kicker">Audit SEO &amp; GEO · 7 octobre 2026</span>
+  <h1>Caisses Informatique Services : 1<sup>er</sup> dans les Hautes-Alpes sur Google, mais un site piraté et une fiche Google à l'abandon</h1>
+  <p class="lede">CIS installe et dépanne des caisses enregistreuses depuis 1994, à 20 minutes de Briançon. Sur Google, il est déjà en tête sur « caisse enregistreuse hautes alpes », mais ces recherches sont rares. Le site cache des liens vers des sites étrangers sur ses 17 pages, sa fiche Google n'est pas revendiquée, et son principal atout face aux vendeurs de Marseille, le service après-vente sur place, n'est écrit nulle part.</p>
+  <p class="meta">Sources : SE Ranking (base France, octobre 2026), lecture des 17 pages du site et crawl de 20 adresses, relevés Google du 7 octobre 2026 (France, Gap et Briançon). Le trafic indiqué est une estimation d'outil.</p>
+  <div class="tiles">
+    <div class="tile"><b>≈ 5</b><span>visites Google / mois, presque toutes sur le nom de l'entreprise</span></div>
+    <div class="tile"><b>32</b><span>liens cachés vers 16 sites sans rapport, sur chacune des 17 pages</span></div>
+    <div class="tile"><b>23</b><span>avis sur une fiche Google non revendiquée</span></div>
+    <div class="tile"><b>&lt; 10</b><span>recherches / mois sur « caisse enregistreuse » + Gap, Briançon ou Hautes-Alpes</span></div>
+    <div class="tile"><b>× 6</b><span>recherches « facturation électronique obligatoire » en 2026 (720 → 4 400 / mois)</span></div>
+  </div>
+</header>
+
+<section>
+  <span class="kicker">Réponse courte</span>
+  <h2>Grosse opportunité ou pas ?</h2>
+  <div class="answer">
+    <div class="card"><span class="chip warn">Trafic Google</span><b class="big">Petite</b><p>Dans le 05, presque personne ne tape « caisse enregistreuse » suivi d'une ville. CIS est déjà 1<sup>er</sup> sur « caisse enregistreuse hautes alpes » et 2<sup>e</sup> sur « caisse enregistreuse gap ». Il n'y a pas de gros volume à aller chercher localement.</p></div>
+    <div class="card feature"><span class="chip good">Clients</span><b class="big">Réelle</b><p>Le commerçant qui cherche une caisse voit d'abord SumUp, JDC ou L'Addition, qui paient des annonces à Gap et Briançon. Ce qui fait signer CIS se joue ailleurs : avis Google, promesse de dépannage sur place, accompagnement sur les nouvelles règles, recommandations des comptables.</p></div>
+    <div class="card"><span class="chip crit">Urgence</span><b class="big">Le site</b><p>Le site est très probablement piraté : 32 liens invisibles vers des cliniques brésiliennes, un site espagnol et d'autres sites sans rapport. C'est un risque de sanction Google et de sécurité, et la meilleure porte d'entrée pour un premier rendez-vous.</p></div>
+  </div>
+</section>
+
+<section>
+  <span class="kicker">Le marché sur Google</span>
+  <h2>Ce que cherchent vraiment les commerçants</h2>
+  <p>Volumes mensuels moyens en France (SE Ranking). Les recherches locales sont trop rares pour être mesurées ; les recherches par métier et sur la réglementation, elles, existent.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Famille</th><th>Recherches</th><th class="r">Vol. / mois</th><th>CIS</th></tr></thead>
+    <tbody>
+      <tr><td>Local</td><td>caisse enregistreuse gap, briançon, embrun, hautes alpes, 05, digne, manosque, sisteron</td><td class="r num">&lt; 10 chacune</td><td>1<sup>er</sup> sur hautes alpes, 2<sup>e</sup> sur gap</td></tr>
+      <tr><td>Par métier</td><td>caisse enregistreuse boulangerie (480), location caisse enregistreuse (390), caisse enregistreuse bar (320), caisse enregistreuse ipad (320), caisse enregistreuse coiffure (110), monnayeur automatique boulangerie (90), caisse enregistreuse snack (70)</td><td class="r num">≈ 1 780</td><td>absent</td></tr>
+      <tr><td>Réglementation</td><td>facturation électronique obligatoire (4 400), facture électronique obligatoire (1 100), nf525 (500), facture électronique 2026 (390), caisse enregistreuse obligatoire (210), certification nf525 (210)</td><td class="r num">≈ 6 800</td><td>absent</td></tr>
+      <tr><td>Dépannage</td><td>réparation caisse enregistreuse (40), maintenance caisse enregistreuse (10)</td><td class="r num">≈ 50</td><td>absent</td></tr>
+      <tr><td>Générique</td><td>caisse enregistreuse (9 900), logiciel de caisse (1 900)</td><td class="r num">≈ 11 800</td><td>hors des 100 premiers à Gap et Briançon</td></tr>
+    </tbody>
+  </table></div>
+  <div class="figure">
+    <h3>La facture électronique fait exploser les recherches</h3>
+    <p class="meta">Recherches mensuelles en France, janvier – octobre 2026 · source SE Ranking</p>
+    <div class="legend"><span><i style="background:var(--series)"></i>facturation électronique obligatoire</span><span><i style="background:var(--series-2)"></i>facture électronique obligatoire</span></div>
+    <div class="chart" id="trend"></div>
+  </div>
+  <p>Depuis le 1<sup>er</sup> septembre 2026, toutes les entreprises doivent pouvoir recevoir des factures électroniques ; les PME et micro-entreprises devront en émettre à partir du 1<sup>er</sup> septembre 2027. Chaque commerçant du 05 se pose la question. C'est le meilleur sujet pour reprendre contact avec d'anciens clients et en approcher de nouveaux.</p>
+  <div class="callout"><p><b>Les recherches génériques sont prises par les nationaux.</b> Sur « caisse enregistreuse », Google affiche à Gap comme à Briançon des résultats nationaux (Kash.click, JDC, Metro, SumUp…), sans carte locale. SumUp, JDC, Clyo Systems, L'Addition et myPOS y paient des annonces. CIS n'y apparaît pas.</p></div>
+</section>
+
+<section>
+  <span class="kicker">Concurrence</span>
+  <h2>Qui prend les clients de CIS</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Concurrent</th><th>Basé à</th><th>Présence sur Google dans le 05</th><th>À retenir</th></tr></thead>
+    <tbody>
+      <tr><td><b>JPS Distribution</b></td><td>Gap</td><td>1<sup>er</sup> sur « caisse enregistreuse gap », cité par l'IA de Google</td><td>Concurrent local n°1 : bureautique, mobilier et caisses (CarréPos, UltimaPos, Ingenico). Aucune promesse de SAV sur sa page caisse.</td></tr>
+      <tr><td><b>Alpes Bureautique</b></td><td>Gap</td><td>annuaires seulement</td><td>Photocopieurs et fournitures, caisses Casio, Sharp et CSI, terminaux Ingenico.</td></tr>
+      <tr><td><b>Vendeurs de Marseille</b> : AJ Monetic, SODECO, Technicaisse, agence JDC</td><td>Marseille, Aubagne</td><td>AJ Monetic 15<sup>e</sup> et SODECO 25<sup>e</sup> sur « caisse enregistreuse hautes alpes »</td><td>Des pages par ville et par métier en série pour ressortir partout dans le Sud. Briançon est à environ 3 h de route de Marseille.</td></tr>
+      <tr><td><b>Nationaux en ligne</b> : SumUp, JDC, L'Addition, Clyo, myPOS</td><td>—</td><td>annonces Google à Gap et Briançon</td><td>Vente à distance, assistance par téléphone.</td></tr>
+      <tr><td><b>Digiteck</b> (exemple à suivre)</td><td>Aix-en-Provence, Béziers</td><td>ne couvre pas le 05</td><td>4,9/5 sur 138 avis Google, un technicien attitré par client, dépannage « même le samedi » : leur site vend le SAV avant la caisse.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="table-wrap"><table class="vs">
+    <thead><tr><th>Indicateur</th><th class="r l">CIS</th><th class="r">JPS Distribution</th></tr></thead>
+    <tbody>
+      <tr><td>Visites Google / mois (estimation)</td><td class="r num l">5</td><td class="r num">107</td></tr>
+      <tr><td>Mots-clés dans le top 5</td><td class="r num l">1</td><td class="r num">14</td></tr>
+      <tr><td>« caisse enregistreuse gap »</td><td class="r num l">2<sup>e</sup></td><td class="r num">1<sup>er</sup></td></tr>
+      <tr><td>« caisse enregistreuse hautes alpes »</td><td class="r num l">1<sup>er</sup></td><td class="r num">23<sup>e</sup></td></tr>
+      <tr><td>Sites qui font un lien vers le site</td><td class="r num l">39</td><td class="r num">43</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">Le trafic de JPS vient presque entièrement de recherches sur son nom (« jps gap », « jps distribution »). « Les vendeurs de Marseille n'assurent pas de SAV » est une information de terrain : elle ne se vérifie pas en ligne, mais elle donne à CIS son meilleur argument.</p>
+</section>
+
+<section>
+  <span class="kicker">GEO · moteurs de réponse IA</span>
+  <h2>L'IA de Google recommande déjà CIS, avec une information dépassée</h2>
+  <div class="quote"><b>« caisse enregistreuse hautes alpes »</b> : l'IA de Google cite CIS en premier (« basé à L'Argentière-la-Bessée… intervient dans l'ensemble des Hautes-Alpes et des Alpes-de-Haute-Provence »), puis JPS Distribution.</div>
+  <div class="quote">Dans la même réponse, l'IA affirme, en citant le site de CIS, que le logiciel de caisse « doit obligatoirement être certifié conforme (norme NF525 ou certification LNE) ». Une autre source citée annonce que la caisse « ne pourra plus être auto-certifiée » en 2026.</div>
+  <p>C'est faux depuis février 2026 : la loi de finances pour 2026 (loi n° 2026-103 du 19 février 2026, article 125) a rétabli l'attestation individuelle de l'éditeur. Le premier titre de la page d'accueil de CIS annonce pourtant toujours la « fin de l'auto-attestation ». Google affiche aussi les questions « Quelle est la norme à respecter pour les caisses enregistreuses en 2026 ? » et « Est-ce que la caisse enregistreuse sera obligatoire en 2027 ? ». Avec des réponses justes et datées, CIS peut devenir la source que l'IA cite dans tout le département.</p>
+</section>
+
+<section>
+  <span class="kicker">Audit technique</span>
+  <h2>Ce qui freine le site</h2>
+  <p>Crawl de 20 adresses (score de santé SE Ranking : 82/100) et lecture des 17 pages à la main. Le score de l'outil ne voit pas le problème principal.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Priorité</th><th>Constat</th><th>Impact</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip crit">Critique</span></td><td>32 liens cachés hors de l'écran sur chacune des 17 pages, vers 16 sites sans rapport (cliniques au Brésil, site espagnol, location de jeux…), placés en tête du contenu.</td><td>Signe très probable de piratage. Les liens cachés enfreignent les règles anti-spam de Google, qui peut sanctionner le site ; le pirate a peut-être encore accès au site.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>Premier titre de l'accueil : « Fin de l'auto-attestation… Loi de finances pour 2025 ». La règle a été annulée en février 2026. Le bloc facture électronique annonce aussi une obligation au « 1<sup>er</sup> janvier 2026 », puis au 1<sup>er</sup> septembre 2026.</td><td>Le spécialiste local affiche une règle qui n'existe plus ; l'IA de Google la répète.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>Fiche Google non revendiquée (23 avis) : elle affiche « Vous êtes le propriétaire de cet établissement ? » et pointe vers l'ancien nom de domaine (qui redirige).</td><td>Pas de photos, de services ni de réponses aux avis : CIS ne maîtrise pas ce que Google affiche.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>Aucune promesse de SAV : pas de délai d'intervention, de zone couverte, de disponibilité en saison ni de matériel de prêt.</td><td>Le seul argument que les vendeurs de Marseille et les nationaux n'ont pas reste invisible.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>6 pages ville identiques à 90–94 % (seul le nom change). Les pages Sisteron, Digne, Gap et Manosque affichent toutes le titre « Dépannage ordinateur et mobile à Briançon ». Gap et Briançon ont chacune deux pages qui se concurrencent.</td><td>Google ne garde qu'une version ; ces pages ne rapportent rien.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Les pages ville disent CIS « localisée dans les Hautes-Alpes depuis quelques années », alors que l'entreprise existe depuis 1994.</td><td>30 ans d'ancienneté gâchés.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>9 descriptions manquantes, 11 pages avec plusieurs titres H1, contenu non sécurisé (HTTP) sur 12 pages, images sans texte alternatif sur 12 pages.</td><td>Extraits Google peu clairs, alertes de sécurité possibles dans le navigateur.</td></tr>
+      <tr><td><span class="chip info">Faible</span></td><td>39 sites font un lien vers CIS, presque tous des sites de spam (.top, .monster, .sbs), 2 seulement transmettent de la valeur. Aucune donnée structurée d'entreprise, adresse e-mail Gmail.</td><td>Aucune autorité, peu d'informations pour Google et les IA.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">Points positifs : HTTPS, affichage mobile, sitemap, téléphone visible, 1<sup>er</sup> sur « caisse enregistreuse hautes alpes » et cité par l'IA de Google.</p>
+</section>
+
+<section>
+  <span class="kicker">Stratégie</span>
+  <h2>Vendre le dépannage sur place, pas la caisse</h2>
+  <ol class="steps">
+    <li><span><b>Nettoyer et sécuriser le site, tout de suite</b>Supprimer les liens cachés, trouver comment ils sont entrés, changer les accès, mettre à jour, sauvegarder. Corriger l'accueil : auto-attestation rétablie, bonnes dates de la facture électronique.</span></li>
+    <li><span><b>Reprendre la fiche Google</b>La revendiquer, ajouter services, photos, zone d'intervention et horaires de saison, répondre aux avis, et demander un avis à chaque installation. Objectif : passer de 23 à plus de 60 avis.</span></li>
+    <li><span><b>Faire du SAV l'argument n°1</b>Une page « Dépannage de caisse enregistreuse dans les Hautes-Alpes » : délai d'intervention, communes couvertes (Briançon, Serre Chevalier, Vallouise, Embrun, Vars, Gap…), disponibilité en saison, prêt de matériel, et dépannage des caisses achetées ailleurs.</span></li>
+    <li><span><b>Répondre aux questions réglementaires</b>Facture électronique, attestation NF525, ce qui change en 2027, avec une fiche à envoyer aux clients et aux experts-comptables, qui recommandent les caisses à leurs clients.</span></li>
+    <li><span><b>Une page par métier, à la place des pages ville</b>Boulangerie, bar, restaurant, commerce de station, coiffure, location, avec de vrais clients du 05.</span></li>
+    <li><span><b>Option : quelques annonces Google limitées au 05</b>Sur « caisse enregistreuse » et « logiciel de caisse », pour apparaître à côté de SumUp et JDC quand un commerçant du département cherche.</span></li>
+  </ol>
+  <div class="callout"><p><b>Ordre de grandeur :</b> un client caisse, c'est du matériel, souvent un contrat de maintenance ou de location sur plusieurs années, et un terminal de paiement. Deux ou trois clients de plus par an suffisent à rentabiliser le suivi.</p></div>
+</section>
+
+<section>
+  <span class="kicker">Proposition</span>
+  <h2>L'offre</h2>
+  <div class="cols">
+    <div class="card">
+      <span class="kicker">Mise en place</span>
+      <h3>Remise en état</h3>
+      <div class="price">790 € <small>HT, une fois</small></div>
+      <ul>
+        <li>Nettoyage des liens cachés et sécurisation du site</li>
+        <li>Correction de l'accueil et des informations réglementaires</li>
+        <li>Fiche Google revendiquée et complète</li>
+        <li>Page « Dépannage et SAV dans les Hautes-Alpes »</li>
+        <li>Suivi des appels et des demandes de devis</li>
+      </ul>
+    </div>
+    <div class="card feature">
+      <span class="kicker">Chaque mois</span>
+      <h3>Suivi</h3>
+      <div class="price">190 € <small>HT / mois</small></div>
+      <ul>
+        <li>2 contenus par mois : métiers, réglementation, cas clients</li>
+        <li>Publications et réponses aux avis sur la fiche Google</li>
+        <li>Surveillance de la sécurité du site</li>
+        <li>Suivi des citations dans les IA</li>
+        <li>Compte rendu mensuel des appels et des demandes</li>
+      </ul>
+    </div>
+  </div>
+  <ul class="verdict">
+    <li><span class="chip good">Rentable</span><span>Deux ou trois clients de plus par an couvrent largement le suivi.</span></li>
+    <li><span class="chip info">Engagement</span><span>6 mois, puis mois par mois.</span></li>
+    <li><span class="chip info">Annonces</span><span>Si l'option est retenue, le budget publicitaire est payé directement à Google.</span></li>
+  </ul>
+</section>
+
+<footer>
+  <p>Méthode et limites : volumes de recherche, trafic et liens sont des estimations SE Ranking (base France, octobre 2026). Positions relevées dans Google le 7 octobre 2026, sur ordinateur, en France, à Gap et à Briançon. Règles fiscales vérifiées sur service-public.fr (actualité du 24 février 2026) et dans la loi n° 2026-103 du 19 février 2026. Aucune donnée privée de l'entreprise n'a été utilisée.</p>
+</footer>
+</div>
+
+<script>
+(function () {
+  const months = ["2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09","2026-10"];
+  const SERIES = [
+    { name: 'facturation électronique obligatoire', short: 'facturation', data: [720,720,1100,1500,1900,1900,1900,1900,3200,4400], line: 'series-line', dot: 'dot' },
+    { name: 'facture électronique obligatoire', short: 'facture', data: [40,50,50,180,140,220,170,270,990,1100], line: 'series-2', dot: 'dot2' },
+  ];
+  const MOIS = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+  const fmtM = (m) => { const [y, mo] = m.split('-'); return MOIS[+mo - 1] + ' ' + y; };
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (n, a = {}) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); return e; };
+  const host = document.getElementById('trend');
+  const W = 900, H = 280, m = { t: 20, r: 70, b: 30, l: 50 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b, yMax = 5000;
+  const x = (i) => m.l + (i / (months.length - 1)) * iw;
+  const y = (v) => m.t + ih - (v / yMax) * ih;
+  const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Recherches mensuelles de janvier à octobre 2026 : facturation électronique obligatoire de 720 à 4 400, facture électronique obligatoire de 40 à 1 100' });
+  const g = el('g', { class: 'grid' });
+  [0, 2500, 5000].forEach((v) => {
+    g.appendChild(el('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v) }));
+    const t = el('text', { x: m.l - 8, y: y(v) + 4, 'text-anchor': 'end' }); t.textContent = v.toLocaleString('fr-FR'); svg.appendChild(t);
+  });
+  svg.appendChild(g);
+  months.forEach((mo, i) => { if (i % 3 === 0 || i === months.length - 1) { const t = el('text', { x: x(i), y: H - 8, 'text-anchor': 'middle' }); t.textContent = MOIS[+mo.slice(5) - 1]; svg.appendChild(t); } });
+  const path = (arr) => arr.map((v, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ');
+  [...SERIES].reverse().forEach((s) => svg.appendChild(el('path', { d: path(s.data), class: s.line })));
+  const last = months.length - 1;
+  SERIES.forEach((s) => {
+    svg.appendChild(el('circle', { cx: x(last), cy: y(s.data[last]), r: 4, class: s.dot }));
+    const t = el('text', { x: x(last) + 8, y: y(s.data[last]) + 4, class: 'anno' }); t.textContent = s.data[last].toLocaleString('fr-FR'); svg.appendChild(t);
+  });
+  const cross = el('line', { class: 'cross', y1: m.t, y2: m.t + ih, visibility: 'hidden' });
+  const hov = SERIES.map((s) => el('circle', { r: 4, class: s.dot, visibility: 'hidden' }));
+  svg.append(cross, ...hov);
+  const hit = el('rect', { x: m.l, y: m.t, width: iw, height: ih, fill: 'transparent', tabindex: 0 });
+  svg.appendChild(hit);
+  host.appendChild(svg);
+  const tip = document.createElement('div'); tip.className = 'tip'; tip.hidden = true;
+  host.parentElement.appendChild(tip);
+  let cur = last;
+  const show = (i) => {
+    cur = Math.max(0, Math.min(last, i));
+    SERIES.forEach((s, k) => { hov[k].setAttribute('cx', x(cur)); hov[k].setAttribute('cy', y(s.data[cur])); hov[k].setAttribute('visibility', 'visible'); });
+    cross.setAttribute('x1', x(cur)); cross.setAttribute('x2', x(cur)); cross.setAttribute('visibility', 'visible');
+    tip.replaceChildren();
+    const head = document.createElement('span'); head.textContent = fmtM(months[cur]); head.style.cssText = 'display:block;color:var(--ink-3);font-size:.8rem';
+    tip.append(head);
+    SERIES.forEach((s) => { const r = document.createElement('b'); r.textContent = s.data[cur].toLocaleString('fr-FR') + ' ' + s.short; tip.append(r); });
+    tip.hidden = false;
+    const box = svg.getBoundingClientRect(), fb = host.parentElement.getBoundingClientRect();
+    const px = box.left - fb.left + (x(cur) / W) * box.width;
+    tip.style.left = Math.min(fb.width - tip.offsetWidth - 8, Math.max(8, px + 12)) + 'px';
+    tip.style.top = (box.top - fb.top + 10) + 'px';
+  };
+  const hide = () => { tip.hidden = true; [cross, ...hov].forEach((e) => e.setAttribute('visibility', 'hidden')); };
+  hit.addEventListener('pointermove', (e) => { const r = svg.getBoundingClientRect(); const sx = ((e.clientX - r.left) / r.width) * W; show(Math.round(((sx - m.l) / iw) * last)); });
+  hit.addEventListener('pointerleave', hide);
+  hit.addEventListener('focus', () => show(cur));
+  hit.addEventListener('blur', hide);
+  hit.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
+})();
+</script>
