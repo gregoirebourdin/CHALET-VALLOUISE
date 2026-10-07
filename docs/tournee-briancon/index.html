@@ -1,0 +1,428 @@
+<title>Tournée Briançon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Carnet de tournée : une colonne, les arrêts dans l'ordre de la route, comme un panneau de direction */
+:root {
+  --bg: #f3f5f4; --surface: #ffffff; --fg: #15201c; --muted: #5d6b66; --line: #d6dedb;
+  --route: #0b6b4c; --route-ink: #ffffff; --cartouche: #c4202b; --hi: #8a5a00; --hi-soft: #fbf0d9; --soft: #e3efe9;
+  --display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Manrope', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f1513; --surface: #17201d; --fg: #e8eeeb; --muted: #9db0a8; --line: #2a3632;
+  --route: #3fae86; --route-ink: #06140f; --cartouche: #e2545c; --hi: #f0c46b; --hi-soft: #3a2e14; --soft: #1c2c26; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0f1513; --surface: #17201d; --fg: #e8eeeb; --muted: #9db0a8; --line: #2a3632;
+  --route: #3fae86; --route-ink: #06140f; --cartouche: #e2545c; --hi: #f0c46b; --hi-soft: #3a2e14; --soft: #1c2c26; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 400 16px/1.55 var(--body); margin: 0; padding: 0 16px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding-block: 40px 80px; }
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+header.top h1 { font-size: clamp(2.3rem, 6vw, 3.6rem); font-weight: 750; line-height: 1; }
+.sign { display: inline-flex; align-items: center; gap: 10px; background: var(--route); color: var(--route-ink); font: 600 .78rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 8px 12px; border-radius: 6px; margin-bottom: 18px; }
+.lede { color: var(--muted); font-size: 1.08rem; max-width: 62ch; margin: 16px 0 0; }
+.how { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 30px 0 10px; }
+.how div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; min-width: 0; }
+.how b { display: block; font-family: var(--display); font-size: 1.02rem; margin-bottom: 4px; }
+.how p { margin: 0; color: var(--muted); font-size: .93rem; }
+.script { background: var(--soft); border-radius: 10px; padding: 16px 18px; margin: 14px 0 0; }
+.script p { margin: 0; max-width: 70ch; }
+.script span { display: block; font: 600 .72rem/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--route); margin-bottom: 6px; }
+ol.route { list-style: none; padding: 0; margin: 44px 0 0; }
+.stop { display: grid; grid-template-columns: 44px 1fr; gap: 18px; }
+.rail { position: relative; display: flex; justify-content: center; }
+.rail::before { content: ""; position: absolute; top: 0; bottom: 0; width: 4px; background: var(--route); border-radius: 2px; opacity: .35; }
+.stop:first-child .rail::before { top: 18px; }
+.stop:last-child .rail::before { bottom: auto; height: 18px; }
+.n { position: relative; z-index: 1; width: 36px; height: 36px; border-radius: 50%; background: var(--route); color: var(--route-ink); display: grid; place-items: center; font: 700 .95rem var(--mono); font-variant-numeric: tabular-nums; }
+article { min-width: 0; padding-bottom: 40px; }
+.where { display: flex; align-items: center; gap: 10px; color: var(--muted); font: 500 .8rem/1 var(--mono); letter-spacing: .04em; margin: 8px 0 8px; }
+.road { background: var(--cartouche); color: #fff; font: 700 .72rem/1 var(--mono); padding: 4px 6px; border-radius: 3px; }
+.road.gap { background: var(--muted); }
+h2 { font-size: clamp(1.45rem, 3.4vw, 1.9rem); font-weight: 700; }
+.sector { margin: 4px 0 16px; color: var(--muted); }
+.grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 22px; align-items: start; }
+dl { display: grid; grid-template-columns: 96px 1fr; gap: 8px 14px; margin: 0 0 16px; font-size: .95rem; }
+dt { font: 600 .7rem/1.9 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+dd { margin: 0; min-width: 0; }
+.pill { display: inline-block; font: 700 .72rem/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; padding: 5px 8px; border-radius: 999px; background: var(--soft); color: var(--route); margin-right: 4px; }
+.pill.hi { background: var(--hi-soft); color: var(--hi); }
+.sel { font-family: var(--mono); user-select: all; }
+.muted { color: var(--muted); }
+h3 { font-size: .98rem; font-weight: 700; margin: 0 0 6px; }
+.seen { margin: 0 0 14px; padding-left: 1.1em; }
+.seen li { margin-bottom: 4px; }
+blockquote { margin: 0 0 10px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; font-weight: 600; }
+.tip { margin: 0; color: var(--muted); font-size: .9rem; }
+.shots { display: grid; grid-template-columns: 1fr 34%; gap: 10px; align-items: start; text-decoration: none; color: var(--route); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+.shots img { width: 100%; height: auto; display: block; border-radius: 6px; border: 1px solid var(--line); }
+.shots img.m { aspect-ratio: 390 / 700; object-fit: cover; object-position: top; border-radius: 12px; }
+.shots .open { grid-column: 1 / -1; font: 600 .9rem var(--body); padding: 4px 2px 2px; }
+.shots:hover .open, .shots:focus-visible .open { text-decoration: underline; }
+.shots:focus-visible { outline: 2px solid var(--route); outline-offset: 3px; }
+footer { color: var(--muted); font-size: .86rem; border-top: 1px solid var(--line); padding-top: 22px; margin-top: 20px; }
+@media (max-width: 760px) {
+  .grid { grid-template-columns: 1fr; }
+  .stop { grid-template-columns: 30px 1fr; gap: 12px; }
+  .n { width: 28px; height: 28px; font-size: .8rem; }
+  dl { grid-template-columns: 1fr; gap: 2px; }
+  dd { margin-bottom: 8px; }
+}
+</style>
+<div class="wrap">
+<header class="top">
+  <span class="sign">N94 → D1091 · Briançonnais</span>
+  <h1>Tournée Briançon</h1>
+  <p class="lede">Douze entreprises à gros panier dont le site les dessert, dans l’ordre de la route depuis L’Argentière-la-Bessée jusqu’au Monêtier. Pour chacune : qui demander, ce qui cloche, la phrase d’accroche et un aperçu de page d’accueil à montrer sur ton téléphone.</p>
+  <div class="how">
+    <div><b>Sur place, 2 minutes</b><p>Tu te présentes, tu montres l’aperçu et un seul constat. Tu ne vends rien : tu demandes 15 minutes.</p></div>
+    <div><b>S’il dit oui</b><p>Rendez-vous sous 3 à 5 jours. Deux questions : quels clients il veut, ce qui l’agace dans son site.</p></div>
+    <div><b>Au rendez-vous</b><p>Page d’accueil complète, deux ou trois chiffres, puis l’offre.</p></div>
+    <div><b>S’il dit non ou « envoyez un mail »</b><p>Le soir même : un mail avec l’aperçu. Relances à J+3 et J+10.</p></div>
+  </div>
+  <div class="script"><span>Script d’ouverture</span><p>« Bonjour, je m’appelle Grégoire, je suis de L’Argentière. J’aide les entreprises de la vallée à avoir un site à la hauteur de leur travail. J’ai préparé un premier aperçu de votre page d’accueil, je peux vous le montrer ? Ça prend deux minutes, et si ça vous plaît on se cale 15 minutes, sans aucun engagement. »</p></div>
+</header>
+<ol class="route">
+    <li class="stop" id="roche">
+      <div class="rail"><span class="n">1</span></div>
+      <article>
+        <div class="where"><span class="road">N94</span>L’Argentière-la-Bessée</div>
+        <h2>Atelier de Roche</h2>
+        <p class="sector">Menuiserie, agencement, cuisines et bains</p>
+        <div class="grid">
+          <div class="facts">
+            <dl>
+              <dt>Panier</dt><dd><span class="pill ">Élevé</span> Cuisines, escaliers et agencements sur mesure</dd>
+              <dt>Demander</dt><dd>Laurent Pontvianne, gérant · 10 à 19 salariés</dd>
+              <dt>Adresse</dt><dd>Rue de la Conciergerie, 05120 L’Argentière-la-Bessée</dd>
+              <dt>Téléphone</dt><dd><span class="sel">04 92 23 02 08</span></dd>
+              <dt>Google</dt><dd>24e sur « cuisiniste briançon » (90 recherches/mois) ; environ 1 visite Google par mois.</dd>
+            </dl>
+            <h3>Ce que j’ai vu sur leur site</h3>
+            <ul class="seen"><li>Pas de HTTPS : Chrome affiche « Non sécurisé ».</li><li>Pas adapté au téléphone : la page s’affiche en version ordinateur réduite.</li><li>Le menu contient des textes de modèle oubliés (« Colonne 3.1 », « Lien 3.1.3 »).</li></ul>
+            <blockquote>« Vos cuisines sont superbes, mais sur téléphone votre site s’affiche en version ordinateur. Je vous ai préparé un aperçu de ce qu’il pourrait être. »</blockquote>
+            <p class="tip">Sur ta route, à L’Argentière : commence par lui.</p>
+          </div>
+          <a class="shots" href="p/roche.html" aria-label="Ouvrir la fiche à montrer à Atelier de Roche">
+            <img class="d" src="img/roche-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à Atelier de Roche" loading="lazy">
+            <img class="m" src="img/roche-m.jpg" alt="Aperçu téléphone" loading="lazy">
+            <span class="open">Ouvrir la fiche à montrer →</span>
+          </a>
+        </div>
+      </article>
+    </li>
+    <li class="stop" id="alpesalu">
+      <div class="rail"><span class="n">2</span></div>
+      <article>
+        <div class="where"><span class="road">N94</span>L’Argentière-la-Bessée</div>
+        <h2>Alpes Alu</h2>
+        <p class="sector">Fenêtres, volets, verrières, structures métalliques</p>
+        <div class="grid">
+          <div class="facts">
+            <dl>
+              <dt>Panier</dt><dd><span class="pill ">Élevé</span> Menuiseries aluminium sur mesure</dd>
+              <dt>Demander</dt><dd>Pierre Melquiond, gérant · 3 à 5 salariés · créée en 1988</dd>
+              <dt>Adresse</dt><dd>37 rue de la Série E, Parc d’activité Les Sablonnières, 05120 L’Argentière-la-Bessée</dd>
+              <dt>Téléphone</dt><dd><span class="sel">04 92 23 07 39</span></dd>
+              <dt>Google</dt><dd>20e sur « menuiserie fenêtre briançon ».</dd>
+            </dl>
+            <h3>Ce que j’ai vu sur leur site</h3>
+            <ul class="seen"><li>Au chargement, la page reste plusieurs secondes sur un écran blanc.</li><li>Pas adapté au téléphone : affichage ordinateur réduit.</li><li>Ni titre principal ni description pour Google ; dernière mise à jour affichée en 2022.</li></ul>
+            <blockquote>« Vous fabriquez vos fenêtres ici, à L’Argentière : c’est ce que votre site devrait dire dès la première seconde. »</blockquote>
+            <p class="tip">Même zone que l’Atelier de Roche, à enchaîner.</p>
+          </div>
+          <a class="shots" href="p/alpesalu.html" aria-label="Ouvrir la fiche à montrer à Alpes Alu">
+            <img class="d" src="img/alpesalu-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à Alpes Alu" loading="lazy">
+            <img class="m" src="img/alpesalu-m.jpg" alt="Aperçu téléphone" loading="lazy">
+            <span class="open">Ouvrir la fiche à montrer →</span>
+          </a>
+        </div>
+      </article>
+    </li>
+    <li class="stop" id="herisson">
+      <div class="rail"><span class="n">3</span></div>
+      <article>
+        <div class="where"><span class="road">N94</span>Prelles · Saint-Martin-de-Queyrières</div>
+        <h2>Le Hérisson Vert</h2>
+        <p class="sector">Poêles et cheminées</p>
+        <div class="grid">
+          <div class="facts">
+            <dl>
+              <dt>Panier</dt><dd><span class="pill ">Élevé</span> Poêles, poêles de masse, installation</dd>
+              <dt>Demander</dt><dd>Patrick Hocqueloux, président · 3 à 5 salariés</dd>
+              <dt>Adresse</dt><dd>ZA Le Pré du Faure, Prelles, 05120 Saint-Martin-de-Queyrières</dd>
+              <dt>Téléphone</dt><dd><span class="sel">04 92 20 04 92</span></dd>
+              <dt>Google</dt><dd>Déjà visible (environ 61 visites Google par mois, 663 mots-clés) : ici, l’argument est l’image, pas le trafic.</dd>
+            </dl>
+            <h3>Ce que j’ai vu sur leur site</h3>
+            <ul class="seen"><li>La page d’accueil n’a pas de titre : l’onglet et Google n’affichent rien de clair.</li><li>Les photos d’accueil sont des photos d’illustration : aucune des « 4 000 réalisations » n’apparaît.</li><li>Numéro non cliquable sur téléphone.</li></ul>
+            <blockquote>« Plus de 4 000 réalisations depuis 1996 : je vous ai préparé un accueil qui donne envie de venir au magasin. »</blockquote>
+            <p class="tip">Magasin fermé le dimanche et le lundi.</p>
+          </div>
+          <a class="shots" href="p/herisson.html" aria-label="Ouvrir la fiche à montrer à Le Hérisson Vert">
+            <img class="d" src="img/herisson-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à Le Hérisson Vert" loading="lazy">
+            <img class="m" src="img/herisson-m.jpg" alt="Aperçu téléphone" loading="lazy">
+            <span class="open">Ouvrir la fiche à montrer →</span>
+          </a>
+        </div>
+      </article>
+    </li>
+    <li class="stop" id="tendances">
+      <div class="rail"><span class="n">4</span></div>
+      <article>
+        <div class="where"><span class="road">N94</span>Briançon</div>
+        <h2>Tendances Cuisines</h2>
+        <p class="sector">Cuisines, salles de bains, agencement, décoration</p>
+        <div class="grid">
+          <div class="facts">
+            <dl>
+              <dt>Panier</dt><dd><span class="pill ">Élevé</span> Cuisines et salles de bains</dd>
+              <dt>Demander</dt><dd>Lugdivine Faure, gérante (le site cite aussi Fabrice Faure)</dd>
+              <dt>Adresse</dt><dd>Espace Sud, 448 route des Maisons Blanches, 05100 Briançon</dd>
+              <dt>Téléphone</dt><dd><span class="sel">04 92 21 27 60</span></dd>
+              <dt>Google</dt><dd>7e sur « cuisiniste briançon » (90/mois) et 5e sur « salle de bain briançon » : bien placés.</dd>
+            </dl>
+            <h3>Ce que j’ai vu sur leur site</h3>
+            <ul class="seen"><li>Site sur la plateforme PagesJaunes (Solocal) : ils paient probablement un abonnement pour ce site.</li><li>Une fenêtre de cookies couvre l’écran à l’arrivée.</li><li>Le menu mélange cuisines et accessoires de cake design ; numéro non cliquable.</li></ul>
+            <blockquote>« Vous êtes déjà bien placés sur Google pour les cuisines à Briançon ; la question, c’est ce que voit le client quand il clique. »</blockquote>
+            <p class="tip">Demande-leur combien ils paient PagesJaunes pour le site : c’est ta base de comparaison.</p>
+          </div>
+          <a class="shots" href="p/tendances.html" aria-label="Ouvrir la fiche à montrer à Tendances Cuisines">
+            <img class="d" src="img/tendances-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à Tendances Cuisines" loading="lazy">
+            <img class="m" src="img/tendances-m.jpg" alt="Aperçu téléphone" loading="lazy">
+            <span class="open">Ouvrir la fiche à montrer →</span>
+          </a>
+        </div>
+      </article>
+    </li>
+    <li class="stop" id="mccuisine">
+      <div class="rail"><span class="n">5</span></div>
+      <article>
+        <div class="where"><span class="road">N94</span>Briançon</div>
+        <h2>MC Menuisier Cuisiniste</h2>
+        <p class="sector">Cuisines, escaliers et placards sur mesure</p>
+        <div class="grid">
+          <div class="facts">
+            <dl>
+              <dt>Panier</dt><dd><span class="pill ">Élevé</span> Cuisines sur mesure en bois</dd>
+              <dt>Demander</dt><dd>Jérémy Rey (entreprise individuelle)</dd>
+              <dt>Adresse</dt><dd>223 rue des Couteliers, 05100 Briançon</dd>
+              <dt>Téléphone</dt><dd><span class="sel">06 10 47 81 57</span></dd>
+              <dt>Google</dt><dd>8e sur « cuisiniste briançon » (90/mois).</dd>
+            </dl>
+            <h3>Ce que j’ai vu sur leur site</h3>
+            <ul class="seen"><li>À l’ouverture, la page reste sur un écran noir de chargement.</li><li>L’accueil compte environ 110 mots.</li><li>Photos très lourdes (jusqu’à 5 760 px de large) : lent sur téléphone.</li></ul>
+            <blockquote>« Vos cuisines en mélèze méritent mieux qu’un écran noir de chargement. »</blockquote>
+            <p class="tip">Artisan seul : souvent en chantier, passe en fin de journée ou appelle avant.</p>
+          </div>
+          <a class="shots" href="p/mccuisine.html" aria-label="Ouvrir la fiche à montrer à MC Menuisier Cuisiniste">
+            <img class="d" src="img/mccuisine-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à MC Menuisier Cuisiniste" loading="lazy">
+            <img class="m" src="img/mccuisine-m.jpg" alt="Aperçu téléphone" loading="lazy">
+            <span class="open">Ouvrir la fiche à montrer →</span>
+          </a>
+        </div>
+      </article>
+    </li>
+    <li class="stop" id="hmrenov">
+      <div class="rail"><span class="n">6</span></div>
+      <article>
+        <div class="where"><span class="road">N94</span>Briançon</div>
+        <h2>HM Rénovation</h2>
+        <p class="sector">Rénovation intérieure tous travaux</p>
+        <div class="grid">
+          <div class="facts">
+            <dl>
+              <dt>Panier</dt><dd><span class="pill hi">Très élevé</span> Rénovations complètes de logements</dd>
+              <dt>Demander</dt><dd>Mathys Humbert, président · créée en 2022</dd>
+              <dt>Adresse</dt><dd>40 avenue Professeur Forgues, 05100 Briançon</dd>
+              <dt>Téléphone</dt><dd><span class="sel">04 92 49 41 92</span></dd>
+              <dt>Google</dt><dd>17e sur « rénovation chalet serre chevalier ».</dd>
+            </dl>
+            <h3>Ce que j’ai vu sur leur site</h3>
+            <ul class="seen"><li>La mise en page s’affiche mal (liste à puces brute, grands blancs).</li><li>Pas de titre principal (H1) pour Google.</li><li>Seulement 7 sites font un lien vers eux.</li></ul>
+            <blockquote>« Vous avez de vraies réalisations récentes ; je vous ai préparé une page d’accueil qui les met en avant. »</blockquote>
+            <p class="tip">Entreprise jeune : plus ouverte au changement, mais budget à sonder.</p>
+          </div>
+          <a class="shots" href="p/hmrenov.html" aria-label="Ouvrir la fiche à montrer à HM Rénovation">
+            <img class="d" src="img/hmrenov-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à HM Rénovation" loading="lazy">
+            <img class="m" src="img/hmrenov-m.jpg" alt="Aperçu téléphone" loading="lazy">
+            <span class="open">Ouvrir la fiche à montrer →</span>
+          </a>
+        </div>
+      </article>
+    </li>
+    <li class="stop" id="lagence">
+      <div class="rail"><span class="n">7</span></div>
+      <article>
+        <div class="where"><span class="road">N94</span>Briançon</div>
+        <h2>L’Agence</h2>
+        <p class="sector">Agence immobilière</p>
+        <div class="grid">
+          <div class="facts">
+            <dl>
+              <dt>Panier</dt><dd><span class="pill hi">Très élevé</span> Commissions sur des ventes de biens</dd>
+              <dt>Demander</dt><dd>Damien ou Bruno (selon le site)</dd>
+              <dt>Adresse</dt><dd>Briançon (adresse à vérifier sur Google Maps)</dd>
+              <dt>Téléphone</dt><dd><span class="muted">non trouvé sur le site</span></dd>
+              <dt>Google</dt><dd>Présente dans la carte Google sur « agence immobilière briançon » ; 10e sur « agence immobilière serre chevalier » (320/mois).</dd>
+            </dl>
+            <h3>Ce que j’ai vu sur leur site</h3>
+            <ul class="seen"><li>Pied de page arrêté en 2018.</li><li>Pas de titre principal (H1).</li><li>Numéro non cliquable sur téléphone.</li></ul>
+            <blockquote>« Vous êtes dans la carte Google à Briançon ; votre site doit maintenant convaincre les vendeurs qui cliquent. »</blockquote>
+            <p class="tip">Vise les vendeurs : un mandat de plus paie largement le site.</p>
+          </div>
+          <a class="shots" href="p/lagence.html" aria-label="Ouvrir la fiche à montrer à L’Agence">
+            <img class="d" src="img/lagence-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à L’Agence" loading="lazy">
+            <img class="m" src="img/lagence-m.jpg" alt="Aperçu téléphone" loading="lazy">
+            <span class="open">Ouvrir la fiche à montrer →</span>
+          </a>
+        </div>
+      </article>
+    </li>
+    <li class="stop" id="rovagna">
+      <div class="rail"><span class="n">8</span></div>
+      <article>
+        <div class="where"><span class="road">N94</span>Briançon</div>
+        <h2>Alessandro Rovagna, architecte</h2>
+        <p class="sector">Architecture : chalets, logements collectifs, bâtiments publics</p>
+        <div class="grid">
+          <div class="facts">
+            <dl>
+              <dt>Panier</dt><dd><span class="pill hi">Très élevé</span> Honoraires sur des projets importants</dd>
+              <dt>Demander</dt><dd>Alessandro Rovagna</dd>
+              <dt>Adresse</dt><dd>Briançon (adresse à vérifier)</dd>
+              <dt>Téléphone</dt><dd><span class="muted">non trouvé sur le site</span></dd>
+              <dt>Google</dt><dd>7e sur « architecte briançon ».</dd>
+            </dl>
+            <h3>Ce que j’ai vu sur leur site</h3>
+            <ul class="seen"><li>Les projets, dont Le Domaine des Grands Chalets (7 426 m²), sont présentés en petites vignettes.</li><li>Environ 200 mots sur l’accueil.</li><li>Pas de numéro cliquable.</li></ul>
+            <blockquote>« Vos chalets méritent d’être vus en grand. »</blockquote>
+            <p class="tip">Architecte : appelle avant pour un rendez-vous plutôt que de passer à l’improviste.</p>
+          </div>
+          <a class="shots" href="p/rovagna.html" aria-label="Ouvrir la fiche à montrer à Alessandro Rovagna, architecte">
+            <img class="d" src="img/rovagna-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à Alessandro Rovagna, architecte" loading="lazy">
+            <img class="m" src="img/rovagna-m.jpg" alt="Aperçu téléphone" loading="lazy">
+            <span class="open">Ouvrir la fiche à montrer →</span>
+          </a>
+        </div>
+      </article>
+    </li>
+    <li class="stop" id="payan">
+      <div class="rail"><span class="n">9</span></div>
+      <article>
+        <div class="where"><span class="road">D1091</span>Saint-Chaffrey</div>
+        <h2>Payan-Ferrero</h2>
+        <p class="sector">Cheminées sur mesure, poêles, cuisinières</p>
+        <div class="grid">
+          <div class="facts">
+            <dl>
+              <dt>Panier</dt><dd><span class="pill ">Élevé</span> Cheminées sur mesure et poêles</dd>
+              <dt>Demander</dt><dd>Thierry Ferrero ou Pierre-Emmanuel Ferrero, gérants · 3 à 5 salariés</dd>
+              <dt>Adresse</dt><dd>Les Chapelets, 05330 Saint-Chaffrey</dd>
+              <dt>Téléphone</dt><dd><span class="sel">04 92 24 01 94</span></dd>
+              <dt>Google</dt><dd>2e sur « poêle à bois briançon » : bien placés.</dd>
+            </dl>
+            <h3>Ce que j’ai vu sur leur site</h3>
+            <ul class="seen"><li>L’accueil s’ouvre sur un fond sombre presque vide (« Depuis 1947 »).</li><li>Aucune de leurs cheminées n’apparaît sur l’accueil.</li><li>Numéro non cliquable sur téléphone.</li></ul>
+            <blockquote>« Quatre générations de cheminées, et votre page d’accueil n’en montre aucune. »</blockquote>
+            <p class="tip">Showroom à Serre Chevalier : demande à le voir, ça lance la conversation.</p>
+          </div>
+          <a class="shots" href="p/payan.html" aria-label="Ouvrir la fiche à montrer à Payan-Ferrero">
+            <img class="d" src="img/payan-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à Payan-Ferrero" loading="lazy">
+            <img class="m" src="img/payan-m.jpg" alt="Aperçu téléphone" loading="lazy">
+            <span class="open">Ouvrir la fiche à montrer →</span>
+          </a>
+        </div>
+      </article>
+    </li>
+    <li class="stop" id="declic">
+      <div class="rail"><span class="n">10</span></div>
+      <article>
+        <div class="where"><span class="road">D1091</span>Saint-Chaffrey</div>
+        <h2>Declic Immobilier</h2>
+        <p class="sector">Agence immobilière, location de vacances, neuf</p>
+        <div class="grid">
+          <div class="facts">
+            <dl>
+              <dt>Panier</dt><dd><span class="pill hi">Très élevé</span> Biens affichés jusqu’à 1,5 M€</dd>
+              <dt>Demander</dt><dd>Alessandra Pogneaux, présidente · 3 à 5 salariés</dd>
+              <dt>Adresse</dt><dd>78 allée des Boutiques, 05330 Saint-Chaffrey</dd>
+              <dt>Téléphone</dt><dd><span class="muted">non trouvé sur le site</span></dd>
+              <dt>Google</dt><dd>12e sur « agence immobilière serre chevalier » (320/mois).</dd>
+            </dl>
+            <h3>Ce que j’ai vu sur leur site</h3>
+            <ul class="seen"><li>Accents cassés dans le titre affiché par Google : « Serre Chevalier Valle : 25 ans d’exprience ».</li><li>Site daté (2018, outil SiteW).</li><li>Une fenêtre de cookies couvre l’accueil.</li></ul>
+            <blockquote>« Dans Google, votre titre s’affiche « 25 ans d’exprience » : c’est la première chose que voient vos clients. »</blockquote>
+            <p class="tip">Montre-leur la capture Google du titre cassé sur ton téléphone.</p>
+          </div>
+          <a class="shots" href="p/declic.html" aria-label="Ouvrir la fiche à montrer à Declic Immobilier">
+            <img class="d" src="img/declic-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à Declic Immobilier" loading="lazy">
+            <img class="m" src="img/declic-m.jpg" alt="Aperçu téléphone" loading="lazy">
+            <span class="open">Ouvrir la fiche à montrer →</span>
+          </a>
+        </div>
+      </article>
+    </li>
+    <li class="stop" id="guglielmetti">
+      <div class="rail"><span class="n">11</span></div>
+      <article>
+        <div class="where"><span class="road">D1091</span>Le Monêtier-les-Bains</div>
+        <h2>Entreprise Guglielmetti</h2>
+        <p class="sector">Maçonnerie générale, construction, rénovation</p>
+        <div class="grid">
+          <div class="facts">
+            <dl>
+              <dt>Panier</dt><dd><span class="pill hi">Très élevé</span> Gros œuvre et rénovation de chalets</dd>
+              <dt>Demander</dt><dd>Cédric Guglielmetti, gérant · 10 à 19 salariés</dd>
+              <dt>Adresse</dt><dd>Le Monêtier-les-Bains (05220)</dd>
+              <dt>Téléphone</dt><dd><span class="muted">non trouvé sur le site</span></dd>
+              <dt>Google</dt><dd>1er sur « rénovation chalet serre chevalier » : à protéger.</dd>
+            </dl>
+            <h3>Ce que j’ai vu sur leur site</h3>
+            <ul class="seen"><li>Pas de HTTPS : Chrome affiche « Non sécurisé ».</li><li>Pas adapté au téléphone.</li><li>Accueil rempli de répétitions de mots-clés (« maçon Briancon Monetier les Bains… »), un procédé que Google sanctionne.</li></ul>
+            <blockquote>« Vous êtes 1er sur Google pour la rénovation de chalets à Serre Chevalier ; votre site, lui, s’affiche « Non sécurisé ». »</blockquote>
+            <p class="tip">Au bout de la route : passe en fin de matinée, avant la pause chantier.</p>
+          </div>
+          <a class="shots" href="p/guglielmetti.html" aria-label="Ouvrir la fiche à montrer à Entreprise Guglielmetti">
+            <img class="d" src="img/guglielmetti-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à Entreprise Guglielmetti" loading="lazy">
+            <img class="m" src="img/guglielmetti-m.jpg" alt="Aperçu téléphone" loading="lazy">
+            <span class="open">Ouvrir la fiche à montrer →</span>
+          </a>
+        </div>
+      </article>
+    </li>
+    <li class="stop" id="degril">
+      <div class="rail"><span class="n">12</span></div>
+      <article>
+        <div class="where"><span class="road gap">Gap</span>Gap (siège)</div>
+        <h2>Degril</h2>
+        <p class="sector">Piscines, spas, aménagement extérieur</p>
+        <div class="grid">
+          <div class="facts">
+            <dl>
+              <dt>Panier</dt><dd><span class="pill hi">Très élevé</span> Construction de piscines</dd>
+              <dt>Demander</dt><dd>Norman Degril ou René Degril, gérants · entreprise familiale depuis 1983</dd>
+              <dt>Adresse</dt><dd>6 rue Joseph Faure, 05000 Gap ; interventions à Briançon</dd>
+              <dt>Téléphone</dt><dd><span class="sel">04 92 56 10 75</span></dd>
+              <dt>Google</dt><dd>13e sur « spa jacuzzi sauna briançon » ; « spa hautes alpes » pèse 260 recherches/mois.</dd>
+            </dl>
+            <h3>Ce que j’ai vu sur leur site</h3>
+            <ul class="seen"><li>Site sur la plateforme PagesJaunes (Solocal).</li><li>Bannière d’accueil : une texture d’eau, pas une de leurs piscines.</li><li>Environ 3 visites Google par mois (estimation).</li></ul>
+            <blockquote>« Une piscine, ça se vend en photo : je vous ai préparé un accueil qui montre les vôtres. »</blockquote>
+            <p class="tip">Pas sur la route de Briançon : appelle, ou passe lors d’un passage à Gap.</p>
+          </div>
+          <a class="shots" href="p/degril.html" aria-label="Ouvrir la fiche à montrer à Degril">
+            <img class="d" src="img/degril-d.jpg" alt="Aperçu ordinateur de la page d’accueil proposée à Degril" loading="lazy">
+            <img class="m" src="img/degril-m.jpg" alt="Aperçu téléphone" loading="lazy">
+            <span class="open">Ouvrir la fiche à montrer →</span>
+          </a>
+        </div>
+      </article>
+    </li>
+</ol>
+<footer>
+  <p>Sélection faite le 7 octobre 2026 à partir des résultats Google à Briançon (immobilier, cuisines, menuiserie, chauffage, rénovation, architectes, piscines). Positions et volumes : SE Ranking ; dirigeants : Annuaire des entreprises (data.gouv.fr) ; constats vérifiés sur chaque site le même jour. Les aperçus reprennent les photos et les informations publiées par chaque entreprise sur son propre site.</p>
+</footer>
+</div>
