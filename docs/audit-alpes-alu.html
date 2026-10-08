@@ -1,0 +1,373 @@
+<title>Audit Alpes Alu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout : dossier d'audit, une colonne de lecture (≈ 980 px), tableaux et graphiques pleine largeur de colonne */
+:root {
+  --bg: #f4f6f7; --surface: #ffffff; --ink: #13202a; --ink-2: #4a5965; --ink-3: #6f7d88; --line: #dbe2e7;
+  --accent: #1d5f86; --accent-soft: #e2edf4; --series: #2a78d6; --neutral-bar: #b7c1c9;
+  --crit: #b8372d; --crit-soft: #f8e4e1; --warn: #9a6512; --warn-soft: #f7ecd8; --good: #2c7a4b; --good-soft: #e0f0e6;
+  --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e161c; --surface: #152029; --ink: #e7edf1; --ink-2: #a7b6c1; --ink-3: #8394a1; --line: #263540;
+  --accent: #79b6dc; --accent-soft: #1a2d3a; --series: #3987e5; --neutral-bar: #4b5a65;
+  --crit: #ec7d72; --crit-soft: #3a1f1d; --warn: #dcab55; --warn-soft: #362a14; --good: #6cc08c; --good-soft: #17301f; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0e161c; --surface: #152029; --ink: #e7edf1; --ink-2: #a7b6c1; --ink-3: #8394a1; --line: #263540;
+  --accent: #79b6dc; --accent-soft: #1a2d3a; --series: #3987e5; --neutral-bar: #4b5a65;
+  --crit: #ec7d72; --crit-soft: #3a1f1d; --warn: #dcab55; --warn-soft: #362a14; --good: #6cc08c; --good-soft: #17301f; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--body); margin: 0; padding: 0 16px; }
+.doc { max-width: 980px; margin: 0 auto; padding-block: 48px 96px; }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -0.01em; line-height: 1.15; text-wrap: balance; margin: 0 0 .5em; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; }
+h2 { font-size: clamp(1.45rem, 3vw, 1.9rem); font-weight: 600; }
+h3 { font-size: 1.12rem; font-weight: 600; }
+p { margin: 0 0 1em; max-width: 68ch; }
+a { color: var(--accent); }
+.kicker { font: 600 .74rem/1.2 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; display: block; }
+.meta { color: var(--ink-3); font-size: .92rem; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+section { padding-block: 44px; border-top: 1px solid var(--line); }
+header.top { padding-bottom: 36px; }
+.lede { font-size: 1.18rem; color: var(--ink-2); max-width: 64ch; }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 28px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; min-width: 0; }
+.tile b { display: block; font: 500 1.7rem/1.1 var(--mono); font-variant-numeric: tabular-nums; margin-bottom: 4px; }
+.tile span { font-size: .88rem; color: var(--ink-2); }
+
+.verdict { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+.verdict li { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font: 600 .72rem/1 var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; white-space: nowrap; }
+.chip.crit { background: var(--crit-soft); color: var(--crit); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.chip.good { background: var(--good-soft); color: var(--good); }
+.chip.info { background: var(--accent-soft); color: var(--accent); }
+
+.figure { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 20px 14px; margin: 22px 0; position: relative; min-width: 0; }
+.figure h3 { margin-bottom: 2px; }
+.figure .meta { margin: 0 0 12px; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart text { fill: var(--ink-3); font: 12px var(--body); }
+.chart .grid line { stroke: var(--line); stroke-width: 1; }
+.chart .series-line { fill: none; stroke: var(--series); stroke-width: 2; stroke-linejoin: round; }
+.chart .series-area { fill: var(--series); opacity: .1; }
+.chart .cross { stroke: var(--ink-3); stroke-width: 1; }
+.chart .dot { fill: var(--series); stroke: var(--surface); stroke-width: 2; }
+.chart .anno { fill: var(--ink-2); font-weight: 600; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 6px 20px rgba(0,0,0,.12); border-radius: 8px; padding: 8px 10px; font-size: .85rem; white-space: nowrap; }
+.tip b { font: 500 1rem var(--mono); display: block; }
+
+.bars { display: grid; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: minmax(120px, 230px) 1fr; gap: 14px; align-items: center; }
+.bar-row .label { font-size: .95rem; min-width: 0; overflow-wrap: anywhere; }
+.bar-row .label small { display: block; color: var(--ink-3); font-size: .8rem; }
+.bar-track { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.bar { height: 14px; border-radius: 0 4px 4px 0; background: var(--neutral-bar); min-width: 3px; }
+.bar.hl { background: var(--series); }
+.bar-val { font: 500 .9rem var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+@media (max-width: 560px) { .bar-row { grid-template-columns: 1fr; gap: 4px; } }
+
+.table-wrap { overflow-x: auto; margin: 18px 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .94rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 .74rem/1.2 var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); background: var(--bg); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.r, th.r { text-align: right; }
+.vol { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.vol i { display: inline-block; height: 8px; border-radius: 0 3px 3px 0; background: var(--series); opacity: .75; }
+.pos { font: 500 .85rem var(--mono); padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+.pos.top { background: var(--good-soft); color: var(--good); }
+.pos.mid { background: var(--warn-soft); color: var(--warn); }
+.pos.none { background: var(--crit-soft); color: var(--crit); }
+
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 18px 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; min-width: 0; }
+.card h3 { margin-bottom: 6px; }
+.card p, .card li { font-size: .95rem; color: var(--ink-2); }
+.card ul { margin: 0; padding-left: 1.1em; }
+.card.feature { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.price { font: 500 1.6rem/1.1 var(--mono); color: var(--ink); margin: 6px 0 10px; }
+.price small { font: 400 .9rem var(--body); color: var(--ink-3); }
+
+.callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 20px; margin: 18px 0; }
+.callout p:last-child { margin: 0; }
+.steps { counter-reset: s; list-style: none; padding: 0; margin: 18px 0; display: grid; gap: 14px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 12px; }
+.steps li::before { content: counter(s); font: 600 .9rem/34px var(--mono); text-align: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); }
+.steps b { display: block; }
+.months { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.month { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; }
+.month b { font-family: var(--display); font-size: .95rem; }
+.month p { font-size: .92rem; color: var(--ink-2); margin: 4px 0 0; }
+footer { color: var(--ink-3); font-size: .86rem; padding-top: 28px; border-top: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<style>
+.vs { width: 100%; }
+.vs td.l, .vs th.l { background: var(--accent-soft); }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: .88rem; color: var(--ink-2); margin: 0 0 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 18px; height: 3px; border-radius: 2px; display: inline-block; }
+.chart .series-2 { fill: none; stroke: var(--series-2); stroke-width: 2; stroke-linejoin: round; }
+.chart .dot2 { fill: var(--series-2); stroke: var(--surface); stroke-width: 2; }
+.quote { border-left: 3px solid var(--accent); padding: 10px 16px; margin: 12px 0; background: var(--surface); border-radius: 0 10px 10px 0; font-size: .95rem; color: var(--ink-2); }
+.quote b { color: var(--ink); }
+:root { --series-2: #eb6834; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --series-2: #d95926; } }
+:root[data-theme="dark"] { --series-2: #d95926; }
+</style>
+<style>
+.chart .series-3 { fill: none; stroke: var(--series-3); stroke-width: 2; stroke-linejoin: round; }
+.chart .dot3 { fill: var(--series-3); stroke: var(--surface); stroke-width: 2; }
+.chart .series-line { stroke-width: 2.5; }
+td.na { color: var(--ink-3); }
+:root { --series-3: #8a63c9; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --series-3: #a585e0; } }
+:root[data-theme="dark"] { --series-3: #a585e0; }
+</style>
+<div class="doc">
+<header class="top">
+  <span class="kicker">Audit SEO &amp; GEO · 8 octobre 2026</span>
+  <h1>Alpes Alu : un vrai atelier depuis 1988, et 2 visites Google par mois</h1>
+  <p class="lede">Alpes Alu fabrique dans son atelier des Sablonnières, à L'Argentière-la-Bessée, des menuiseries que les magasins de réseau de Briançon commandent sur catalogue. L'IA de Google le sait déjà : sur « menuiserie aluminium hautes alpes », c'est Alpes Alu qu'elle cite en premier. Le site, lui, ne reçoit qu'environ 2 visites Google par mois, contre 52 pour Alp'Habitat et 45 pour La Miroiterie Gapençaise. Sur « fenêtre aluminium briançon », trois annonces et trois magasins de réseau passent devant lui.</p>
+  <p class="meta">Sources : SE Ranking (base France, octobre 2026), lecture des 43 pages du site, relevés Google du 8 octobre 2026 depuis Briançon, registre AFNIC. Le trafic indiqué est une estimation d'outil : aucune balise de statistiques n'est visible dans le code du site.</p>
+  <div class="tiles">
+    <div class="tile"><b>≈ 2</b><span>visites Google / mois, contre ≈ 52 pour Alp'Habitat et ≈ 45 pour La Miroiterie Gapençaise</span></div>
+    <div class="tile"><b>1<sup>er</sup></b><span>nom cité par l'IA de Google sur « menuiserie aluminium hautes alpes »</span></div>
+    <div class="tile"><b>7<sup>e</sup></b><span>sur « fenêtre aluminium briançon », derrière 3 annonces et 3 magasins de réseau</span></div>
+    <div class="tile"><b>37 / 43</b><span>pages sans description pour Google</span></div>
+    <div class="tile"><b>31 / 100</b><span>autorité du domaine, la plus haute des quatre menuisiers comparés</span></div>
+  </div>
+</header>
+
+<section>
+  <span class="kicker">Synthèse</span>
+  <h2>Ce qu'il faut retenir</h2>
+  <ul class="verdict">
+    <li><span class="chip good">Acquis</span><span>4<sup>e</sup> sur « menuiserie aluminium hautes alpes » et 1<sup>er</sup> nom cité par l'IA de Google sur cette recherche, devant Alp'Habitat et La Miroiterie Gapençaise. Autorité du domaine de 31, la plus haute des quatre. Qualification Qualibat RGE, nom de domaine à votre nom, et plus de 50 vraies photos d'atelier, d'équipe et de chantiers déjà en ligne.</span></li>
+    <li><span class="chip crit">Manque</span><span>À Briançon, les magasins de réseau tiennent la première page : Caséo, Tryba et Isofrance passent devant Alpes Alu sur « fenêtre aluminium briançon » (7<sup>e</sup>) et sur « menuiserie fenêtre briançon » (20<sup>e</sup>). Sur « volet roulant briançon », Alpes Alu est 31<sup>e</sup>, Alp'Habitat 6<sup>e</sup>. Sur « véranda hautes alpes », Alpes Alu n'apparaît pas.</span></li>
+    <li><span class="chip crit">Manque</span><span>Le site reçoit environ 2 visites Google par mois. Ses mots-clés les mieux placés sont des catalogues PDF de fournisseurs (Prolians, Atlantem, Installux), pas vos métiers.</span></li>
+    <li><span class="chip crit">Image</span><span>Sur une recherche « Alpes Alu », Google affiche sous votre site le texte RGPD de votre formulaire : « Alpes Alu traite les données recueillies pour l'établissement d'un contact… ». La page n'a pas de description.</span></li>
+    <li><span class="chip warn">Fragile</span><span>4 articles, tous de 2022 ; l'article sur la qualification RGE renvoie encore au Crédit d'impôt transition énergétique (CITE), supprimé en 2021. Le pied de page affiche « Copyright © 2022 ».</span></li>
+    <li><span class="chip warn">Technique</span><span>38 pages sur 43 sans titre principal (H1), titres de 99 caractères coupés par Google, rond de chargement qui cache la page, pages de démonstration du thème encore en ligne, doublons et 72 fiches PDF dans le sitemap.</span></li>
+    <li><span class="chip info">Leviers</span><span>Deux atouts que les magasins de réseau n'ont pas : la fabrication sur place (« fabriqué à L'Argentière ») et un service de dépannage (serrurerie, vitrerie, volets). Sur « serrurier ouverture de porte », les annonceurs paient 5,08 € le clic.</span></li>
+  </ul>
+</section>
+
+<section>
+  <span class="kicker">Face aux menuisiers aluminium du département</span>
+  <h2>La meilleure autorité des quatre, mais le moins de visites</h2>
+  <div class="table-wrap"><table class="vs">
+    <thead><tr><th>Indicateur</th><th class="r l">Alpes Alu<br>(L'Argentière)</th><th class="r">Alp'Habitat<br>(Chorges, showroom Briançon)</th><th class="r">Miroiterie Gapençaise<br>(La Roche-des-Arnauds)</th><th class="r">Technic'Aluminium<br>(Gap)</th></tr></thead>
+    <tbody>
+      <tr><td>Visites Google / mois (estimation)</td><td class="r num l">2</td><td class="r num">52</td><td class="r num">45</td><td class="r num">12</td></tr>
+      <tr><td>Mots-clés positionnés</td><td class="r num l">40</td><td class="r num">54</td><td class="r num">24</td><td class="r num">49</td></tr>
+      <tr><td>Mots-clés dans le top 5</td><td class="r num l">1</td><td class="r num">10</td><td class="r num">8</td><td class="r num">0</td></tr>
+      <tr><td>Sites qui font un lien vers le site</td><td class="r num l">47</td><td class="r num">108</td><td class="r num">42</td><td class="r num">19</td></tr>
+      <tr><td>Autorité du domaine (SE Ranking, sur 100)</td><td class="r num l">31</td><td class="r num">22</td><td class="r num">26</td><td class="r num">21</td></tr>
+      <tr><td>« menuiserie aluminium hautes alpes »</td><td class="r num l">4<sup>e</sup></td><td class="r num">2<sup>e</sup></td><td class="r num">7<sup>e</sup></td><td class="r num">32<sup>e</sup></td></tr>
+      <tr><td>Cité par l'IA de Google sur cette recherche</td><td class="r l">oui, en premier</td><td class="r">oui</td><td class="r">oui</td><td class="r">non</td></tr>
+      <tr><td>« fenêtre aluminium briançon »</td><td class="r num l">7<sup>e</sup></td><td class="r num">17<sup>e</sup></td><td class="r">absent</td><td class="r num">11<sup>e</sup></td></tr>
+      <tr><td>« menuiserie fenêtre briançon »</td><td class="r num l">20<sup>e</sup></td><td class="r num">26<sup>e</sup></td><td class="r">absent</td><td class="r">absent</td></tr>
+      <tr><td>« volet roulant briançon »</td><td class="r num l">31<sup>e</sup></td><td class="r num">6<sup>e</sup></td><td class="r">absent</td><td class="r">absent</td></tr>
+      <tr><td>« véranda hautes alpes »</td><td class="r l">absent</td><td class="r num">32<sup>e</sup></td><td class="r">absent</td><td class="r num">46<sup>e</sup></td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">Positions relevées dans Google le 8 octobre 2026 depuis Briançon. « absent » : hors des 100 premiers résultats. Trafic, liens et autorité : SE Ranking, base France.</p>
+  <div class="figure">
+    <h3>Visites Google estimées par mois</h3>
+    <p class="meta">Base France, juillet 2024 – octobre 2026 · source SE Ranking</p>
+    <div class="legend"><span><i style="background:var(--series)"></i>Alpes Alu</span><span><i style="background:var(--series-2)"></i>Alp'Habitat</span><span><i style="background:var(--series-3)"></i>Miroiterie Gapençaise</span></div>
+    <div class="chart" id="traffic"></div>
+  </div>
+  <p>Alpes Alu a l'autorité la plus élevée des quatre, et une qualification RGE comme Alp'Habitat. L'écart vient de ce que les autres ont écrit sur leur site :</p>
+  <ul>
+    <li><b>Alp'Habitat a une page par produit</b> (fenêtres, volets et stores, vérandas et pergolas, portails) et dit « Hautes-Alpes » et « Briançon » dans ses titres : 2<sup>e</sup> sur « menuiserie aluminium hautes alpes », 6<sup>e</sup> sur « volet roulant briançon ». Son trafic vient pourtant de chuter de 311 visites par mois en avril à 52 : la place se libère.</li>
+    <li><b>La Miroiterie Gapençaise se présente comme « fabricant menuiseries alu » depuis 1963</b>, dès le titre de son site : 8 mots-clés dans le top 5.</li>
+    <li><b>Technic'Aluminium, à Gap, écrit « Pose sur Briançon »</b> sur son accueil : il passe 11<sup>e</sup> sur « fenêtre aluminium briançon » sans atelier dans le Briançonnais.</li>
+    <li><b>Le titre de l'accueil d'Alpes Alu</b> fait 103 caractères et commence par « Accueil » : « Accueil - ALPES ALU : fabricant de fenêtres, portes-fenêtres en aluminium, portails, gardes-corps acier ». Google le coupe, et il ne cite ni L'Argentière, ni Briançon, ni les Hautes-Alpes.</li>
+  </ul>
+  <div class="callout"><p><b>Le message que les magasins de réseau ne peuvent pas tenir.</b> Caséo, Tryba et Isofrance vendent des produits fabriqués ailleurs. Alpes Alu conçoit, fabrique et pose depuis son propre atelier, à vingt minutes de Briançon. Ce message n'apparaît aujourd'hui ni dans les titres de vos pages, ni sur votre fiche Google.</p></div>
+</section>
+
+<section>
+  <span class="kicker">GEO · moteurs de réponse IA</span>
+  <h2>L'IA de Google vous cite déjà en premier</h2>
+  <p>Réponse de l'IA de Google à la recherche « menuiserie aluminium hautes alpes », relevée le 8 octobre 2026 :</p>
+  <div class="quote"><b>« Alpes Alu</b> : Situé à L'Argentière-la-Bessée (Parc d'activité Les Sablonnières), cet atelier fabrique et pose des menuiseries en aluminium, des volets, des gardes-corps et des verrières. » Viennent ensuite La Miroiterie Gapençaise, Miroiterie des Alpes (réseau Komilfo), Alp'Habitat et Isofrance Fenêtres. Même ici, l'extrait affiché sous votre site est le texte RGPD de votre formulaire : « Les données marquées d'un astérisque doivent obligatoirement être fournies… ».</div>
+  <div class="quote"><b>« véranda hautes alpes »</b> : l'IA cite Fenêtre &amp; Véranda des Alpes (Gap) et s'appuie notamment sur Alp'Habitat, Rénoval et Gustave Rideau. Alpes Alu, qui fabrique des vérandas, n'y figure pas : son site n'a qu'une page véranda de 271 mots.</div>
+  <div class="quote"><b>Dans les bases de SE Ranking</b> (IA de Google, Mode IA, ChatGPT), aucune réponse ne cite encore alpesalu.fr. Alp'Habitat y est cité deux fois, avec son adresse, son showroom de Briançon et ses produits.</div>
+  <p>Les IA reprennent les pages qui répondent clairement à une question. Google affiche déjà celles de vos clients : « Quel est le prix d'une menuiserie en aluminium par m² ? », « Quel est le prix moyen d'une fenêtre en aluminium ? », « Quel est le mieux entre PVC et alu ? », « Quel prix pour une véranda de 20 mètres carrés ? », « Quel est le tarif de la pose d'un volet roulant ? ». Alpes Alu a toutes ces réponses ; elles ne sont écrites nulle part sur son site.</p>
+</section>
+
+<section>
+  <span class="kicker">Opportunités</span>
+  <h2>Environ 9 000 recherches par mois sur vos métiers</h2>
+  <p>Volumes mensuels moyens en France (SE Ranking). Les recherches locales du Briançonnais sont trop faibles pour être mesurées une par une, mais Google les sert à partir des mêmes pages. La colonne « Alpes Alu » donne sa position actuelle quand elle est connue.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Famille</th><th>Recherches</th><th class="r">Vol. / mois</th><th>Alpes Alu</th><th>Contenu à créer</th></tr></thead>
+    <tbody>
+      <tr><td>Fenêtres et baies sur mesure</td><td>fenêtre aluminium sur mesure (590), changement fenêtre prix (390), menuiserie aluminium sur mesure (320), aide remplacement fenêtre (260), prix baie vitrée aluminium (170), prix fenêtre alu sur mesure (110)</td><td class="r num">≈ 1 840</td><td>7<sup>e</sup> sur « fenêtre aluminium briançon »</td><td>Pages fenêtres et baies vitrées « fabriquées à L'Argentière », guide prix Hautes-Alpes, page aides et RGE à jour</td></tr>
+      <tr><td>Volets et stores</td><td>prix volet roulant (2 400), store banne prix (320), volet roulant prix pose (260)</td><td class="r num">≈ 2 980</td><td>31<sup>e</sup> sur « volet roulant briançon »</td><td>Page volets roulants électriques et solaires pour le Briançonnais, prix de pose, dépannage</td></tr>
+      <tr><td>Portes, portails, métallerie</td><td>porte d'entrée aluminium (1 800), portail coulissant aluminium (50), escalier métallique extérieur (30)</td><td class="r num">≈ 1 880</td><td>absent</td><td>Pages portes d'entrée, portails, escaliers et garde-corps sur mesure, avec vos réalisations</td></tr>
+      <tr><td>Serrurerie, vitrerie, dépannage</td><td>ouverture de porte (390), serrurier ouverture de porte (210, 5,08 € le clic), serrurier gap (210), remplacement vitre (170), changer vitre fenêtre (170), porte blindée prix (40)</td><td class="r num">≈ 1 190</td><td>absent sur « serrurier briançon »</td><td>Page dépannage serrurerie et vitrerie, zone d'intervention, numéro direct</td></tr>
+      <tr><td>Vérandas, verrières, pergolas</td><td>verrière atelier (220), prix véranda aluminium (170), véranda gap (50), pergola bioclimatique prix (10)</td><td class="r num">≈ 450</td><td>absent sur « véranda hautes alpes »</td><td>Page vérandas et verrières avec réalisations et prix indicatifs</td></tr>
+      <tr><td>Recherches locales mesurées</td><td>menuisier gap (210), menuiserie gap (210), fenêtre gap (90), menuisier embrun (70), menuisier briançon (30), volet roulant gap (30), vitrier gap (30)</td><td class="r num">≈ 670</td><td>—</td><td>Pages de secteur : Briançon, Pays des Écrins, Guillestrois-Queyras, Embrun</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><p><b>Le bon ordre de grandeur.</b> Ces volumes sont nationaux : seule une petite part vient du Briançonnais. Mais chaque demande locale est un chantier de plusieurs milliers d'euros, et ce trafic se paie quand on l'achète : 2,27 € le clic sur « fenêtre gap », 5,08 € sur « serrurier ouverture de porte ». Sur Briançon, Tryba et deux autres annonceurs paient déjà pour passer devant vous.</p></div>
+</section>
+
+<section>
+  <span class="kicker">Audit technique</span>
+  <h2>Ce qui freine le site</h2>
+  <p>Lecture des 43 pages du sitemap (hors fiches PDF), vérifiée dans le code et dans Google. Le site tourne sur un thème WordPress du commerce (Promina), conçu fin 2021 : plutôt que de corriger ses défauts un à un, nous proposons de repartir sur un site neuf.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Priorité</th><th>Constat</th><th>Impact</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip crit">Haute</span></td><td>37 pages sur 43 sans description. Sur la recherche « Alpes Alu », Google affiche à la place le texte RGPD du formulaire de contact.</td><td>Première impression ratée, même pour un client qui vous cherche par votre nom.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>38 pages sur 43 sans titre principal (H1), dont l'accueil et les 17 fiches produits.</td><td>Google ne sait pas quel est le sujet principal de chaque page.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>Titres de page de 99 caractères en moyenne, tous sur le modèle « … - ALPES ALU : fabricant de fenêtres, portes-fenêtres en aluminium, portails, gardes-corps acier », sans ville ni secteur.</td><td>Titres coupés par Google ; aucune page ne vise Briançon ou les Hautes-Alpes.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Un rond de chargement jaune sur fond blanc cache la page tant que tout n'est pas chargé : 136 fichiers et plus de 2 Mo pour l'accueil.</td><td>Sur téléphone et en montagne, le visiteur attend devant un écran vide.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Pages de démonstration du thème encore en ligne et dans le sitemap : « Blog Standard », « Projects Standard », et un projet dont l'adresse est « guggenheim-museum ».</td><td>Pages sans rapport avec Alpes Alu proposées à Google.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Doublons : /fenetres/ et /service/fenetre/, /vitrerie/ et /service/vitrerie/, /volets-roulants/ et /service/volets/, /contact/ et /contactez-nous/.</td><td>Deux pages se disputent chaque recherche, aucune ne gagne.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>72 fiches de catalogues PDF de fournisseurs dans le sitemap. Ce sont elles qui ressortent sur Google (Prolians, Atlantem, Installux).</td><td>Le site travaille pour les marques de vos fournisseurs plutôt que pour vous.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Réalisations : 4 pages de 44 à 46 mots ; pages produits de 174 à 537 mots.</td><td>Trop peu de texte pour être classé ; rien à citer pour les IA.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Fautes visibles sur l'accueil : « Pour vous installez », « N'hésite-pas », « posés par no experts ».</td><td>Image moins soignée que votre travail.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Contenu daté : 4 articles de 2022, mention du CITE supprimé en 2021, « Copyright © 2022 », avis clients PagesJaunes de 2019.</td><td>Le site donne l'impression d'être à l'abandon.</td></tr>
+      <tr><td><span class="chip info">Faible</span></td><td>375 images sur 621 sans texte alternatif ; pas de données structurées d'entreprise locale (adresse, horaires, avis) ; 7 avis sur la fiche Google.</td><td>Moins d'informations comprises par Google et les IA.</td></tr>
+      <tr><td><span class="chip info">Faible</span></td><td>47 sites font un lien vers vous, dont beaucoup d'annuaires automatiques (.top, .monster, .sbs).</td><td>Peu de liens de qualité : presse locale, fournisseurs et partenaires à aller chercher.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">Points positifs : HTTPS, mise en page adaptée au téléphone, numéro cliquable, sitemap, WordPress à jour, et nom de domaine enregistré au nom d'Alpes Alu chez OVH (registre AFNIC) : changer de site ne dépend d'aucun prestataire.</p>
+</section>
+
+<section>
+  <span class="kicker">Stratégie</span>
+  <h2>Un site neuf, puis devenir l'atelier de référence du Briançonnais</h2>
+  <ol class="steps">
+    <li><span><b>Repartir sur un site neuf, qui vous appartient</b>Rapide, sans écran de chargement, construit pour Google et à la hauteur de vos réalisations. Vos contenus et vos photos sont repris ; chaque ancienne adresse est redirigée pour ne rien perdre. Google Analytics 4 avec suivi des appels et des demandes de devis ; fiche Google complète.</span></li>
+    <li><span><b>Dire partout « fabriqué à L'Argentière »</b>Dans les titres, sur l'accueil et sur la fiche Google : conception, fabrication et pose par la même équipe familiale, depuis 1988. C'est l'argument que Caséo, Tryba et Isofrance ne peuvent pas reprendre.</span></li>
+    <li><span><b>Une page par métier et par secteur</b>Fenêtres et baies, volets roulants, portes et portails, vérandas et verrières, escaliers et garde-corps, dépannage serrurerie et vitrerie ; et des pages Briançon, Pays des Écrins, Guillestrois-Queyras et Embrun, avec de vrais chantiers.</span></li>
+    <li><span><b>Montrer l'atelier et les chantiers</b>Vous avez déjà plus de 50 vraies photos : l'équipe, l'atelier, les camions, une vitre posée à la grue sur un toit, des escaliers et des portails posés dans la vallée. Chacune devient une réalisation avec son lieu et son histoire.</span></li>
+    <li><span><b>Répondre aux questions de prix et d'aides</b>Prix d'une fenêtre alu sur mesure dans les Hautes-Alpes, PVC ou alu en montagne, prix d'une véranda, aides à la rénovation réservées aux entreprises RGE : de quoi être cité par les IA.</span></li>
+    <li><span><b>Multiplier les avis</b>7 avis Google aujourd'hui : une demande simple après chaque chantier, par SMS avec un lien direct.</span></li>
+    <li><span><b>Mesurer chaque mois</b>Visites, appels, demandes de devis, positions et citations IA dans un compte rendu mensuel.</span></li>
+  </ol>
+  <div class="callout"><p><b>Ordre de grandeur :</b> un chantier de fenêtres, une véranda ou un escalier sur mesure se chiffre en milliers d'euros. Le site n'a besoin d'apporter qu'un ou deux chantiers de plus par an pour être rentable.</p></div>
+</section>
+
+<section>
+  <span class="kicker">Proposition</span>
+  <h2>L'offre</h2>
+  <div class="cols">
+    <div class="card">
+      <span class="kicker">Mise en place</span>
+      <h3>Nouveau site</h3>
+      <div class="price">1 900 € <small>HT, une fois</small></div>
+      <ul>
+        <li>Site neuf, rapide, adapté au mobile et construit pour Google</li>
+        <li>Page d'accueil premium qui met en avant l'atelier et vos réalisations</li>
+        <li>Reprise de vos contenus et de vos photos ; pages métiers et secteurs</li>
+        <li>Redirection de toutes les anciennes adresses</li>
+        <li>Fiche Google et suivi des appels et des demandes</li>
+      </ul>
+    </div>
+    <div class="card feature">
+      <span class="kicker">Chaque mois</span>
+      <h3>Abonnement</h3>
+      <div class="price">390 € <small>HT / mois</small></div>
+      <ul>
+        <li>2 contenus par mois : réalisations, pages de secteur, guides prix</li>
+        <li>Hébergement, sauvegardes et maintenance du site inclus</li>
+        <li>Fiche Google animée et demandes d'avis après chantier</li>
+        <li>Suivi des citations dans les IA</li>
+        <li>Compte rendu mensuel des visites et des demandes</li>
+      </ul>
+    </div>
+  </div>
+  <ul class="verdict">
+    <li><span class="chip good">Rentable</span><span>Un ou deux chantiers de plus par an grâce au site couvrent l'abonnement ; le compte rendu mensuel permet de le vérifier.</span></li>
+    <li><span class="chip info">Engagement</span><span>12 mois, puis mois par mois.</span></li>
+    <li><span class="chip info">Propriété</span><span>Le site, le nom de domaine et les contenus restent à votre nom. Si vous arrêtez l'abonnement, vous gardez tout.</span></li>
+  </ul>
+</section>
+
+<footer>
+  <p>Méthode et limites : volumes de recherche, trafic, liens, autorité et citations IA sont des estimations SE Ranking (base France, octobre 2026). Positions et réponses de l'IA relevées dans Google le 8 octobre 2026, sur ordinateur, depuis Briançon. Données du nom de domaine : registre public AFNIC. Aucune donnée privée de l'entreprise n'a été utilisée.</p>
+</footer>
+</div>
+
+<script>
+(function () {
+  const months = ["2024-07","2024-08","2024-09","2024-10","2024-11","2024-12","2025-01","2025-02","2025-03","2025-04","2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09","2026-10"];
+  const alu = [1,6,9,11,11,11,11,8,1,2,4,4,4,10,5,8,11,12,10,6,6,8,4,5,2,2,10,2];
+  const alp = [130,160,181,205,327,286,269,223,215,208,92,235,208,201,229,201,218,211,251,302,302,311,257,211,89,63,66,52];
+  const mir = [104,94,91,91,95,97,103,74,70,63,12,61,49,68,66,68,143,117,111,99,99,92,63,66,73,49,43,45];
+  const SERIES = [
+    { name: 'Alpes Alu', data: alu, line: 'series-line', dot: 'dot' },
+    { name: "Alp'Habitat", data: alp, line: 'series-2', dot: 'dot2' },
+    { name: 'Miroiterie', data: mir, line: 'series-3', dot: 'dot3' },
+  ];
+  const MOIS = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+  const fmtM = (m) => { const [y, mo] = m.split('-'); return MOIS[+mo - 1] + ' ' + y; };
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (n, a = {}) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); return e; };
+  const host = document.getElementById('traffic');
+  const W = 900, H = 300, m = { t: 20, r: 130, b: 30, l: 44 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b, yMax = 400;
+  const x = (i) => m.l + (i / (months.length - 1)) * iw;
+  const y = (v) => m.t + ih - (v / yMax) * ih;
+  const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': "Visites Google estimées par mois, juillet 2024 à octobre 2026 : Alp'Habitat de 130 à 52 avec un pic à 327, Miroiterie Gapençaise de 104 à 45, Alpes Alu entre 1 et 12" });
+  const g = el('g', { class: 'grid' });
+  [0, 100, 200, 300, 400].forEach((v) => {
+    g.appendChild(el('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v) }));
+    const t = el('text', { x: m.l - 8, y: y(v) + 4, 'text-anchor': 'end' }); t.textContent = v; svg.appendChild(t);
+  });
+  svg.appendChild(g);
+  months.forEach((mo, i) => { if (mo.endsWith('-01')) { const t = el('text', { x: x(i), y: H - 8, 'text-anchor': 'middle' }); t.textContent = mo.slice(0, 4); svg.appendChild(t); } });
+  const path = (arr) => arr.map((v, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ');
+  [...SERIES].reverse().forEach((s) => svg.appendChild(el('path', { d: path(s.data), class: s.line })));
+  const last = months.length - 1;
+  const labelY = { 'Alpes Alu': 12, "Alp'Habitat": -6, 'Miroiterie': 6 };
+  SERIES.forEach((s) => {
+    svg.appendChild(el('circle', { cx: x(last), cy: y(s.data[last]), r: 4, class: s.dot }));
+    const t = el('text', { x: x(last) + 8, y: y(s.data[last]) + labelY[s.name], class: 'anno' }); t.textContent = s.name + ' ' + s.data[last]; svg.appendChild(t);
+  });
+  const cross = el('line', { class: 'cross', y1: m.t, y2: m.t + ih, visibility: 'hidden' });
+  const hov = SERIES.map((s) => el('circle', { r: 4, class: s.dot, visibility: 'hidden' }));
+  svg.append(cross, ...hov);
+  const hit = el('rect', { x: m.l, y: m.t, width: iw, height: ih, fill: 'transparent', tabindex: 0 });
+  svg.appendChild(hit);
+  host.appendChild(svg);
+  const tip = document.createElement('div'); tip.className = 'tip'; tip.hidden = true;
+  host.parentElement.appendChild(tip);
+  let cur = last;
+  const show = (i) => {
+    cur = Math.max(0, Math.min(last, i));
+    SERIES.forEach((s, k) => { hov[k].setAttribute('cx', x(cur)); hov[k].setAttribute('cy', y(s.data[cur])); hov[k].setAttribute('visibility', 'visible'); });
+    cross.setAttribute('x1', x(cur)); cross.setAttribute('x2', x(cur)); cross.setAttribute('visibility', 'visible');
+    tip.replaceChildren();
+    const head = document.createElement('span'); head.textContent = fmtM(months[cur]); head.style.cssText = 'display:block;color:var(--ink-3);font-size:.8rem';
+    tip.append(head);
+    SERIES.forEach((s) => { const r = document.createElement('b'); r.textContent = s.data[cur] + ' ' + s.name; tip.append(r); });
+    tip.hidden = false;
+    const box = svg.getBoundingClientRect(), fb = host.parentElement.getBoundingClientRect();
+    const px = box.left - fb.left + (x(cur) / W) * box.width;
+    tip.style.left = Math.min(fb.width - tip.offsetWidth - 8, Math.max(8, px + 12)) + 'px';
+    tip.style.top = (box.top - fb.top + 10) + 'px';
+  };
+  const hide = () => { tip.hidden = true; [cross, ...hov].forEach((e) => e.setAttribute('visibility', 'hidden')); };
+  hit.addEventListener('pointermove', (e) => { const r = svg.getBoundingClientRect(); const sx = ((e.clientX - r.left) / r.width) * W; show(Math.round(((sx - m.l) / iw) * last)); });
+  hit.addEventListener('pointerleave', hide);
+  hit.addEventListener('focus', () => show(cur));
+  hit.addEventListener('blur', hide);
+  hit.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
+})();
+</script>
