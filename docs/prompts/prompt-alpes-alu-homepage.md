@@ -4,6 +4,13 @@ Contexte : c'est une maquette de démonstration que je présenterai à Alpes Alu
 
 L'enjeu commercial à garder en tête : à Briançon, des magasins de réseau (Caséo, Tryba, Isofrance) passent devant Alpes Alu sur Google. Alpes Alu, lui, conçoit, fabrique et pose depuis son propre atelier. La page doit le faire sentir en trois secondes : **un vrai atelier, une vraie famille, des menuiseries faites ici.**
 
+**Les 5 moments qui doivent rester en mémoire.** Tout le reste est au service de ces 5 moments. Réussis-les avant de peaufiner le reste :
+1. **La fenêtre qui s'ouvre sur les Écrins (hero).** Une vraie fenêtre aluminium en 3D temps réel (WebGL) : profilés en alu anodisé brossé, vitrage qui reflète et réfracte la montagne. Elle suit légèrement la souris, puis coulisse et s'efface au scroll pour dévoiler la vraie photo en plein écran.
+2. **La fenêtre qui se monte toute seule.** Une vue éclatée où dormant, ouvrant, joints, vitrage, poignée et crémone glissent à leur place au scroll, avec les cotes qui se tracent.
+3. **Le volet roulant comme transition.** Entre les grandes sections, un volet roulant descend lame par lame sur l'écran, puis remonte sur la section suivante. C'est la signature de la page : on ne l'a jamais vue ailleurs.
+4. **Le mur de l'atelier.** Les vraies photos de l'équipe et de l'atelier, présentées comme des vitrages encadrés, avec un reflet qui glisse dessus au passage de la souris.
+5. **La cornière jaune.** La bande en L du logo traverse l'écran à l'appel final et se transforme en bouton « Demander un devis ».
+
 # 0. Avant de coder
 
 1. Liste les skills disponibles dans ta session et charge ceux qui touchent au design front-end, à la mise en page ou aux artefacts (par exemple frontend-design ou artifact-design s'ils existent). N'invente pas de nom de skill : utilise ceux qui sont réellement listés.
@@ -169,8 +176,9 @@ Numérote chaque section en mono (« 01 / 16 ») et donne-lui un kicker, un titr
    - La coupe d'un profilé aluminium se dessine en traits fins pendant qu'un compteur défile de 1988 à 2026.
    - Le logo apparaît, puis l'écran s'ouvre comme un vantail qui pivote sur le hero.
 2. **Hero plein écran (100svh) :**
-   - Un grand cadre de fenêtre en SVG (dormant, ouvrant, petits bois facultatifs) occupe l'écran ; derrière, une vraie photo (une baie Alpes Alu ouverte sur la montagne, ou la vitre posée à la grue) en parallaxe, avec les silhouettes SVG des sommets des Écrins.
-   - Au premier scroll, la baie coulisse et dévoile toute la photo ; des cotes en mono apparaissent sur le cadre puis s'effacent.
+   - Une fenêtre aluminium en 3D temps réel occupe l'écran : profilés en alu anodisé brossé (matériau métallique, rugosité faible, reflets doux), vitrage avec transmission et légère réfraction. Derrière, une vraie photo (une baie Alpes Alu ouverte sur la montagne, ou la vitre posée à la grue) en parallaxe, avec les silhouettes SVG des sommets des Écrins.
+   - La fenêtre suit légèrement la souris (quelques degrés). Au premier scroll, l'ouvrant coulisse, la fenêtre recule et s'efface pour dévoiler toute la photo ; des cotes en mono apparaissent sur le cadre puis s'effacent.
+   - Repli obligatoire : si WebGL n'est pas disponible, sur les appareils modestes ou en prefers-reduced-motion, le même cadre est dessiné en SVG, avec la même ouverture en coulissant.
    - Le titre H1 apparaît ligne par ligne (SplitText, masques), suivi du sous-titre et de 2 boutons magnétiques (« Demander un devis », « Voir nos réalisations »).
    - En bas : « Faire défiler » animé, et une ligne en mono « L'Argentière-la-Bessée · Hautes-Alpes · depuis 1988 ».
 3. **Manifeste :**
@@ -227,7 +235,13 @@ Numérote chaque section en mono (« 01 / 16 ») et donne-lui un kicker, un titr
 **Outils :**
 - GSAP 3 avec ScrollTrigger, SplitText et éventuellement Flip (GSAP est entièrement gratuit, plugins compris).
 - Lenis pour le défilement doux, synchronisé avec ScrollTrigger.
+- Three.js (ou OGL, plus léger) uniquement pour la fenêtre 3D du hero : chargé après le premier affichage, moins de 150 Ko compressés pour la scène, géométrie modélisée en code (extrusions de profilés), environnement généré à partir d'une vraie photo de montagne d'Alpes Alu, pas de fichier HDR lourd.
 - Rien d'autre de lourd.
+
+**Transition « volet roulant » :**
+- Entre 3 ou 4 grandes sections (par exemple avant l'atelier, avant le dépannage et avant l'appel final), un volet SVG ou CSS à lames horizontales descend sur l'écran, lame par lame, au rythme du scroll, puis remonte sur la section suivante.
+- Les lames ont un léger relief alu brossé et une fine lumière qui passe entre elles.
+- Elle reste réversible au scroll vers le haut, ne bloque jamais le défilement et disparaît en prefers-reduced-motion.
 
 **Règles :**
 - N'anime que transform, opacity, clip-path et stroke-dashoffset.
@@ -350,5 +364,7 @@ Après la première version :
    - que chaque fait affiché figure dans la section 2 ;
    - qu'aucune photo de banque d'images n'est présentée comme une réalisation ;
    - que la navigation et les boutons sont bien inertes.
+
+4. Rejoue les 5 moments du début un par un, sur ordinateur et sur téléphone. Si l'un d'eux ne provoque pas un « waouh », reprends-le avant de livrer.
 
 Le résultat doit donner l'impression d'un site d'agence à 40 000 €, et faire dire à la famille Melquiond : « C'est exactement nous. » Prends le temps qu'il faut et ne livre que ce dont tu es fier.
