@@ -1,0 +1,340 @@
+<title>Audit Atelier de Roche</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout : dossier d'audit, une colonne de lecture (≈ 980 px), tableaux et graphiques pleine largeur de colonne */
+:root {
+  --bg: #f6f4f1; --surface: #ffffff; --ink: #1d1a16; --ink-2: #554d44; --ink-3: #7a7067; --line: #e3ddd5;
+  --accent: #8a4a1c; --accent-soft: #f3e8dd; --series: #b8611f; --neutral-bar: #c4bab0;
+  --crit: #b8372d; --crit-soft: #f8e4e1; --warn: #9a6512; --warn-soft: #f7ecd8; --good: #2c7a4b; --good-soft: #e0f0e6;
+  --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #16130f; --surface: #201b16; --ink: #efe9e2; --ink-2: #bfb4a8; --ink-3: #998e83; --line: #352d25;
+  --accent: #e2a574; --accent-soft: #3a2a1d; --series: #e08a45; --neutral-bar: #5a5047;
+  --crit: #ec7d72; --crit-soft: #3a1f1d; --warn: #dcab55; --warn-soft: #362a14; --good: #6cc08c; --good-soft: #17301f; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #16130f; --surface: #201b16; --ink: #efe9e2; --ink-2: #bfb4a8; --ink-3: #998e83; --line: #352d25;
+  --accent: #e2a574; --accent-soft: #3a2a1d; --series: #e08a45; --neutral-bar: #5a5047;
+  --crit: #ec7d72; --crit-soft: #3a1f1d; --warn: #dcab55; --warn-soft: #362a14; --good: #6cc08c; --good-soft: #17301f; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--body); margin: 0; padding: 0 16px; }
+.doc { max-width: 980px; margin: 0 auto; padding-block: 48px 96px; }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -0.01em; line-height: 1.15; text-wrap: balance; margin: 0 0 .5em; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; }
+h2 { font-size: clamp(1.45rem, 3vw, 1.9rem); font-weight: 600; }
+h3 { font-size: 1.12rem; font-weight: 600; }
+p { margin: 0 0 1em; max-width: 68ch; }
+a { color: var(--accent); }
+.kicker { font: 600 .74rem/1.2 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; display: block; }
+.meta { color: var(--ink-3); font-size: .92rem; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+section { padding-block: 44px; border-top: 1px solid var(--line); }
+header.top { padding-bottom: 36px; }
+.lede { font-size: 1.18rem; color: var(--ink-2); max-width: 64ch; }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 28px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; min-width: 0; }
+.tile b { display: block; font: 500 1.7rem/1.1 var(--mono); font-variant-numeric: tabular-nums; margin-bottom: 4px; }
+.tile span { font-size: .88rem; color: var(--ink-2); }
+
+.verdict { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+.verdict li { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font: 600 .72rem/1 var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; white-space: nowrap; }
+.chip.crit { background: var(--crit-soft); color: var(--crit); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.chip.good { background: var(--good-soft); color: var(--good); }
+.chip.info { background: var(--accent-soft); color: var(--accent); }
+
+.figure { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 20px 14px; margin: 22px 0; position: relative; min-width: 0; }
+.figure h3 { margin-bottom: 2px; }
+.figure .meta { margin: 0 0 12px; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart text { fill: var(--ink-3); font: 12px var(--body); }
+.chart .grid line { stroke: var(--line); stroke-width: 1; }
+.chart .series-line { fill: none; stroke: var(--series); stroke-width: 2; stroke-linejoin: round; }
+.chart .series-area { fill: var(--series); opacity: .1; }
+.chart .cross { stroke: var(--ink-3); stroke-width: 1; }
+.chart .dot { fill: var(--series); stroke: var(--surface); stroke-width: 2; }
+.chart .anno { fill: var(--ink-2); font-weight: 600; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 6px 20px rgba(0,0,0,.12); border-radius: 8px; padding: 8px 10px; font-size: .85rem; white-space: nowrap; }
+.tip b { font: 500 1rem var(--mono); display: block; }
+
+.bars { display: grid; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: minmax(120px, 230px) 1fr; gap: 14px; align-items: center; }
+.bar-row .label { font-size: .95rem; min-width: 0; overflow-wrap: anywhere; }
+.bar-row .label small { display: block; color: var(--ink-3); font-size: .8rem; }
+.bar-track { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.bar { height: 14px; border-radius: 0 4px 4px 0; background: var(--neutral-bar); min-width: 3px; }
+.bar.hl { background: var(--series); }
+.bar-val { font: 500 .9rem var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+@media (max-width: 560px) { .bar-row { grid-template-columns: 1fr; gap: 4px; } }
+
+.table-wrap { overflow-x: auto; margin: 18px 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .94rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 .74rem/1.2 var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); background: var(--bg); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.r, th.r { text-align: right; }
+.vol { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.vol i { display: inline-block; height: 8px; border-radius: 0 3px 3px 0; background: var(--series); opacity: .75; }
+.pos { font: 500 .85rem var(--mono); padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+.pos.top { background: var(--good-soft); color: var(--good); }
+.pos.mid { background: var(--warn-soft); color: var(--warn); }
+.pos.none { background: var(--crit-soft); color: var(--crit); }
+
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 18px 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; min-width: 0; }
+.card h3 { margin-bottom: 6px; }
+.card p, .card li { font-size: .95rem; color: var(--ink-2); }
+.card ul { margin: 0; padding-left: 1.1em; }
+.card.feature { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.price { font: 500 1.6rem/1.1 var(--mono); color: var(--ink); margin: 6px 0 10px; }
+.price small { font: 400 .9rem var(--body); color: var(--ink-3); }
+
+.callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 20px; margin: 18px 0; }
+.callout p:last-child { margin: 0; }
+.steps { counter-reset: s; list-style: none; padding: 0; margin: 18px 0; display: grid; gap: 14px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 12px; }
+.steps li::before { content: counter(s); font: 600 .9rem/34px var(--mono); text-align: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); }
+.steps b { display: block; }
+.months { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.month { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; }
+.month b { font-family: var(--display); font-size: .95rem; }
+.month p { font-size: .92rem; color: var(--ink-2); margin: 4px 0 0; }
+footer { color: var(--ink-3); font-size: .86rem; padding-top: 28px; border-top: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<style>
+.vs { width: 100%; }
+.verdict li > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+p, li, td { overflow-wrap: break-word; }
+.vs td.l, .vs th.l { background: var(--accent-soft); }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: .88rem; color: var(--ink-2); margin: 0 0 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 18px; height: 3px; border-radius: 2px; display: inline-block; }
+.chart .series-2 { fill: none; stroke: var(--series-2); stroke-width: 2; stroke-linejoin: round; }
+.chart .series-3 { fill: none; stroke: var(--series-3); stroke-width: 2; stroke-linejoin: round; stroke-dasharray: 5 4; }
+.chart .dot2 { fill: var(--series-2); stroke: var(--surface); stroke-width: 2; }
+.chart .dot3 { fill: var(--series-3); stroke: var(--surface); stroke-width: 2; }
+:root { --series-2: #2f6fb3; --series-3: #6e7a84; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --series-2: #6aa3e0; --series-3: #9aa6b0; } }
+:root[data-theme="dark"] { --series-2: #6aa3e0; --series-3: #9aa6b0; }
+</style>
+<div class="doc">
+<header class="top">
+  <span class="kicker">Audit SEO &amp; GEO · 9 octobre 2026</span>
+  <h1>Atelier de Roche : un atelier de dix personnes, un site que Google ne sait pas lire</h1>
+  <p class="lede">Bureau d'étude, commande numérique, qualification RGE, des cuisines, des escaliers et des fenêtres en mélèze de pays : le savoir-faire est là. Mais le site existe en double, sur deux adresses, et 8 de ses 11 pages indiquent à Google une « vraie » adresse qui n'existe pas. Résultat : environ une visite Google par mois, et un client qui cherche un menuisier à Briançon trouve d'abord les concurrents.</p>
+  <p class="meta">Sources : SE Ranking (base France, octobre 2026), lecture des 11 pages du site et des deux domaines, recherches Google localisées à Briançon les 7 et 9 octobre 2026. Le trafic indiqué est une estimation d'outil ; le vrai chiffre se lit dans Google Search Console.</p>
+  <div class="tiles">
+    <div class="tile"><b>≈ 1</b><span>visite Google par mois (estimation)</span></div>
+    <div class="tile"><b>4</b><span>mots-clés dans le top 100, contre 73 pour Tendances Cuisines</span></div>
+    <div class="tile"><b>8 / 11</b><span>pages qui renvoient Google vers une adresse en erreur 404</span></div>
+    <div class="tile"><b>2</b><span>domaines qui affichent exactement le même site</span></div>
+    <div class="tile"><b>62</b><span>sites qui citent déjà Atelier de Roche, plus que ses concurrents</span></div>
+  </div>
+</header>
+
+<section>
+  <span class="kicker">Synthèse</span>
+  <h2>Ce qu'il faut retenir</h2>
+  <ul class="verdict">
+    <li><span class="chip good">Acquis</span><span>1<sup>er</sup> sur son nom, avec les liens de site sous le résultat. 6<sup>e</sup> sur « escalier bois briançon » et 9<sup>e</sup> sur « menuisier serre chevalier ». 62 sites font un lien vers atelierderoche.com, plus que vers Menuiserie Alpes Bois (46) ou Tendances Cuisines (47).</span></li>
+    <li><span class="chip crit">Bloquant</span><span>Le même site est en ligne sur atelierderoche.com et sur atelierderoche-menuiserie.fr, sans redirection de l'un vers l'autre. Google voit deux copies identiques et partage entre elles le peu de crédit du site. L'ancien domaine, celui qu'affiche encore la page Facebook, était classé sur 54 mots-clés en 2020 ; il en reste 7.</span></li>
+    <li><span class="chip crit">Bloquant</span><span>8 pages sur 11 déclarent à Google que leur adresse officielle est, par exemple, « www.atelierderoche.com/cuisines-bains/ ». Cette adresse répond « page introuvable ». Google ne sait pas quelle version montrer, et n'en montre presque aucune.</span></li>
+    <li><span class="chip crit">Manque</span><span>Absent du top 100 sur « menuisier briançon » et « dressing sur mesure briançon », 24<sup>e</sup> sur « cuisiniste briançon ». Menuiserie Alpes Bois y est 3<sup>e</sup> et 4<sup>e</sup>, avec une page par métier.</span></li>
+    <li><span class="chip warn">Contenu</span><span>Pages métier de 120 à 200 mots, sauf la cuisine (420). Rien sur le dressing, le ski room, la salle de bain ou les garde-corps, qui ne sont que cités. Trois réalisations en ligne.</span></li>
+    <li><span class="chip warn">Image</span><span>La politique de confidentialité est copiée d'un autre site : elle parle de « ausensdenospas.com » et s'exprime à la première personne, au féminin.</span></li>
+    <li><span class="chip info">IA</span><span>Aucune mention d'Atelier de Roche relevée par SE Ranking dans les réponses de Google, ChatGPT, Gemini ou Perplexity.</span></li>
+  </ul>
+</section>
+
+<section>
+  <span class="kicker">Face aux concurrents du Briançonnais</span>
+  <h2>Ce que Menuiserie Alpes Bois et Tendances Cuisines font mieux</h2>
+  <div class="table-wrap"><table class="vs">
+    <thead><tr><th>Indicateur</th><th class="r l">Atelier de Roche</th><th class="r">Menuiserie Alpes Bois</th><th class="r">Tendances Cuisines</th></tr></thead>
+    <tbody>
+      <tr><td>Mots-clés dans le top 100 (octobre 2026)</td><td class="r num l">4</td><td class="r num">20</td><td class="r num">73</td></tr>
+      <tr><td>Mots-clés dans le top 10</td><td class="r num l">1</td><td class="r num">3</td><td class="r num">9</td></tr>
+      <tr><td>Sites qui font un lien vers le site</td><td class="r num l">62</td><td class="r num">46</td><td class="r num">47</td></tr>
+      <tr><td>Autorité du domaine (SE Ranking, sur 100)</td><td class="r num l">11</td><td class="r num">19</td><td class="r num">10</td></tr>
+      <tr><td>Une page par métier, avec la ville dans le titre</td><td class="r l">non</td><td class="r">oui</td><td class="r">oui</td></tr>
+      <tr><td>« cuisiniste briançon »</td><td class="r num l">24<sup>e</sup></td><td class="r num">4<sup>e</sup></td><td class="r num">7<sup>e</sup></td></tr>
+      <tr><td>« menuisier briançon »</td><td class="r num l">absent</td><td class="r num">3<sup>e</sup></td><td class="r num">absent</td></tr>
+      <tr><td>« salle de bain briançon »</td><td class="r num l">26<sup>e</sup></td><td class="r num">8<sup>e</sup></td><td class="r num">5<sup>e</sup></td></tr>
+      <tr><td>« dressing sur mesure briançon »</td><td class="r num l">absent</td><td class="r num">absent</td><td class="r num">3<sup>e</sup></td></tr>
+      <tr><td>« escalier bois briançon »</td><td class="r num l">6<sup>e</sup></td><td class="r num">absent</td><td class="r num">9<sup>e</sup></td></tr>
+    </tbody>
+  </table></div>
+  <div class="figure">
+    <h3>Mots-clés classés dans les 100 premiers résultats Google</h3>
+    <p class="meta">Base France, novembre 2025 (début des données pour atelierderoche.com) – octobre 2026 · source SE Ranking</p>
+    <div class="legend"><span><i style="background:var(--series)"></i>Atelier de Roche</span><span><i style="background:var(--series-2)"></i>Menuiserie Alpes Bois</span><span><i style="background:var(--series-3)"></i>Tendances Cuisines</span></div>
+    <div class="chart" id="traffic"></div>
+  </div>
+  <p>Sur un marché aussi local, les outils estiment le trafic de tous ces sites à quelques visites par mois, et ils sous-évaluent les recherches faites sur Google Maps. La bonne mesure, ce sont les positions. Atelier de Roche est le seul à avoir plus de liens que ses concurrents, et le seul à ne pas en profiter. Ses concurrents n'ont rien de plus que lui, sauf trois choses :</p>
+  <ul>
+    <li><b>Une seule adresse de site.</b> Tout le crédit de leurs liens va au même endroit.</li>
+    <li><b>Une page par métier, qui dit où.</b> Alpes Bois a une page cuisine, une page salle de bain (« Réalisation de salle de bains sur mesure à Briançon »), une page menuiserie bois, une page ébéniste. Tendances Cuisines a des pages agencement, dressing, salles de bains et escaliers : 8 mots-clés dans le top 5.</li>
+    <li><b>Du texte qui répond.</b> Atelier de Roche a deux titres « Les tables » et « Les ski-room » sans aucun contenu en dessous.</li>
+  </ul>
+</section>
+
+<section>
+  <span class="kicker">Positions · recherches Google vues depuis Briançon</span>
+  <h2>Ce que voit un client qui cherche un artisan</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Recherche</th><th>Atelier de Roche</th><th>En tête</th></tr></thead>
+    <tbody>
+      <tr><td>« Atelier de Roche L'Argentière-la-Bessée »</td><td><span class="pos top">1er</span></td><td>Atelier de Roche, avec liens de site</td></tr>
+      <tr><td>« escalier bois briançon »</td><td><span class="pos top">6e</span></td><td>Treppenmeister, ADN Métallerie, Thibo Charpente</td></tr>
+      <tr><td>« menuisier serre chevalier »</td><td><span class="pos mid">9e</span></td><td>Travaux.com, Pages Jaunes, Monts &amp; Merveilles</td></tr>
+      <tr><td>« cuisiniste briançon »</td><td><span class="pos mid">24e</span></td><td>MH Cuisines, Caséo, Travaux.com, Menuiserie Alpes Bois, FB Design</td></tr>
+      <tr><td>« salle de bain briançon »</td><td><span class="pos mid">26e</span></td><td>Au Fil du Bain, Richardson, Andrety, Germann Habitat, Tendances</td></tr>
+      <tr><td>« menuiserie fenetre briançon »</td><td><span class="pos mid">35e</span></td><td>Tryba, Caséo, Isofrance ; Menuiserie Agencement 05 7<sup>e</sup></td></tr>
+      <tr><td>« menuisier briançon »</td><td><span class="pos none">absent</span></td><td>Menuiserie Agencement 05, Pages Jaunes, Menuiserie Alpes Bois</td></tr>
+      <tr><td>« dressing sur mesure briançon »</td><td><span class="pos none">absent</span></td><td>Caséo, Pages Jaunes, Tendances Cuisines, annuaire Elle Déco</td></tr>
+      <tr><td>« ski room sur mesure »</td><td><span class="pos none">absent</span></td><td>Rénov Concept Lyon (ski room à L'Alpe d'Huez), Koralp, Dunoyer ; aucun site du Briançonnais identifié</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">Classement des résultats naturels, hors annonces, relevé les 7 et 9 octobre 2026 sur ordinateur, position géographique Briançon.</p>
+</section>
+
+<section>
+  <span class="kicker">GEO · moteurs de réponse IA</span>
+  <h2>Les IA ne connaissent pas encore Atelier de Roche</h2>
+  <p>Les IA (l'aperçu IA de Google, ChatGPT, Gemini, Perplexity) recommandent une entreprise quand plusieurs sources disent la même chose d'elle, et quand son site répond clairement à la question posée. Aujourd'hui, les sources se contredisent :</p>
+  <ul>
+    <li><b>Trois adresses différentes</b> : « 14, rue de la Conciergerie » sur le site et Mappy, « 27 avenue Charles de Gaulle » sur Facebook et Nos artisans ont du talent, « avenue du Général de Gaulle » au registre du commerce.</li>
+    <li><b>Deux sites</b> : Facebook renvoie vers atelierderoche-menuiserie.fr, la fiche Google vers atelierderoche.com.</li>
+    <li><b>Une histoire que le site ne raconte pas.</b> Le Dauphiné explique que le nom vient d'un local situé rue de Roche, à Briançon, et cite un prix de l'excellence territoriale en 2016. Le site ne dit ni l'origine du nom, ni ce prix, et la date d'installation à L'Argentière (2009) n'apparaît que sur la page Contact.</li>
+  </ul>
+  <p>Ce sont précisément ces faits (lieu, date, métier, qualification RGE, réalisations nommées) que les IA reprennent dans leurs réponses. Les écrire une fois, de la même façon partout, suffit à exister pour elles.</p>
+</section>
+
+<section>
+  <span class="kicker">Opportunités</span>
+  <h2>Les métiers d'Atelier de Roche, tels que les clients les cherchent</h2>
+  <p>Volumes mensuels moyens en France (SE Ranking). La colonne « Roche » donne la meilleure position actuelle d'Atelier de Roche sur la recherche locale équivalente.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Métier</th><th>Recherches</th><th class="r">Vol. / mois</th><th>Roche</th><th>Page à créer</th></tr></thead>
+    <tbody>
+      <tr><td>Cuisines</td><td>cuisine sur mesure (4 400), cuisine en bois (4 400), cuisine bois massif (540), cuisine chalet (480)</td><td class="r num">≈ 9 800</td><td>24<sup>e</sup> sur « cuisiniste briançon »</td><td>Cuisines sur mesure en bois massif, avec les réalisations</td></tr>
+      <tr><td>Rangements</td><td>dressing sur mesure (14 800), agencement sur mesure (320), table sur mesure (240), menuiserie sur mesure (120)</td><td class="r num">≈ 15 500</td><td>absent sur « dressing sur mesure briançon »</td><td>Dressing et placards ; tables et mobilier (la table papillon en mélèze)</td></tr>
+      <tr><td>Escaliers</td><td>escalier bois (9 900), escalier bois sur mesure (590), garde corps bois metal (320)</td><td class="r num">≈ 10 800</td><td>6<sup>e</sup> sur « escalier bois briançon »</td><td>Escaliers bois et bois-métal, garde-corps</td></tr>
+      <tr><td>Fenêtres et portes</td><td>volet bois (14 800), porte d'entrée bois (5 400), fenêtre bois (4 400), fenêtre rge (170), fenêtre mélèze (40)</td><td class="r num">≈ 24 800</td><td>35<sup>e</sup> sur « menuiserie fenetre briançon »</td><td>Fenêtres bois RGE et aides ; portes d'entrée bois sur mesure</td></tr>
+      <tr><td>Montagne</td><td>ski room (non mesuré), parquet mélèze (90), bardage mélèze (10)</td><td class="r num">≈ 100</td><td>absent ; aucun artisan local en 1<sup>re</sup> page</td><td>Ski room sur mesure : la page que personne n'a faite dans la vallée</td></tr>
+      <tr><td>Salles de bain</td><td>salle de bain sur mesure (170)</td><td class="r num">≈ 170</td><td>26<sup>e</sup> sur « salle de bain briançon »</td><td>Salles de bain bois et pierre</td></tr>
+      <tr><td>Le métier, près de chez soi</td><td>menuisier embrun (70), menuisier briançon (30), menuisier hautes alpes (30)</td><td class="r num">≈ 130</td><td>absent sur « menuisier briançon »</td><td>Accueil réécrit : menuisier agenceur, de L'Argentière à Briançon, Serre Chevalier et Embrun</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><p><b>Ces volumes sont nationaux.</b> Pour la plupart de ces recherches, Google affiche les entreprises proches de la personne qui cherche : à Briançon, ce sont les artisans du Briançonnais. Seule une petite part de ces recherches vient de la vallée, mais un seul chantier de cuisine, d'escalier ou d'agencement complet vaut largement le travail sur le site. Aujourd'hui, ce client trouve d'abord Menuiserie Alpes Bois, Tendances Cuisines ou FB Design.</p></div>
+</section>
+
+<section>
+  <span class="kicker">Audit technique</span>
+  <h2>Ce qui freine le site</h2>
+  <p>Lecture des 11 pages du sitemap, des deux domaines et des réponses du serveur.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Priorité</th><th>Constat</th><th>Impact</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip crit">Haute</span></td><td>atelierderoche.com et atelierderoche-menuiserie.fr servent des pages identiques, sans redirection. Le robots.txt de atelierderoche.com déclare le sitemap… de l'autre domaine.</td><td>Contenu en double ; liens et crédit partagés entre deux sites.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>8 pages sur 11 ont une balise « canonical » vers une adresse en 404 (« www.atelierderoche.com/fenetres/ », « /portes/ », « /contact/ »…), avec « www » alors que le sitemap n'en a pas. La page Agencements en a même deux, contradictoires.</td><td>Google ignore ou écarte les pages métier.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>La version http n'est pas redirigée vers https : les deux répondent. Google affiche d'ailleurs la page Contact en http dans les liens de site.</td><td>Mention « Non sécurisé » dans le navigateur, doublons.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>120 à 200 mots visibles par page métier ; une phrase répétée deux fois sur la page Cuisines ; titres « Les tables » et « Les ski-room » sans contenu ; 3 réalisations.</td><td>Rien à classer pour Google, rien à citer pour les IA.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Aucune donnée structurée (entreprise locale, adresse, horaires, zone d'intervention, qualification RGE).</td><td>Google et les IA doivent deviner ces informations.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Politique de confidentialité copiée d'un autre site (« ausensdenospas.com », première personne au féminin) ; « © 2024 » en pied de page.</td><td>Image peu sérieuse, risque juridique.</td></tr>
+      <tr><td><span class="chip info">Faible</span></td><td>Photos en JPEG jusqu'à 660 Ko, aucune en WebP ou AVIF ; menu balisé en titres H2 (12 à 20 par page) ; /index.html, doublon de l'accueil, présent dans le sitemap.</td><td>Pages plus lentes sur mobile, structure confuse.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">Points positifs : titre et description sur chaque page, https disponible avec HSTS, Google Tag Manager et Axeptio installés, sitemap mis à jour en octobre 2025, photos maison (crédit photo : Laurent Pontvianne).</p>
+</section>
+
+<section>
+  <span class="kicker">Stratégie</span>
+  <h2>Devenir l'atelier qu'on trouve, de L'Argentière à Briançon</h2>
+  <ol class="steps">
+    <li><span><b>Une seule adresse, en une semaine</b>Garder atelierderoche.com en https. Rediriger définitivement atelierderoche-menuiserie.fr, le http et /index.html. Corriger les canonical, le robots.txt et le sitemap, ouvrir Google Search Console. Puis mettre Facebook, Pages Jaunes et les annuaires à la même adresse et au même site.</span></li>
+    <li><span><b>Une page par métier, ancrée dans la vallée</b>Cuisines, salles de bain, dressing et placards, ski room, escaliers et garde-corps, fenêtres RGE, portes, tables et mobilier. Chaque page parle des essences (mélèze de pays), des matériaux (Dekton, granit, quartz), du bureau d'étude, et des villages où l'atelier a posé.</span></li>
+    <li><span><b>Montrer l'atelier</b>Passer de 3 à une quinzaine de réalisations, chacune avec son lieu, ses contraintes et ses photos. La table papillon en mélèze et Dekton, avec sa vidéo, est déjà le bon modèle.</span></li>
+    <li><span><b>Raconter l'histoire, une fois, partout pareil</b>Le local de la rue de Roche à Briançon, d'où vient le nom, l'installation à L'Argentière en 2009, l'équipe de plus de dix personnes, la commande numérique, la qualification RGE. C'est ce que Google et les IA reprennent.</span></li>
+    <li><span><b>Soigner la fiche Google</b>Catégories menuisier, cuisiniste et agenceur, photos de réalisations, et une demande d'avis après chaque pose.</span></li>
+    <li><span><b>Mesurer chaque mois</b>Positions, demandes de contact et appels, dans un compte rendu court.</span></li>
+  </ol>
+  <div class="callout"><p><b>La bonne nouvelle :</b> le plus gros du problème est technique, et se corrige vite. Atelier de Roche a déjà plus de sites qui le citent que ses concurrents, et des réalisations à montrer depuis 2009. Une fois le site réuni sous une seule adresse, chaque page métier a de vraies chances d'entrer en première page sur le Briançonnais.</p></div>
+</section>
+
+<footer>
+  <p>Méthode et limites : volumes de recherche, trafic, liens et mots-clés sont des estimations SE Ranking (base France, octobre 2026). Positions relevées dans Google les 7 et 9 octobre 2026, sur ordinateur, avec Briançon comme position. Le trafic réel se lit dans Google Search Console, à ouvrir sur atelierderoche.com. Aucune donnée privée de l'entreprise n'a été utilisée.</p>
+</footer>
+</div>
+
+<script>
+(function () {
+  const months = ["2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09","2026-10"];
+  const roche = [1,3,7,8,7,11,4,4,4,4,4,4];
+  const alpes = [48,48,45,40,40,40,35,31,29,20,21,20];
+  const tend = [89,87,92,97,98,105,93,90,84,69,81,73];
+  const MOIS = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+  const fmtM = (m) => { const [y, mo] = m.split('-'); return MOIS[+mo - 1] + ' ' + y; };
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (n, a = {}) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); return e; };
+  const host = document.getElementById('traffic');
+  const W = 900, H = 300, m = { t: 20, r: 130, b: 30, l: 44 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b, yMax = 120;
+  const x = (i) => m.l + (i / (months.length - 1)) * iw;
+  const y = (v) => m.t + ih - (v / yMax) * ih;
+  const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Mots-clés classés dans le top 100 Google, de novembre 2025 à octobre 2026 : Tendances Cuisines de 89 à 73, Menuiserie Alpes Bois de 48 à 20, Atelier de Roche de 1 à 4' });
+  const g = el('g', { class: 'grid' });
+  [0, 30, 60, 90, 120].forEach((v) => {
+    g.appendChild(el('line', { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v) }));
+    const t = el('text', { x: m.l - 8, y: y(v) + 4, 'text-anchor': 'end' }); t.textContent = v; svg.appendChild(t);
+  });
+  svg.appendChild(g);
+  months.forEach((mo, i) => { if (i % 2 === 0) { const t = el('text', { x: x(i), y: H - 8, 'text-anchor': 'middle' }); const [yy, mm] = mo.split('-'); t.textContent = MOIS[+mm - 1] + (mm === '01' || i === 0 ? ' ' + yy.slice(2) : ''); svg.appendChild(t); } });
+  const path = (arr) => arr.map((v, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ');
+  svg.appendChild(el('path', { d: path(tend), class: 'series-3' }));
+  svg.appendChild(el('path', { d: path(alpes), class: 'series-2' }));
+  svg.appendChild(el('path', { d: path(roche), class: 'series-line' }));
+  const last = months.length - 1;
+  [[tend, 'dot3', 'Tendances 73'], [alpes, 'dot2', 'Alpes Bois 20'], [roche, 'dot', 'Roche 4']].forEach(([arr, cls, label]) => {
+    svg.appendChild(el('circle', { cx: x(last), cy: y(arr[last]), r: 4, class: cls }));
+    const t = el('text', { x: x(last) + 8, y: y(arr[last]) + 4, class: 'anno' }); t.textContent = label; svg.appendChild(t);
+  });
+  const cross = el('line', { class: 'cross', y1: m.t, y2: m.t + ih, visibility: 'hidden' });
+  const h1 = el('circle', { r: 4, class: 'dot', visibility: 'hidden' });
+  const h2 = el('circle', { r: 4, class: 'dot2', visibility: 'hidden' });
+  const h3 = el('circle', { r: 4, class: 'dot3', visibility: 'hidden' });
+  svg.append(cross, h3, h2, h1);
+  const hit = el('rect', { x: m.l, y: m.t, width: iw, height: ih, fill: 'transparent', tabindex: 0 });
+  svg.appendChild(hit);
+  host.appendChild(svg);
+  const tip = document.createElement('div'); tip.className = 'tip'; tip.hidden = true;
+  host.parentElement.appendChild(tip);
+  let cur = last;
+  const show = (i) => {
+    cur = Math.max(0, Math.min(last, i));
+    [[h1, roche], [h2, alpes], [h3, tend]].forEach(([c, arr]) => { c.setAttribute('cx', x(cur)); c.setAttribute('cy', y(arr[cur])); c.setAttribute('visibility', 'visible'); });
+    cross.setAttribute('x1', x(cur)); cross.setAttribute('x2', x(cur)); cross.setAttribute('visibility', 'visible');
+    tip.replaceChildren();
+    const head = document.createElement('span'); head.textContent = fmtM(months[cur]); head.style.cssText = 'display:block;color:var(--ink-3);font-size:.8rem';
+    const rows = [[roche, 'Atelier de Roche'], [alpes, 'Alpes Bois'], [tend, 'Tendances']].map(([arr, n]) => { const b = document.createElement('b'); b.textContent = arr[cur] + ' ' + n; return b; });
+    tip.append(head, ...rows); tip.hidden = false;
+    const box = svg.getBoundingClientRect(), fb = host.parentElement.getBoundingClientRect();
+    const px = box.left - fb.left + (x(cur) / W) * box.width;
+    tip.style.left = Math.min(fb.width - tip.offsetWidth - 8, Math.max(8, px + 12)) + 'px';
+    tip.style.top = (box.top - fb.top + 10) + 'px';
+  };
+  const hide = () => { tip.hidden = true; [cross, h1, h2, h3].forEach((e) => e.setAttribute('visibility', 'hidden')); };
+  hit.addEventListener('pointermove', (e) => { const r = svg.getBoundingClientRect(); const sx = ((e.clientX - r.left) / r.width) * W; show(Math.round(((sx - m.l) / iw) * last)); });
+  hit.addEventListener('pointerleave', hide);
+  hit.addEventListener('focus', () => show(cur));
+  hit.addEventListener('blur', hide);
+  hit.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') show(cur - 1); if (e.key === 'ArrowRight') show(cur + 1); });
+})();
+</script>
