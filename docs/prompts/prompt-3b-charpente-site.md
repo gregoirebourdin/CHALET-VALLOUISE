@@ -57,7 +57,8 @@ Tu es un développeur front-end et designer web senior. Tu construis des sites d
 
 ### Typographies
 
-- **Titres :** Nohemi Bold et SemiBold, auto-hébergée (licence et fichiers : `[À VALIDER : fichiers Nohemi]`).
+- **Titres :** Nohemi Bold et SemiBold, auto-hébergée en WOFF2.
+  - Elle est diffusée gratuitement par son créateur, Rajesh Rajput, sur Gumroad (rajputrajesh-448.gumroad.com/l/NOHEMI9), qui la déclare utilisable pour des projets commerciaux. Vérifie le fichier de licence du téléchargement avant la mise en ligne.
   - Si elle n'est pas disponible, choisis une grotesque géométrique très grasse au rendu proche, et justifie ce choix dans design.md.
   - Approche légèrement serrée (−0,02 em) ; deux ou trois mots par titre en vert `#336233`. Dans les fiches, ces mots sont entre `**`.
 - **Texte :** Inter, avec les mots forts en gras comme dans la maquette.
