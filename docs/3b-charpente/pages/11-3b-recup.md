@@ -453,7 +453,7 @@ Oui. Nous utilisons du bois issu des chantiers de déconstruction, transformé e
 | rénover la charpente existante | `/renovation-charpente-combles/` |
 | charpente bois traditionnelle | `/charpente-bois/` |
 | garde-corps et balcons bois | `/balcon-terrasse-abri-bois/` |
-| Jean-Michel Tardy, Compagnon du Devoir | `/a-propos/` |
+| Jean-Michel Tardy, formé chez les Compagnons du Devoir | `/a-propos/` |
 | charpentier en Vallouise et Pays des Écrins | `/charpentier-vallouise-pays-des-ecrins/` |
 
 Liens entrants à prévoir : depuis le menu principal (lien mis en avant, pastille verte), depuis chaque page de prestation (02 à 10), depuis les fiches de réalisation 19, 15 et 13, depuis l'accueil (service « Utilisation de bois de réemploi »).
