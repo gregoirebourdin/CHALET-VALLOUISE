@@ -1,0 +1,427 @@
+<title>Audit 3B Charpente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout : dossier d'audit, une colonne de lecture (≈ 980 px), tableaux et graphiques pleine largeur de colonne */
+:root {
+  --bg: #f8f4ee; --surface: #ffffff; --ink: #102311; --ink-2: #44513f; --ink-3: #6b7266; --line: #e3ddd2;
+  --accent: #2c4f2d; --accent-soft: #e2efe0; --series: #336233; --neutral-bar: #c9c3b6;
+  --crit: #b8372d; --crit-soft: #f8e4e1; --warn: #9a6512; --warn-soft: #f7ecd8; --good: #2c7a4b; --good-soft: #e0f0e6;
+  --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #101510; --surface: #171e17; --ink: #e8efe4; --ink-2: #b2bfab; --ink-3: #8a9684; --line: #2a3428;
+  --accent: #a3d2a3; --accent-soft: #1d2d1d; --series: #8cc78c; --neutral-bar: #4a5446;
+  --crit: #ec7d72; --crit-soft: #3a1f1d; --warn: #dcab55; --warn-soft: #362a14; --good: #6cc08c; --good-soft: #17301f; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #101510; --surface: #171e17; --ink: #e8efe4; --ink-2: #b2bfab; --ink-3: #8a9684; --line: #2a3428;
+  --accent: #a3d2a3; --accent-soft: #1d2d1d; --series: #8cc78c; --neutral-bar: #4a5446;
+  --crit: #ec7d72; --crit-soft: #3a1f1d; --warn: #dcab55; --warn-soft: #362a14; --good: #6cc08c; --good-soft: #17301f; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--body); margin: 0; padding: 0 16px; }
+.doc { max-width: 980px; margin: 0 auto; padding-block: 48px 96px; }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -0.01em; line-height: 1.15; text-wrap: balance; margin: 0 0 .5em; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; }
+h2 { font-size: clamp(1.45rem, 3vw, 1.9rem); font-weight: 600; }
+h3 { font-size: 1.12rem; font-weight: 600; }
+p { margin: 0 0 1em; max-width: 68ch; }
+a { color: var(--accent); }
+.kicker { font: 600 .74rem/1.2 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; display: block; }
+.meta { color: var(--ink-3); font-size: .92rem; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+section { padding-block: 44px; border-top: 1px solid var(--line); }
+header.top { padding-bottom: 36px; }
+.lede { font-size: 1.18rem; color: var(--ink-2); max-width: 64ch; }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 28px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; min-width: 0; }
+.tile b { display: block; font: 500 1.7rem/1.1 var(--mono); font-variant-numeric: tabular-nums; margin-bottom: 4px; }
+.tile span { font-size: .88rem; color: var(--ink-2); }
+
+.verdict { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+.verdict > li { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font: 600 .72rem/1 var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; white-space: nowrap; }
+.chip.crit { background: var(--crit-soft); color: var(--crit); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.chip.good { background: var(--good-soft); color: var(--good); }
+.chip.info { background: var(--accent-soft); color: var(--accent); }
+
+.figure { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 20px 14px; margin: 22px 0; position: relative; min-width: 0; }
+.figure h3 { margin-bottom: 2px; }
+.figure .meta { margin: 0 0 12px; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart text { fill: var(--ink-3); font: 12px var(--body); }
+.chart .grid line { stroke: var(--line); stroke-width: 1; }
+.chart .series-line { fill: none; stroke: var(--series); stroke-width: 2; stroke-linejoin: round; }
+.chart .series-area { fill: var(--series); opacity: .1; }
+.chart .cross { stroke: var(--ink-3); stroke-width: 1; }
+.chart .dot { fill: var(--series); stroke: var(--surface); stroke-width: 2; }
+.chart .anno { fill: var(--ink-2); font-weight: 600; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 6px 20px rgba(0,0,0,.12); border-radius: 8px; padding: 8px 10px; font-size: .85rem; white-space: nowrap; }
+.tip b { font: 500 1rem var(--mono); display: block; }
+
+.bars { display: grid; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: minmax(120px, 230px) 1fr; gap: 14px; align-items: center; }
+.bar-row .label { font-size: .95rem; min-width: 0; overflow-wrap: anywhere; }
+.bar-row .label small { display: block; color: var(--ink-3); font-size: .8rem; }
+.bar-track { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.bar { height: 14px; border-radius: 0 4px 4px 0; background: var(--neutral-bar); min-width: 3px; }
+.bar.hl { background: var(--series); }
+.bar-val { font: 500 .9rem var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+@media (max-width: 560px) { .bar-row { grid-template-columns: 1fr; gap: 4px; } }
+
+.table-wrap { overflow-x: auto; margin: 18px 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .94rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 .74rem/1.2 var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); background: var(--bg); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.r, th.r { text-align: right; }
+.vol { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.vol i { display: inline-block; height: 8px; border-radius: 0 3px 3px 0; background: var(--series); opacity: .75; }
+.pos { font: 500 .85rem var(--mono); padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+.pos.top { background: var(--good-soft); color: var(--good); }
+.pos.mid { background: var(--warn-soft); color: var(--warn); }
+.pos.none { background: var(--crit-soft); color: var(--crit); }
+
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 18px 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; min-width: 0; }
+.card h3 { margin-bottom: 6px; }
+.card p, .card li { font-size: .95rem; color: var(--ink-2); }
+.card ul { margin: 0; padding-left: 1.1em; }
+.card.feature { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.price { font: 500 1.6rem/1.1 var(--mono); color: var(--ink); margin: 6px 0 10px; }
+.price small { font: 400 .9rem var(--body); color: var(--ink-3); }
+
+.callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 20px; margin: 18px 0; }
+.callout p:last-child { margin: 0; }
+.steps { counter-reset: s; list-style: none; padding: 0; margin: 18px 0; display: grid; gap: 14px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 12px; }
+.steps li::before { content: counter(s); font: 600 .9rem/34px var(--mono); text-align: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); }
+.steps b { display: block; }
+.months { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.month { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; }
+.month b { font-family: var(--display); font-size: .95rem; }
+.month p { font-size: .92rem; color: var(--ink-2); margin: 4px 0 0; }
+footer { color: var(--ink-3); font-size: .86rem; padding-top: 28px; border-top: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<style>
+.vs { width: 100%; }
+.verdict li > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+p, li, td { overflow-wrap: break-word; }
+.vs td.l, .vs th.l { background: var(--accent-soft); }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: .88rem; color: var(--ink-2); margin: 0 0 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 18px; height: 3px; border-radius: 2px; display: inline-block; }
+.chart .series-2 { fill: none; stroke: var(--series-2); stroke-width: 2; stroke-linejoin: round; }
+.chart .series-3 { fill: none; stroke: var(--series-3); stroke-width: 2; stroke-linejoin: round; stroke-dasharray: 5 4; }
+.chart .dot2 { fill: var(--series-2); stroke: var(--surface); stroke-width: 2; }
+.chart .dot3 { fill: var(--series-3); stroke: var(--surface); stroke-width: 2; }
+:root { --series-2: #d9692b; --series-3: #6e7a84; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --series-2: #ec8a52; --series-3: #9aa6b0; } }
+:root[data-theme="dark"] { --series-2: #ec8a52; --series-3: #9aa6b0; }
+</style>
+<style>
+.verdict li > div { min-width: 0; overflow-wrap: anywhere; }
+.verdict ul, .callout ul, footer ul { margin: .4em 0 .4em; padding-left: 1.2em; }
+.callout > div > *:last-child { margin-bottom: 0; }
+.tree { display: grid; gap: 14px; margin: 18px 0; }
+.branch { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; min-width: 0; }
+.branch.hl { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.branch h3 { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.branch h3 small { font: 400 .82rem var(--mono); color: var(--ink-3); }
+.branch ul { list-style: none; margin: 0; padding: 0 0 0 14px; border-left: 2px solid var(--line); display: grid; gap: 6px; }
+.branch li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: baseline; font-size: .95rem; }
+.branch li > span:first-child { min-width: 0; overflow-wrap: anywhere; }
+.branch code { font: 400 .8rem var(--mono); color: var(--ink-3); display: block; overflow-wrap: anywhere; }
+.kw { font: 500 .78rem var(--mono); color: var(--ink-2); white-space: nowrap; text-align: right; }
+.phase { font: 600 .66rem/1 var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 4px 7px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); margin-left: 6px; white-space: nowrap; }
+.phase.p2 { background: var(--warn-soft); color: var(--warn); }
+@media (max-width: 560px) { .branch li { grid-template-columns: 1fr; } .kw { text-align: left; } }
+</style>
+<div class="doc">
+<header class="top">
+  <span class="kicker">Audit SEO &amp; GEO · 11 octobre 2026</span>
+  <h1>3B Charpente : un savoir-faire rare et une filière réemploi unique, invisibles sur Google</h1>
+  <p class="lede">3B Charpente coche des cases que presque aucun charpentier du Briançonnais ne coche : fondateur Compagnon du Devoir, bois local, isolants biosourcés, qualification RGE récente et une filière de déconstruction et de réemploi du bois, 3B Récup'. Sur Google, rien de tout cela n'existe. Le site actuel tient en une page d'accueil et une galerie, la fiche Google n'est pas revendiquée, et une copie de travail du site est indexée à côté de l'original.</p>
+  <p class="meta">Sources :
+    SE Ranking (base France, octobre 2026) ;
+    lecture des sites 3bcharpente.fr, new.3bcharpente.fr et de la maquette Framer ;
+    relevés Google du 11 octobre 2026 depuis Briançon ;
+    annuaire RGE de l'ADEME (données ouvertes) ;
+    fiche du réseau régional PRECI.
+    Le trafic indiqué est une estimation d'outil.</p>
+  <div class="tiles">
+    <div class="tile"><b>≈ 0</b><span>visite Google par mois estimée pour 3bcharpente.fr</span></div>
+    <div class="tile"><b>0 / 11</b><span>mot-clé dans les 20 premiers résultats, sur 11 classés</span></div>
+    <div class="tile"><b>1</b><span>avis Google, sur une fiche que personne n'a revendiquée</span></div>
+    <div class="tile"><b>20 / 24</b><span>réalisations publiées sans une ligne de texte</span></div>
+    <div class="tile"><b>0</b><span>citation relevée dans les réponses des IA</span></div>
+  </div>
+</header>
+
+<section>
+  <span class="kicker">Synthèse</span>
+  <h2>Ce qu'il faut retenir</h2>
+  <ul class="verdict">
+    <li><span class="chip good">Acquis</span><div>
+      Des preuves que les concurrents n'ont pas :
+      <ul>
+        <li>une entreprise créée en 2007 ;</li>
+        <li>un fondateur passé par les Compagnons du Devoir et un Tour de France (France, Martinique, Autriche) ;</li>
+        <li>une qualification RGE en isolation et en fenêtres de toit (annuaire ADEME, octobre 2025) ;</li>
+        <li>du mélèze et du sapin des Hautes-Alpes sciés par la scierie Savoldelli ;</li>
+        <li>de la ouate de cellulose et de la fibre de bois ;</li>
+        <li>24 chantiers photographiés dans une douzaine de communes.</li>
+      </ul>
+    </div></li>
+    <li><span class="chip crit">Bloquant</span><div>La fiche Google n'est pas revendiquée (« Vous êtes le propriétaire de cet établissement ? ») et n'a qu'un avis. Sur « charpentier l'argentière-la-bessée », la carte Google montre Atelier Rêves&amp;Bois, Boulot, Giraud et l'Atelier de Roche. 3B n'y est pas, alors qu'il est installé dans la commune.</div></li>
+    <li><span class="chip crit">Bloquant</span><div>
+      Une copie de travail du site, new.3bcharpente.fr, est indexée par Google et se présente comme la page de référence :
+      <ul>
+        <li>sa page « Réemploi » est vide (« Cette page est en cours de rédaction ») ;</li>
+        <li>sa page « Équipe » contient du faux texte latin.</li>
+      </ul>
+      Elle fait concurrence au vrai site sur ses propres recherches.
+    </div></li>
+    <li><span class="chip crit">Manque</span><div>
+      Le site actuel n'a aucune page par prestation.
+      <ul>
+        <li>Charpente, isolation, ossature bois, escaliers, balcons et réemploi tiennent dans un seul texte d'accueil.</li>
+        <li>Son titre principal est masqué.</li>
+        <li>20 des 24 réalisations n'ont aucun texte, seulement des photos.</li>
+      </ul>
+      Google n'a donc rien à classer sur « isolation biosourcée », « maison ossature bois » ou « escalier bois sur mesure ».
+    </div></li>
+    <li><span class="chip good">Opportunité</span><div>
+      Sur « réemploi bois hautes alpes », l'IA de Google cite la plateforme de réemploi de L'Argentière, la ressourcerie de Gap et un site d'annonces.
+      <ul>
+        <li>Aucun charpentier qui déconstruit et réemploie le bois n'y figure.</li>
+        <li>La seule page de 3B sur ce sujet est la page vide de la copie de travail, 38<sup>e</sup>.</li>
+        <li>3B Récup' peut prendre cette place quasiment seul.</li>
+      </ul>
+    </div></li>
+    <li><span class="chip warn">Image</span><div>
+      Les données que lit Google déclarent une adresse Gmail personnelle d'un tiers comme e-mail de l'entreprise, au lieu de tardy@3bcharpente.fr.
+      Le site répond aussi en http (sans cadenas), avec ou sans « www ». La fiche Google pointe vers l'ancienne adresse en http.
+    </div></li>
+    <li><span class="chip warn">Maquette</span><div>
+      La maquette Framer est une très bonne base visuelle, mais elle contient encore du contenu de modèle à supprimer avant toute mise en ligne :
+      <ul>
+        <li>faux témoignages (« Manager, TechMatter ») ;</li>
+        <li>bloc Trustpilot « 4.7 out of 5 based on 227 reviews » ;</li>
+        <li>études de cas en anglais ;</li>
+        <li>pages Pricing, Demo et Blog dans son plan du site ;</li>
+        <li>badge « Expert du Réemploi » dont nous n'avons trouvé aucune source.</li>
+      </ul>
+    </div></li>
+  </ul>
+</section>
+
+<section>
+  <span class="kicker">Face aux charpentiers du secteur</span>
+  <h2>Le plus de preuves, le moins de visibilité</h2>
+  <div class="table-wrap"><table class="vs">
+    <thead><tr><th>Indicateur</th><th class="r l">3B Charpente</th><th class="r">Alpes Bois Conception<br>(Briançon)</th><th class="r">Boulot<br>(L'Argentière)</th><th class="r">Davin Charpentes<br>(L'Argentière)</th><th class="r">MT Charpente<br>(L'Argentière)</th></tr></thead>
+    <tbody>
+      <tr><td>Visites Google / mois (estimation)</td><td class="r l num">≈ 0</td><td class="r num">≈ 46</td><td class="r num">≈ 16</td><td class="r num">≈ 0</td><td class="r num">≈ 0</td></tr>
+      <tr><td>Mots-clés classés</td><td class="r l num">11</td><td class="r num">147</td><td class="r num">192</td><td class="r num">2</td><td class="r num">1</td></tr>
+      <tr><td>Sites qui font un lien vers le site</td><td class="r l num">78</td><td class="r num">164</td><td class="r num">241</td><td class="r num">138</td><td class="r num">2</td></tr>
+      <tr><td>Carte Google sur « charpentier l'argentière-la-bessée »</td><td class="r l">absent</td><td class="r">absent</td><td class="r">présent</td><td class="r">absent</td><td class="r">absent</td></tr>
+      <tr><td>Une page par prestation</td><td class="r l">non</td><td class="r">oui, et par commune</td><td class="r">oui, courtes</td><td class="r">—</td><td class="r">oui (6)</td></tr>
+      <tr><td>RGE isolation (annuaire ADEME)</td><td class="r l">oui (oct. 2025)</td><td class="r">non vérifié</td><td class="r">oui</td><td class="r">oui</td><td class="r">non trouvé</td></tr>
+      <tr><td>Filière de réemploi du bois</td><td class="r l">oui, 3B Récup'</td><td class="r">non</td><td class="r">non</td><td class="r">non</td><td class="r">non</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">Visites, mots-clés et liens : SE Ranking, base France, octobre 2026 (Boulot : relevé du 7 octobre). Carte Google : relevé du 11 octobre 2026 depuis Briançon. RGE : annuaire de l'ADEME, code postal 05120.</p>
+  <p>Alpes Bois Conception montre ce qui marche dans la vallée : une page par prestation et par commune (« Charpente L'Argentière-la-Bessée », « Rénovation de chalets à Briançon »…). Ces pages lui donnent la 5<sup>e</sup> place sur « charpentier l'argentière-la-bessée » et la 1<sup>re</sup> sur « rénovation chalet briançon », avec 30 avis notés 4,9 affichés dans Google. 3B a plus à raconter, mais aucune page pour le dire.</p>
+</section>
+
+<section>
+  <span class="kicker">Où 3B apparaît aujourd'hui</span>
+  <h2>Premier sur son nom, absent partout ailleurs</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Recherche (depuis Briançon)</th><th>Position de 3B</th><th>Qui est devant</th></tr></thead>
+    <tbody>
+      <tr><td>3b charpente</td><td><span class="pos top">1<sup>er</sup></span></td><td>Fiche Google affichée à droite : 1 avis, non revendiquée.</td></tr>
+      <tr><td>charpentier l'argentière-la-bessée</td><td><span class="pos mid">15<sup>e</sup></span></td><td>Carte : Atelier Rêves&amp;Bois, Boulot, Giraud, Atelier de Roche. 3B ne sort qu'avec une page de galerie ; son accueil est 36<sup>e</sup>, la copie new.3bcharpente.fr 52<sup>e</sup>.</td></tr>
+      <tr><td>charpentier briançon</td><td><span class="pos none">absent</span></td><td>Carte : Philip Christophe, construction-chalet-bois.fr, Thibo Charpente, Serre Che Toiture.</td></tr>
+      <tr><td>charpentier hautes alpes</td><td><span class="pos none">absent</span></td><td>Bonnefont (page dédiée), Kempf, Dautremer, Les Charpentiers (Gap).</td></tr>
+      <tr><td>rénovation chalet briançon</td><td><span class="pos none">absent</span></td><td>Alpes Bois Conception, FC Peinture, Le Chalet Briançonnais, Chalets Lombard.</td></tr>
+      <tr><td>maison ossature bois hautes alpes</td><td><span class="pos none">absent</span></td><td>Booa, Alp'Ecrins Construction, Natilia, CGA (La Roche-de-Rame).</td></tr>
+      <tr><td>isolation biosourcée hautes alpes</td><td><span class="pos none">absent</span></td><td>Des isolateurs. Aucun charpentier en première page.</td></tr>
+      <tr><td>réemploi bois hautes alpes</td><td><span class="pos mid">38<sup>e</sup></span></td><td>Page vide de la copie de travail. L'IA de Google cite La Miraille, la Petite Ourse et Montasdebois.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <span class="kicker">La demande</span>
+  <h2>Ce que les gens cherchent, métier par métier</h2>
+  <p>Recherches mensuelles moyennes en France pour les sujets que 3B traite. Ces chiffres montrent le poids de chaque sujet, pas le nombre de clients dans les Hautes-Alpes. Les recherches locales (« charpentier briançon », « charpentier l'argentière-la-bessée ») sont trop rares pour être mesurées, mais ce sont des clients prêts à appeler.</p>
+  <div class="figure">
+    <h3>Recherches mensuelles par famille de sujets</h3>
+    <p class="meta">France, SE Ranking, octobre 2026 · somme des requêtes principales de chaque famille</p>
+    <div class="bars">
+      <div class="bar-row"><span class="label">Escaliers, balcons, terrasses<small>escalier quart tournant, terrasse bois, escalier bois…</small></span><span class="bar-track"><span class="bar" style="width:100%"></span><span class="bar-val">38 640</span></span></div>
+      <div class="bar-row"><span class="label">Isolation et rénovation énergétique<small>isolation par l'extérieur, ouate de cellulose, sarking…</small></span><span class="bar-track"><span class="bar" style="width:84.6%"></span><span class="bar-val">32 700</span></span></div>
+      <div class="bar-row"><span class="label">Construction et agrandissement<small>maison ossature bois, extension, surélévation</small></span><span class="bar-track"><span class="bar" style="width:34.1%"></span><span class="bar-val">13 180</span></span></div>
+      <div class="bar-row"><span class="label">Charpente et combles<small>charpente bois, charpente traditionnelle, combles</small></span><span class="bar-track"><span class="bar" style="width:23.4%"></span><span class="bar-val">9 060</span></span></div>
+      <div class="bar-row"><span class="label">Réemploi : 3B Récup'<small>pemd, déconstruction, vieux bois, bardage vieux bois…</small></span><span class="bar-track"><span class="bar hl" style="width:9.2%"></span><span class="bar-val">3 550</span></span></div>
+    </div>
+  </div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Famille</th><th>Recherches clés (volume mensuel)</th><th>Page à créer</th></tr></thead>
+    <tbody>
+      <tr><td>Réemploi</td><td>pemd (1 300), déconstruction (1 000), vieux bois (480), bardage vieux bois (170), bois de récupération (140), poutres anciennes (110)</td><td>3B Récup' et ses trois pages</td></tr>
+      <tr><td>Isolation</td><td>isolation par l'extérieur (10 800), ouate de cellulose (10 800), isolation toiture (6 600), sarking (3 200), isolant biosourcé (590)</td><td>Isolation biosourcée, toiture, murs</td></tr>
+      <tr><td>Construction</td><td>maison ossature bois (8 000), construction bois (3 600), extension bois (1 100), surélévation bois (480)</td><td>Maison ossature bois, extension et surélévation</td></tr>
+      <tr><td>Charpente</td><td>charpente bois (5 400), charpente traditionnelle (2 900), aménagement des combles (480), rénovation charpente (170)</td><td>Charpente bois, rénovation et combles</td></tr>
+      <tr><td>Escaliers et extérieurs</td><td>escalier quart tournant (14 800), terrasse bois (12 100), escalier bois (9 900), garde corps bois (660), balcon bois (590)</td><td>Escaliers, balcons-terrasses-abris</td></tr>
+      <tr><td>Local</td><td>charpentier gap (140), charpentier hautes alpes (30), charpentier 05 (30), menuisier briançon (30), charpentier guillestre (20)</td><td>Accueil et 3 pages de secteur</td></tr>
+    </tbody>
+  </table></div>
+  <div class="callout"><div><b>Pourquoi le réemploi compte autant malgré des volumes plus faibles :</b>
+    <ul>
+      <li>c'est le seul sujet où 3B n'a presque pas de concurrent ;</li>
+      <li>il intéresse des clients à fort enjeu : architectes, maîtres d'ouvrage, collectivités ;</li>
+      <li>les IA cherchent justement une réponse locale qu'elles ne trouvent pas.</li>
+    </ul>
+    Une page de référence sur le sujet sert aussi tout le reste du site : elle prouve que 3B construit autrement.</div></div>
+</section>
+
+<section>
+  <span class="kicker">Le plan du site recommandé</span>
+  <h2>21 pages, 24 réalisations et 3B Récup' au premier plan</h2>
+  <p>Chaque page répond à une recherche précise et renvoie vers les autres. 3B Récup' a son propre espace, mis en avant dans le menu. Les 24 réalisations gardent leur adresse actuelle, redirigée, pour ne rien perdre de l'existant. Les guides de la phase 2 servent surtout à être cités par les IA.</p>
+  <div class="tree">
+    <div class="branch">
+      <h3>Accueil <small>/</small></h3>
+      <ul>
+        <li><span>Charpentier écologique à L'Argentière-la-Bessée et Briançon, toutes les prestations, 3B Récup', preuves et réalisations</span><span class="kw">charpentier hautes alpes · 05</span></li>
+      </ul>
+    </div>
+    <div class="branch">
+      <h3>Prestations <small>9 pages</small></h3>
+      <ul>
+        <li><span>Charpente bois traditionnelle<code>/charpente-bois/</code></span><span class="kw">5 400 + 2 900</span></li>
+        <li><span>Rénovation de charpente et aménagement des combles<code>/renovation-charpente-combles/</code></span><span class="kw">480 + 170 + 110</span></li>
+        <li><span>Isolation biosourcée et rénovation énergétique RGE<code>/isolation-biosourcee/</code></span><span class="kw">590 + 260</span></li>
+        <li><span>Isolation de toiture par l'extérieur (sarking)<code>/isolation-toiture-sarking/</code></span><span class="kw">6 600 + 3 200</span></li>
+        <li><span>Isolation des murs : ITE et bâti ancien<code>/isolation-murs-ite/</code></span><span class="kw">10 800</span></li>
+        <li><span>Maison ossature bois<code>/maison-ossature-bois/</code></span><span class="kw">8 000 + 3 600</span></li>
+        <li><span>Extension et surélévation bois<code>/extension-surelevation-bois/</code></span><span class="kw">1 100 + 480</span></li>
+        <li><span>Escaliers bois sur mesure<code>/escalier-bois-sur-mesure/</code></span><span class="kw">14 800 + 9 900</span></li>
+        <li><span>Balcons, terrasses et abris bois<code>/balcon-terrasse-abri-bois/</code></span><span class="kw">12 100 + 660</span></li>
+      </ul>
+    </div>
+    <div class="branch hl">
+      <h3>3B Récup' : déconstruction et réemploi du bois <small>4 pages</small></h3>
+      <ul>
+        <li><span>3B Récup', page de la filière : pour qui, la méthode en 5 étapes, ce qu'on dépose, les preuves<code>/3b-recup/</code></span><span class="kw">réemploi bois</span></li>
+        <li><span>Diagnostic et gisement de matériaux (PEMD, diagnostic ressources)<code>/3b-recup/diagnostic-pemd/</code></span><span class="kw">1 300</span></li>
+        <li><span>Déconstruction sélective<code>/3b-recup/deconstruction-selective/</code></span><span class="kw">1 000</span></li>
+        <li><span>Bois de réemploi : vieux bois, bardage, poutres<code>/3b-recup/bois-de-reemploi/</code></span><span class="kw">480 + 170 + 140</span></li>
+      </ul>
+    </div>
+    <div class="branch">
+      <h3>Preuves et confiance <small>2 pages + 24 fiches</small></h3>
+      <ul>
+        <li><span>Réalisations, filtrables par prestation et par commune<code>/realisations/</code></span><span class="kw">—</span></li>
+        <li><span>24 fiches chantier réécrites, adresses actuelles conservées et redirigées<code>/realisations/{chantier}/</code></span><span class="kw">commune + ouvrage</span></li>
+        <li><span>À propos : Jean-Michel Tardy, Compagnon du Devoir, Bio Bâti Bois, l'équipe<code>/a-propos/</code></span><span class="kw">3b charpente</span></li>
+      </ul>
+    </div>
+    <div class="branch">
+      <h3>Secteurs <small>3 pages</small></h3>
+      <ul>
+        <li><span>Charpentier à Briançon<code>/charpentier-briancon/</code></span><span class="kw">local</span></li>
+        <li><span>Charpentier à Serre Chevalier<code>/charpentier-serre-chevalier/</code></span><span class="kw">local</span></li>
+        <li><span>Charpentier en Vallouise et Pays des Écrins<code>/charpentier-vallouise-pays-des-ecrins/</code></span><span class="kw">local</span></li>
+      </ul>
+    </div>
+    <div class="branch">
+      <h3>Contact et pages légales <small>2 pages</small></h3>
+      <ul>
+        <li><span>Contact et demande de devis<code>/contact/</code></span><span class="kw">—</span></li>
+        <li><span>Mentions légales et confidentialité<code>/mentions-legales/</code></span><span class="kw">—</span></li>
+      </ul>
+    </div>
+    <div class="branch">
+      <h3>Conseils <span class="phase p2">Phase 2</span> <small>4 guides</small></h3>
+      <ul>
+        <li><span>Quel isolant biosourcé choisir pour une maison de montagne ?<code>/conseils/isolant-biosource-montagne/</code></span><span class="kw">10 800</span></li>
+        <li><span>Réemployer le bois en construction : ce qu'on peut réutiliser, et comment<code>/conseils/reemploi-bois-construction/</code></span><span class="kw">réemploi</span></li>
+        <li><span>Rénover un chalet ou une maison ancienne en montagne<code>/conseils/renover-chalet-maison-ancienne/</code></span><span class="kw">330</span></li>
+        <li><span>Aides à la rénovation : pourquoi passer par un artisan RGE<code>/conseils/aides-renovation-artisan-rge/</code></span><span class="kw">1 900</span></li>
+      </ul>
+    </div>
+  </div>
+  <p class="meta">Volumes : recherches mensuelles en France (SE Ranking, octobre 2026) des deux ou trois requêtes principales de chaque page. Chaque page a sa fiche de rédaction : sections, textes prêts à intégrer, balises, questions fréquentes et liens internes.</p>
+</section>
+
+<section>
+  <span class="kicker">GEO · moteurs de réponse IA</span>
+  <h2>Devenir la réponse sur le réemploi du bois dans les Hautes-Alpes</h2>
+  <p>Les IA reprennent des phrases factuelles, des définitions, des étapes et des questions-réponses. Elles croisent aussi les sources : le site, la fiche Google, les annuaires et les réseaux régionaux doivent dire exactement la même chose.</p>
+  <ol class="steps">
+    <li><span><b>Une phrase d'identité sur chaque page</b>« 3B Charpente, charpentier installé à L'Argentière-la-Bessée depuis 2007, construit et rénove en bois local et en isolants biosourcés, et déconstruit pour réemployer le bois avec sa filière 3B Récup'. »</span></li>
+    <li><span><b>Un bloc « En bref » et une FAQ par page</b>40 à 60 mots en tête de page, puis 4 à 6 questions formulées comme les gens les tapent, avec les données structurées qui vont avec.</span></li>
+    <li><span><b>Des définitions claires</b>Qu'est-ce que le sarking, l'ITE, un diagnostic PEMD, un diagnostic ressources, une déconstruction sélective : chacune en deux phrases, sur la page qui en parle.</span></li>
+    <li><span><b>Des chantiers racontés</b>Les 24 réalisations avec la commune, l'ouvrage, les essences et les étapes, au lieu de photos seules.</span></li>
+    <li><span><b>Les mêmes informations partout</b>Mettre à jour les fiches PRECI, PagesJaunes, Facebook et la fiche Google : même nom, même adresse, même téléphone, même description de 3B Récup'.</span></li>
+    <li><span><b>Des liens du réseau du réemploi</b>Raediviva (association régionale du réemploi dans le BTP), la plateforme de réemploi de L'Argentière, Fibois Sud, le CAUE des Hautes-Alpes. Un article ou un partenariat vaut plus que cent annuaires.</span></li>
+  </ol>
+</section>
+
+<section>
+  <span class="kicker">Technique et migration</span>
+  <h2>Ce qu'il faut régler au lancement</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Priorité</th><th>Constat</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip crit">Haute</span></td><td>new.3bcharpente.fr est indexé et se déclare comme page de référence.</td><td>Rediriger chaque page vers son équivalent sur le nouveau site, puis fermer le sous-domaine.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>Fiche Google non revendiquée, 1 avis, lien vers l'ancienne adresse en http.</td><td>Revendiquer la fiche, la compléter (catégories, prestations, photos de chantiers, horaires), mettre le lien en https et demander des avis aux clients récents.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>Les 24 adresses de la galerie et l'accueil reçoivent les liens existants (78 domaines).</td><td>Redirection 301 de chaque ancienne adresse vers sa nouvelle page. Le plan de redirection complet est prêt.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Le site répond aussi en http, avec ou sans « www », sans redirection vers une adresse unique en https.</td><td>Une seule version en https, sans « www », vers laquelle tout redirige.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Les données structurées déclarent l'e-mail personnel d'un tiers.</td><td>Données d'entreprise complètes et justes sur tout le site : adresse, téléphone, e-mail, horaires, zone desservie, liens vers la fiche Google et Facebook.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Titre principal de l'accueil masqué ; 20 réalisations sans texte.</td><td>Un titre visible par page ; chaque réalisation racontée en 100 à 160 mots, avec des légendes et des textes alternatifs.</td></tr>
+      <tr><td><span class="chip info">Faible</span></td><td>La maquette Framer est publiée sur 3bcharpente.framer.website avec des pages de modèle.</td><td>La laisser non publiée ou en « noindex » jusqu'au lancement.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <span class="kicker">Plan d'action</span>
+  <h2>Trois temps</h2>
+  <div class="months">
+    <div class="month"><b>Avant le lancement</b><p>Revendiquer la fiche Google. Valider avec Jean les points ouverts : horaires, équipe, diagnostic PEMD, vente de bois de réemploi, chiffres de la maquette. Rassembler les photos récentes de chantiers et de déconstruction.</p></div>
+    <div class="month"><b>Lancement</b><p>Les 21 pages, les 24 réalisations réécrites, les redirections, les données structurées et la fermeture de new.3bcharpente.fr. Mesure des appels et des demandes de devis dès le premier jour.</p></div>
+    <div class="month"><b>Les trois mois suivants</b><p>Les 4 guides, une réalisation 3B Récup' racontée en détail, des avis Google réguliers, la mise à jour des annuaires et les premiers liens du réseau du réemploi.</p></div>
+  </div>
+  <div class="callout"><div><b>À valider avec Jean avant la mise en ligne :</b>
+    <ul>
+      <li>réalise-t-il lui-même le diagnostic PEMD réglementaire, ou intervient-il en appui d'un diagnostiqueur ?</li>
+      <li>vend-il du bois de réemploi ?</li>
+      <li>les horaires du vendredi ;</li>
+      <li>la composition actuelle de l'équipe ;</li>
+      <li>le chiffre « +100 projets » ;</li>
+      <li>l'objet du financement européen LEADER affiché dans la galerie.</li>
+    </ul>
+    Le site n'affirmera rien de tout cela tant que ce n'est pas confirmé.</div></div>
+</section>
+
+<footer>
+  <div>Méthode et limites :
+    <ul>
+      <li>volumes de recherche, trafic, liens et citations IA : estimations SE Ranking, base France, octobre 2026 ;</li>
+      <li>positions relevées dans Google le 11 octobre 2026, sur ordinateur, depuis Briançon ;</li>
+      <li>qualifications RGE : annuaire de l'ADEME en données ouvertes ;</li>
+      <li>informations sur 3B Récup' : maquette validée par le client et fiche du réseau PRECI (Région Sud).</li>
+    </ul>
+    Aucune donnée privée de l'entreprise n'a été utilisée.</div>
+</footer>
+</div>
