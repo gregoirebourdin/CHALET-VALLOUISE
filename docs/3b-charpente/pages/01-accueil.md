@@ -174,26 +174,15 @@
 - *Note de réécriture :* accroche validée réécrite pour le référencement. On garde « transforme le bois des Hautes Alpes », « matériaux locaux et biosourcés », « écoresponsables à Briançon et dans ses environs ». On ajoute les essences et le réemploi, qui distinguent 3B.
 - **Collage photo :** voir partie 6 (photo principale « levage des fermes », vignettes « tenon à double embrèvement » et « terrasse en mélèze »).
 
-### Section 2 : bandeau de preuves
-
-- **Rôle :** aligner les cinq preuves vérifiées, lisibles en un coup d'œil.
-- **Composant Framer :** ligne de pastilles sauge (reprise des preuves du héros), sur fond de section clair.
-- **Copywriting (5 pastilles) :**
-  - Depuis 2007 à L'Argentière-la-Bessée
-  - Fondateur formé chez les Compagnons du Devoir
-  - Qualification RGE (Qualibat)
-  - Mélèze et sapin des Hautes-Alpes
-  - Isolants biosourcés et bois de réemploi
-
-### Section 3 : en bref
+### Section 2 : en bref
 
 - **Rôle :** paragraphe factuel et autonome, que les moteurs et les IA peuvent reprendre tel quel.
-- **Composant Framer :** carte blanche à coins arrondis, petite pastille sauge « En bref ».
+- **Composant Framer :** carte blanche à coins arrondis, petite pastille sauge « En bref », posée à cheval entre le héros et la section suivante.
 - **Copywriting :**
   - **Étiquette :** En bref
   - **Texte (53 mots) :** 3B Charpente est une entreprise de charpente bois fondée en 2007 par Jean-Michel Tardy, formé chez les Compagnons du Devoir, et installée à L'Argentière-la-Bessée (Hautes-Alpes). Elle réalise charpentes, rénovations, isolation biosourcée avec la qualification RGE, maisons ossature bois, escaliers et balcons, en bois local. Avec 3B Récup', elle déconstruit et réemploie le bois.
 
-### Section 4 : manifeste
+### Section 3 : manifeste
 
 - **Rôle :** donner l'esprit de l'entreprise, avec les phrases validées par le client.
 - **Composant Framer :** section plein cadre « forêt » sombre, titre blanc avec des mots en sauge. Image de fond : vraie photo « charpente apparent et soleil couchant » (monts du Lyonnais) avec un voile sombre, plutôt qu'une photo d'ambiance.
@@ -206,54 +195,54 @@
   - **Bouton contour clair :** Découvrir notre histoire → `/a-propos/`
 - *Note de réécriture :* « une satisfaction totale » est retirée (promesse impossible à prouver) ; « minimiser » devient « limiter ». Le reste est la formulation validée.
 
-### Section 5 : prestations (9 cartes)
+### Section 4 : prestations (9 cartes)
 
 - **Rôle :** présenter toutes les prestations et envoyer vers les pages 02 à 10. C'est le principal réservoir de liens internes de l'accueil.
 - **Composant Framer :** grille de cartes blanches à coins arrondis, icône dans une pastille sauge, lien en bas de carte. 3 colonnes sur ordinateur, 1 sur mobile.
 - **Copywriting :**
   - **Kicker :** Nos prestations
   - **H2 :** Tous nos **métiers du bois**, de la charpente à l'**isolation**
-  - **Intro :** Neuf prestations, une même façon de faire : du bois local, des isolants sains et des assemblages préparés dans notre atelier. Choisissez votre projet.
+  - **Intro :** Neuf prestations, une même façon de faire : du bois local, des isolants sains, des assemblages soignés.
   - **Carte 1 (icône : toit) :**
     - Titre (H3) : Charpente bois traditionnelle
-    - Texte : Des charpentes taillées et assemblées à l'ancienne, avec tenons, mortaises et chevilles. En mélèze et en sapin des Hautes-Alpes, pour une toiture neuve, un abri ou une réhabilitation.
+    - Texte : Des charpentes taillées et assemblées à l'ancienne, tenons, mortaises et chevilles, en mélèze et sapin des Hautes-Alpes.
     - Lien : Voir la charpente bois → `/charpente-bois/`
   - **Carte 2 (icône : marteau) :**
     - Titre (H3) : Rénovation de charpente et combles
-    - Texte : Rénovez la charpente existante de votre maison pour aménager les combles. Nous renforçons la structure de toiture et créons des ouvertures : lucarnes, fenêtres de toit…
+    - Texte : Rénovez votre charpente pour aménager les combles : renfort de la structure, lucarnes, fenêtres de toit.
     - Lien : Rénover ma charpente → `/renovation-charpente-combles/`
   - **Carte 3 (icône : feuille) :**
     - Titre (H3) : Isolation biosourcée
-    - Texte : Une enveloppe isolante continue, en fibre de bois, ouate de cellulose ou laine de chanvre, lin et coton, pour le confort d'hiver comme d'été. Notre qualification RGE ouvre l'accès aux aides, sous conditions.
+    - Texte : Fibre de bois, ouate de cellulose, laine de chanvre, lin et coton, pour le confort d'hiver et d'été. Artisan RGE.
     - Lien : Isoler ma maison → `/isolation-biosourcee/`
   - **Carte 4 (icône : couches superposées) :**
     - Titre (H3) : Isolation de toiture par l'extérieur (sarking)
-    - Texte : Le sarking consiste à isoler la toiture par-dessus les chevrons, côté extérieur. La charpente reste visible à l'intérieur et vous ne perdez aucun volume sous le toit.
+    - Texte : Le sarking isole la toiture par-dessus les chevrons, côté extérieur : la charpente reste visible, sans perte de volume.
     - Lien : Découvrir le sarking → `/isolation-toiture-sarking/`
   - **Carte 5 (icône : mur) :**
     - Titre (H3) : Isolation des murs (ITE et bâti ancien)
-    - Texte : L'ITE, ou isolation thermique par l'extérieur, enveloppe les murs d'un manteau isolant. En bâti ancien, nous isolons aussi par l'intérieur, avec une étanchéité à l'air soignée.
+    - Texte : L'ITE, ou isolation thermique par l'extérieur, enveloppe les murs d'un manteau isolant. En bâti ancien, nous isolons aussi par l'intérieur.
     - Lien : Isoler mes murs → `/isolation-murs-ite/`
   - **Carte 6 (icône : maison) :**
     - Titre (H3) : Maison ossature bois
-    - Texte : Un habitat personnalisé et performant, construit en ossature bois, avec une toiture isolée par l'extérieur de type sarking. Une maison neuve pensée pour la montagne.
+    - Texte : Un habitat neuf et personnalisé, en ossature bois, avec une toiture isolée par l'extérieur de type sarking.
     - Lien : Construire en bois → `/maison-ossature-bois/`
   - **Carte 7 (icône : flèche vers le haut) :**
     - Titre (H3) : Extension et surélévation bois
-    - Texte : Gagner une pièce ou un étage sans tout reconstruire. Nous avons par exemple surélevé une maison en ossature bois à Briançon, et une autre à Pelvoux.
+    - Texte : Gagner une pièce ou un étage sans tout reconstruire, comme nos surélévations à Briançon et à Pelvoux.
     - Lien : Agrandir ma maison → `/extension-surelevation-bois/`
   - **Carte 8 (icône : escalier) :**
     - Titre (H3) : Escaliers bois sur mesure
-    - Texte : Droits, quart tournant ou balancés, nos escaliers sont dessinés pour votre maison, puis tracés, taillés et assemblés dans notre atelier. En mélèze, en frêne ou en bois debout.
+    - Texte : Quart tournant, balancé ou en bois debout : des escaliers dessinés pour votre maison et taillés dans notre atelier.
     - Lien : Voir nos escaliers → `/escalier-bois-sur-mesure/`
   - **Carte 9 (icône : balcon) :**
     - Titre (H3) : Balcons, terrasses et abris bois
-    - Texte : Balcons, terrasses couvertes, garde-corps, abris de voiture et de jardin, sur mesure et en mélèze, conçus pour s'intégrer à l'environnement de montagne et à l'âme de votre maison.
+    - Texte : Balcons, terrasses couvertes, garde-corps et abris sur mesure, pensés pour la montagne et l'âme de votre maison.
     - Lien : Voir balcons et terrasses → `/balcon-terrasse-abri-bois/`
   - **Bouton sous la grille (contour) :** Parler de mon projet → `/contact/`
-- *Note de réécriture :* les cartes 2, 3, 6 et 9 reprennent les textes de services validés, raccourcis ; les cartes 4 et 5 définissent sarking et ITE dès leur première apparition, comme l'exige le brief.
+- *Note de réécriture :* les cartes 2, 6 et 9 reprennent les textes de services validés, raccourcis ; les cartes 4 et 5 définissent sarking et ITE dès leur première apparition, comme l'exige le brief.
 
-### Section 6 : 3B Récup' (bloc mis en avant)
+### Section 5 : 3B Récup' (bloc mis en avant)
 
 - **Rôle :** mettre en avant le vrai point de différence de 3B (personne ne présente un charpentier qui déconstruit et réemploie le bois dans le département) et envoyer vers les pages 11 à 14.
 - **Composant Framer :** grand bandeau vert forêt avec formes organiques vert clair et grille ronde translucide ; pastille « 3B Récup' » verte ; à droite, les cinq étapes en mini-onglets numérotés 01 à 05 (version courte de la méthode de la page 3B Récup') ; photo « bardage vieux bois » à gauche sur ordinateur.
@@ -261,140 +250,137 @@
   - **Pastille :** 3B Récup'
   - **Kicker :** Déconstruction et réemploi du bois
   - **H2 :** Donner une **seconde vie** au bois des **bâtiments déconstruits**
-  - **Paragraphe 1 :** 3B Récup' est l'initiative de 3B Charpente dédiée au réemploi des matériaux et à la déconstruction sélective, c'est-à-dire le démontage d'un bâtiment élément par élément pour trier et récupérer ce qui peut resservir. Charpentiers de métier, nous savons démonter une structure bois sans l'abîmer.
-  - **Paragraphe 2 :** Nous intervenons sur site pour déposer la charpente, les solivages et les murs à ossature bois, mais aussi la couverture, l'isolation et les parements. Le bois récupéré est trié, nettoyé et usiné dans nos ateliers, puis réemployé sur nos chantiers, du bâtiment industriel à la maison particulière.
-  - **Paragraphe 3 :** C'est déjà visible chez nos clients : bardage en vieux bois et garde-corps en bois de réemploi à L'Argentière-la-Bessée, ferme de charpente en vieux bois sur une réfection de toiture.
-  - **Paragraphe 4 (gras) :** Architectes, entreprises du bâtiment et de la démolition, collectivités, particuliers : 3B Récup' vous apporte des solutions personnalisées.
+  - **Paragraphe 1 :** 3B Récup' est l'initiative de 3B Charpente dédiée au réemploi des matériaux et à la déconstruction sélective : démonter un bâtiment élément par élément pour récupérer ce qui peut resservir.
+  - **Paragraphe 2 :** Charpentiers de métier, nous déposons charpentes, solivages et murs à ossature bois, du bâtiment industriel à la maison particulière. Le bois est trié, nettoyé et usiné dans nos ateliers, puis réemployé sur nos chantiers.
+  - **Paragraphe 3 (gras) :** Architectes, entreprises, collectivités, particuliers : 3B Récup' vous apporte des solutions personnalisées.
   - **Les cinq étapes (onglets 01 à 05) :**
-    - 01 Diagnostic : repérer les matériaux réemployables, en lien avec le diagnostic PEMD.
+    - 01 Diagnostic : repérer les matériaux réemployables, en lien avec le diagnostic PEMD (l'inventaire des produits, équipements, matériaux et déchets exigé avant certaines démolitions).
     - 02 Stratégie : une feuille de route pour déposer sans abîmer.
     - 03 Intervention : nos charpentiers déposent les éléments sur site.
-    - 04 Transformation : tri, nettoyage et usinage dans nos ateliers.
-    - 05 Repose : nous adaptons notre système constructif au bois de réemploi.
-  - **Petit texte sous les étapes :** Le diagnostic PEMD (produits, équipements, matériaux et déchets) recense, avant une démolition ou une rénovation lourde, ce qui peut être réemployé. Il est obligatoire notamment au-delà de 1 000 m² de surface de plancher ; en dessous, on parle souvent de « diagnostic ressources ».
+    - 04 Transformation : tri, nettoyage et usinage à l'atelier.
+    - 05 Repose : notre système constructif s'adapte au bois de réemploi.
   - **Bouton plein (clair sur fond vert) :** Découvrir 3B Récup' → `/3b-recup/`
   - **Liens texte :**
     - Diagnostic et gisement (PEMD) → `/3b-recup/diagnostic-pemd/`
     - Déconstruction sélective → `/3b-recup/deconstruction-selective/`
     - Bois de réemploi → `/3b-recup/bois-de-reemploi/`
-  - **Mention discrète :** 3B Récup' figure sur PRECI, la plateforme régionale de l'économie circulaire de la Région Sud. [À VALIDER AVEC JEAN : lien vers la fiche PRECI]
+  - **Mention discrète :** 3B Récup' figure sur PRECI, la plateforme de l'économie circulaire de la Région Sud. [À VALIDER AVEC JEAN : lien vers la fiche PRECI]
 - *Notes :*
-  - « en lien avec le diagnostic PEMD » : formulation prudente imposée par le brief tant que Jean n'a pas confirmé qu'il réalise lui-même le diagnostic réglementaire.
-  - Les étapes sont remises dans l'ordre du chantier (l'intervention, c'est-à-dire la dépose, avant la transformation). La maquette les listait dans l'ordre diagnostic, stratégie, transformation, repose, intervention. À valider avec Jean et à harmoniser avec la fiche 11.
-  - Pas de badge « Expert du Réemploi » (aucune source).
+  - « en lien avec le diagnostic PEMD » : formulation prudente imposée par le brief tant que Jean n'a pas confirmé qu'il réalise lui-même le diagnostic réglementaire ;
+  - les étapes sont remises dans l'ordre du chantier (l'intervention, c'est-à-dire la dépose, avant la transformation) ; la maquette les listait dans l'ordre diagnostic, stratégie, transformation, repose, intervention. À valider avec Jean et à harmoniser avec la fiche 11 ;
+  - la preuve concrète (bardage en vieux bois, garde-corps de réemploi) est portée par la photo du bloc et par la carte 5 des réalisations ;
+  - pas de badge « Expert du Réemploi » (aucune source).
 
-### Section 7 : 3B = Bio, Bâti, Bois
+### Section 6 : 3B = Bio, Bâti, Bois
 
 - **Rôle :** raconter le nom, en faire un outil de mémorisation et relier chaque lettre à une pratique concrète.
 - **Composant Framer :** section de fond clair (#F2F2EC), trois cartes blanches côte à côte ; dans chaque carte, un grand « B » en Nohemi Bold vert, le mot, l'étymologie en petit italique, puis le texte.
 - **Copywriting :**
   - **Kicker :** Pourquoi « 3B » ?
   - **H2 :** **Bio**, **Bâti**, **Bois** : trois mots pour une façon de construire
-  - **Intro :** Le nom de l'entreprise tient en trois lettres. Chacune dit quelque chose de notre métier.
   - **Carte Bio :**
     - Étymologie : du grec ancien βίος, qui exprime l'idée de vie.
-    - Texte : Des maisons saines, isolées avec des matériaux biosourcés : fibre de bois, ouate de cellulose, laine de chanvre, lin et coton.
+    - Texte : Des maisons saines, isolées avec des matériaux biosourcés.
   - **Carte Bâti :**
     - Étymologie : de l'ancien français bastir, idée d'entrelacer, d'assembler.
-    - Texte : L'art d'assembler : tenons et mortaises chevillés, traits de Jupiter, fermes montées à blanc à l'atelier, c'est-à-dire assemblées une première fois pour tout vérifier avant le levage.
+    - Texte : L'art d'assembler : tenons et mortaises chevillés, traits de Jupiter, fermes montées à blanc avant le levage.
   - **Carte Bois :**
     - Étymologie : un être vivant.
-    - Texte : Du mélèze et du sapin des Hautes-Alpes, sciés par notre partenaire local, la Scierie Savoldelli. Et du bois de réemploi, à qui nous donnons une seconde vie.
+    - Texte : Du mélèze et du sapin des Hautes-Alpes, et du bois de réemploi, à qui nous donnons une seconde vie.
 
-### Section 8 : nos preuves
+### Section 7 : nos preuves
 
 - **Rôle :** rassurer avec des faits vérifiables, pas des adjectifs.
 - **Composant Framer :** deux colonnes. À gauche, portrait de Jean-Michel Tardy à l'atelier (photo à fournir). À droite, cinq cartes blanches en liste, chacune avec pastille sauge et icône.
 - **Copywriting :**
   - **Kicker :** Ce sur quoi vous pouvez compter
   - **H2 :** Un **savoir-faire** de compagnon, des **matériaux** d'ici
-  - **Carte 1, Depuis 2007 :** 3B Charpente est installée à L'Argentière-la-Bessée depuis 2007. Nous avons commencé par la charpente, puis élargi notre travail à la rénovation de chalets, de maisons de pays et à la construction neuve en ossature bois.
-  - **Carte 2, Formé chez les Compagnons du Devoir :** Jean-Michel Tardy, notre fondateur, a commencé la charpente en 1995, apprenti à 16 ans en Savoie. CAP chez les Compagnons du Devoir, puis Tour de France : il s'est formé en France métropolitaine, en Martinique et en Autriche.
-  - **Carte 3, Qualifié RGE :** RGE veut dire « reconnu garant de l'environnement ». Notre qualification Qualibat couvre l'isolation des murs et des toitures par l'extérieur, l'isolation par l'intérieur, les fenêtres de toit, les fenêtres, volets et portes extérieurs. Elle ouvre l'accès aux aides publiques à la rénovation énergétique, sous conditions.
-  - **Carte 4, Du bois des Hautes-Alpes :** Nous utilisons principalement du mélèze et du sapin provenant des Hautes-Alpes, sciés par notre partenaire local, la Scierie Savoldelli.
-  - **Carte 5, Des isolants biosourcés :** Fibre de bois, ouate de cellulose, laine de chanvre, lin et coton. Dans le chalet rénové à Vallouise : 28 cm d'isolant dans les murs, 32 cm en toiture.
+  - **Carte 1, Depuis 2007 :** Installés à L'Argentière-la-Bessée depuis 2007 : la charpente d'abord, puis la rénovation de chalets, de maisons de pays et la construction neuve en ossature bois.
+  - **Carte 2, Formé chez les Compagnons du Devoir :** Jean-Michel Tardy, notre fondateur, a débuté à 16 ans, en 1995. CAP chez les Compagnons du Devoir, puis Tour de France : France métropolitaine, Martinique, Autriche.
+  - **Carte 3, Qualifié RGE :** RGE veut dire « reconnu garant de l'environnement ». Notre qualification Qualibat couvre l'isolation des murs et des toitures, les fenêtres de toit et les menuiseries extérieures. Elle ouvre l'accès aux aides publiques, sous conditions.
+  - **Carte 4, Du bois des Hautes-Alpes :** Principalement du mélèze et du sapin des Hautes-Alpes, sciés par notre partenaire local, la Scierie Savoldelli.
+  - **Carte 5, Des isolants biosourcés :** Ouate de cellulose, fibre de bois, laine de chanvre, lin et coton : 28 cm dans les murs du chalet de Vallouise, 32 cm en toiture.
   - **Bouton contour :** Qui sommes-nous ? → `/a-propos/`
+- *Note :* la carte 3 résume les cinq domaines RGE ; la liste exacte figure dans la FAQ 3 et sur la page À propos.
 
-### Section 9 : votre projet, étape par étape
+### Section 8 : votre projet, étape par étape
 
 - **Rôle :** lever la peur de l'inconnu et préparer la prise de contact.
-- **Composant Framer :** onglets numérotés 01 à 05 (même composant que la méthode 3B Récup'), en version frise horizontale sur ordinateur, liste verticale sur mobile.
+- **Composant Framer :** onglets numérotés 01 à 05 (même composant que la méthode 3B Récup'), en frise horizontale sur ordinateur, liste verticale sur mobile.
 - **Copywriting :**
   - **Kicker :** Votre projet, étape par étape
   - **H2 :** Chaque projet commence par une **étude sur mesure**
-  - **01, Vous nous contactez :** Par téléphone au 06 34 67 31 49 ou avec le formulaire. Décrivez votre projet, même en quelques lignes.
-  - **02, Nous nous rencontrons :** Nous discutons de vos besoins, de votre maison et de vos envies. Vous repartez avec un calendrier estimatif dès cette première rencontre.
-  - **03, Vous recevez un devis détaillé :** Nous vous proposons un devis détaillé, adapté à votre projet.
-  - **04, Nous préparons à l'atelier :** Traçage, taille et assemblage à blanc : les pièces sont préparées et vérifiées avant d'arriver sur votre chantier.
-  - **05, Nous levons et posons :** Levage de la charpente, pose et finitions sur place.
+  - **01, Vous nous contactez :** par téléphone ou avec le formulaire, même en quelques lignes.
+  - **02, Nous nous rencontrons :** nous parlons de vos besoins et vous donnons un calendrier estimatif.
+  - **03, Vous recevez un devis détaillé,** adapté à votre projet.
+  - **04, Nous préparons à l'atelier :** traçage, taille et assemblage à blanc, c'est-à-dire un premier montage pour tout vérifier.
+  - **05, Nous levons et posons :** levage, pose et finitions sur votre chantier.
   - **Bouton plein :** Demander mon devis → `/contact/`
 - *Note :* étapes 02 et 03 tirées des réponses FAQ validées (rencontre, calendrier estimatif, devis détaillé) ; étape 04 tirée du texte publié sur l'escalier quart tournant et des légendes « taille de la charpente », « assemblage à blanc ».
 
-### Section 10 : réalisations (6 cartes)
+### Section 9 : réalisations (6 cartes)
 
 - **Rôle :** prouver par des chantiers réels, avec des communes réelles, et nourrir le maillage vers les fiches réalisations.
 - **Composant Framer :** cartes de réalisations (photo, étiquette posée sur la photo, titre, lien « Voir les travaux → »). Proposition : l'étiquette affiche la **commune** au lieu de « 3B Charpente », plus utile au visiteur et au référencement local.
 - **Copywriting :**
   - **Kicker :** Nos réalisations
   - **H2 :** Des chantiers **réels**, de Briançon à **Vallouise**
-  - **Intro :** 24 chantiers présentés, de la taille des pièces à la dernière planche posée. En voici six.
+  - **Intro :** 24 chantiers présentés sur ce site. En voici six.
   - **Carte 1 :**
     - Étiquette : Vallouise
     - Titre (H3) : Rénovation et isolation d'un chalet
-    - Texte : Chalet des années 1980 entièrement rénové : 28 cm d'isolant biosourcé dans les murs, 32 cm en toiture, bardage en mélèze et terrasse agrandie.
+    - Texte : Chalet des années 1980 : 28 cm d'isolant biosourcé dans les murs, 32 cm en toiture.
     - Lien : Voir les travaux → `/realisations/renovation-et-isolation-d-un-chalet-a-vallouise/`
   - **Carte 2 :**
     - Étiquette : L'Argentière-la-Bessée
     - Titre (H3) : Réfection d'une charpente avec lucarne
-    - Texte : Dépose de l'ancienne charpente, taille traditionnelle, levage des fermes et d'une lucarne, panneaux en fibre de bois et bardage en mélèze.
+    - Texte : Taille traditionnelle, levage des fermes et d'une lucarne, fibre de bois et bardage en mélèze.
     - Lien : Voir les travaux → `/realisations/refection-d-une-charpente-a-l-argentiere-la-bessee/`
   - **Carte 3 :**
     - Étiquette : Briançon
     - Titre (H3) : Rénovation d'une copropriété
-    - Texte : Reprise de la charpente et des fermes, isolation soufflée, dépassée de toiture recréée et nouvelle couverture. Avec en prime, une belle vue.
+    - Texte : Reprise des fermes, isolation soufflée, nouvelle couverture. Avec en prime, une belle vue.
     - Lien : Voir les travaux → `/realisations/renovation-d-une-copropriete-a-briancon/`
   - **Carte 4 :**
     - Étiquette : Briançon
     - Titre (H3) : Surélévation en ossature bois
-    - Texte : Murs pignons en ossature bois, pannes porteuses entaillées, panneaux trois plis en épicéa laissés apparents et remplissage en laine de bois.
+    - Texte : Pignons en ossature bois, pannes entaillées, panneaux trois plis en épicéa apparents.
     - Lien : Voir les travaux → `/realisations/surelevation-en-ossature-bois-d-une-maison-a-briancon/`
   - **Carte 5 :**
     - Étiquette : L'Argentière-la-Bessée
     - Titre (H3) : Rénovation d'une maison avec du bois de réemploi
-    - Texte : Pignon vitré, escalier balancé, bardage en vieux bois et garde-corps en bois de réemploi.
+    - Texte : Pignon vitré, escalier balancé, bardage en vieux bois et garde-corps de réemploi.
     - Lien : Voir les travaux → `/realisations/renovation-d-une-maison-d-habitation-a-l-argentiere-la-bessee/`
   - **Carte 6 :**
     - Étiquette : [À VALIDER AVEC JEAN : commune du chantier] (à défaut : « Escalier »)
     - Titre (H3) : Escalier quart tournant en mélèze lamellé-collé
-    - Texte : Dessiné, tracé et taillé à l'atelier, il mène aux combles et sert de cloison à la salle de bains. Montage en deux jours, finitions comprises.
+    - Texte : Tracé et taillé à l'atelier, monté en deux jours, finitions comprises.
     - Lien : Voir les travaux → `/realisations/escalier-1-4-tournant-en-meleze-lamelle-colle/`
   - **Bouton contour :** Voir toutes nos réalisations → `/realisations/`
-- *Note :* « dépassée de toiture » (le débord du toit) est le terme employé sur la fiche ; on le garde, c'est le vocabulaire local.
 
-### Section 11 : zone d'intervention
+### Section 10 : zone d'intervention
 
 - **Rôle :** ancrer l'entreprise dans ses communes et envoyer vers les trois pages secteur.
-- **Composant Framer :** fond crème, deux colonnes. À gauche, texte et trois cartes de lien. À droite, une carte dessinée (SVG simple de la haute Durance, points sur les communes des chantiers), sans carte Google intégrée (pas de cookie tiers).
+- **Composant Framer :** fond crème, deux colonnes. À gauche, texte et trois cartes de lien. À droite, une carte dessinée (SVG simple de la haute Durance) avec un point et le nom de chaque commune de chantier : L'Argentière-la-Bessée, Briançon, Vallouise, Pelvoux, La Salle-les-Alpes, Le Casset, Saint-Martin-de-Queyrières, Prelles, Champcella, La Roche-de-Rame. Pas de carte Google intégrée (pas de cookie tiers).
 - **Copywriting :**
   - **Kicker :** Où nous intervenons
   - **H2 :** Charpentiers dans le **nord des Hautes-Alpes**, et au-delà
-  - **Texte :** Basés à L'Argentière-la-Bessée, nous intervenons dans les Hautes-Alpes, mais aussi en Provence-Alpes-Côte d'Azur et en Auvergne-Rhône-Alpes. La plupart de nos chantiers se trouvent dans trois secteurs.
+  - **Texte :** Basés à L'Argentière-la-Bessée, nous intervenons dans les Hautes-Alpes, mais aussi en Provence-Alpes-Côte d'Azur et en Auvergne-Rhône-Alpes.
   - **Carte secteur 1 :**
     - Titre (H3) : Charpentier à Briançon
-    - Texte : Briançon et le Briançonnais : rénovation d'une copropriété, surélévation d'une maison en ossature bois.
+    - Texte : Une copropriété rénovée, une maison surélevée en ossature bois.
     - Lien : Nos chantiers à Briançon → `/charpentier-briancon/`
   - **Carte secteur 2 :**
     - Titre (H3) : Charpentier à Serre Chevalier
-    - Texte : La Salle-les-Alpes, Le Monêtier-les-Bains : réhabilitation d'une ancienne forge, toit en bardeaux de mélèze au Casset.
+    - Texte : Une ancienne forge à La Salle-les-Alpes, un toit en bardeaux de mélèze au Casset.
     - Lien : Nos chantiers à Serre Chevalier → `/charpentier-serre-chevalier/`
   - **Carte secteur 3 :**
     - Titre (H3) : Charpentier en Vallouise et Pays des Écrins
-    - Texte : L'Argentière-la-Bessée, Vallouise, Pelvoux, Champcella, La Roche-de-Rame, Saint-Martin-de-Queyrières : notre secteur d'origine.
+    - Texte : L'Argentière-la-Bessée, Vallouise, Pelvoux, Champcella, La Roche-de-Rame : notre secteur d'origine.
     - Lien : Nos chantiers en Vallouise → `/charpentier-vallouise-pays-des-ecrins/`
-  - **Ligne sous les cartes (petit texte) :** Nos chantiers présentés sur ce site : L'Argentière-la-Bessée · Briançon · Vallouise · Pelvoux · La Salle-les-Alpes · Le Casset · Saint-Martin-de-Queyrières · Prelles · Champcella · La Roche-de-Rame · Gresse-en-Vercors · monts du Lyonnais.
 - *Note de réécriture :* la FAQ validée dit « en région PACA et Rhône Alpes » ; on écrit les noms actuels des régions (Provence-Alpes-Côte d'Azur, Auvergne-Rhône-Alpes).
 
-### Section 12 : FAQ
+### Section 11 : FAQ
 
 - **Rôle :** répondre aux questions fréquentes et alimenter les données structurées FAQPage.
 - **Composant Framer :** FAQ en accordéon dans des cartes blanches, première question ouverte.
@@ -403,7 +389,7 @@
   - **H2 :** Vos **questions**, nos **réponses**
   - Questions et réponses : voir partie 4.
 
-### Section 13 : appel à l'action final
+### Section 12 : appel à l'action final
 
 - **Rôle :** convertir.
 - **Composant Framer :** bandeau d'appel à l'action vert forêt, formes organiques vert clair et grille ronde translucide.
@@ -414,7 +400,7 @@
   - **Bouton plein clair :** Demander mon devis → `/contact/`
   - **Bouton contour clair :** Appeler le 06 34 67 31 49 → `tel:+33634673149`
 
-### Section 14 : pied de page (commun à tout le site)
+### Section 13 : pied de page (commun à tout le site)
 
 - **Rôle :** coordonnées identiques partout (NAP), liens secteurs et légaux.
 - **Composant Framer :** pied de page crème avec le logo et la signature.
@@ -486,7 +472,7 @@ Contactez-nous par téléphone au 06 34 67 31 49 ou avec le formulaire de co
 | Nos chantiers à Briançon | `/charpentier-briancon/` |
 | Nos chantiers à Serre Chevalier | `/charpentier-serre-chevalier/` |
 | Nos chantiers en Vallouise | `/charpentier-vallouise-pays-des-ecrins/` |
-| Voir les travaux (6 cartes) | les 6 fiches `/realisations/…/` citées en section 10 |
+| Voir les travaux (6 cartes) | les 6 fiches `/realisations/…/` citées en section 9 |
 | Mentions légales et confidentialité | `/mentions-legales/` |
 
 ---
@@ -515,10 +501,10 @@ Photos à télécharger depuis https://3bcharpente.fr, à convertir en WebP, à 
 | Réalisation 5 | `/galeries/renovation-d-une-maison-d-habitation-a-l-argentiere-la-bessee` | Pignon vitré | `pignon-vitre-maison-argentiere-la-bessee.webp` | Pignon vitré d'une maison rénovée à L'Argentière-la-Bessée |
 | Réalisation 6 | `/galeries/escalier-1-4-tournant-en-meleze-lamelle-colle` | montage terminé | `escalier-quart-tournant-meleze-lamelle-colle.webp` | Escalier quart tournant en mélèze lamellé-collé menant aux combles |
 
-**Photos d'ambiance :** une seule au maximum sur l'accueil (rondins de la maquette, en option derrière la section 7), signalée comme photo d'ambiance dans le gestionnaire de médias.
+**Photos d'ambiance :** une seule au maximum sur l'accueil (rondins de la maquette, en option derrière la section 6), signalée comme photo d'ambiance dans le gestionnaire de médias.
 
 **Photos manquantes à demander à Jean :**
-- portrait de Jean-Michel Tardy à l'atelier ou sur un chantier (section 8) ;
+- portrait de Jean-Michel Tardy à l'atelier ou sur un chantier (section 7) ;
 - photo de l'équipe au complet, si l'équipe est confirmée ;
 - l'atelier (établis, bois en stock, taille en cours) ;
 - un chantier de déconstruction 3B Récup' en cours et un stock de bois de réemploi trié ;
