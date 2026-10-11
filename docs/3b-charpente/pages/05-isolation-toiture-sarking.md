@@ -209,7 +209,7 @@ Ce que ça change :
 **Schéma en coupe (à faire dessiner) — légendes, de l'intérieur vers l'extérieur :**
 
 1. Chevrons de la charpente, laissés apparents.
-2. Support (lambris ou panneau) et couche d'étanchéité à l'air.
+2. Support (lambris ou panneau) et couche d'étanchéité à l'air, qui empêche l'air de la maison de traverser la paroi.
 3. Panneaux de fibre de bois, posés en continu.
 4. Écran de sous-toiture, qui protège de l'eau.
 5. Contre-lattes, qui créent une lame d'air ventilée.

@@ -168,7 +168,7 @@
 
 **H1 :** Isolation des murs **par l'extérieur** (ITE) et du **bâti ancien** dans les Hautes-Alpes
 
-**Texte :** Des murs froids, des courants d'air, une façade à refaire ? 3B Charpente, charpentier à L'Argentière-la-Bessée depuis 2007, isole les murs des maisons et des chalets avec des **isolants biosourcés**, issus du bois ou de plantes. Par l'extérieur, avec un manteau de fibre de bois fini par un **bardage bois ou un enduit**. Par l'intérieur, quand la façade doit rester telle qu'elle est. Avec, à chaque fois, une **étanchéité à l'air** soignée.
+**Texte :** Des murs froids, des courants d'air, une façade à refaire ? 3B Charpente, charpentier à L'Argentière-la-Bessée depuis 2007, isole les murs des maisons et des chalets avec des **isolants biosourcés**, issus du bois ou de plantes. Par l'extérieur, avec un manteau de fibre de bois fini par un **bardage bois ou un enduit**. Par l'intérieur, quand la façade doit rester telle qu'elle est. Avec, à chaque fois, une **étanchéité à l'air** soignée : la couche qui empêche l'air de traverser les murs.
 
 **Bouton plein :** Demander mon devis → `/contact/`
 

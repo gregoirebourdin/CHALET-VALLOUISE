@@ -317,6 +317,7 @@ Volumes : recherches mensuelles moyennes en France, SE Ranking, octobre 2026. Le
 | 24 | Guide : le réemploi du bois en construction | `/conseils/reemploi-bois-construction/` | réemploi matériaux construction (40), matériauthèque (1 300), re2020 réemploi | 2 |
 | 25 | Guide : rénover un chalet ou une maison ancienne en montagne | `/conseils/renover-chalet-maison-ancienne/` | rénovation maison ancienne (330), rénovation chalet | 2 |
 | 26 | Guide : aides à la rénovation avec un artisan RGE | `/conseils/aides-renovation-artisan-rge/` | artisan rge (1 900), charpentier rge (40) | 2 |
+| 27 | Conseils (liste des guides) | `/conseils/` | — (page de rangement, fil d'Ariane des guides) | 2 |
 
 **Menu principal :**
 - Prestations (menu déroulant de 02 à 10) ;

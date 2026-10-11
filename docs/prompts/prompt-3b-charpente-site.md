@@ -129,7 +129,7 @@ Le plan complet est dans `00-brief.md`, section 7 ; chaque page a sa fiche dans 
   - 3 pages de secteur ;
   - Contact ;
   - Mentions légales.
-- **Phase 2 :** les 4 guides de `/conseils/`. Construis le gabarit Article et publie-les si leurs fiches sont prêtes.
+- **Phase 2 :** les 4 guides et la page `/conseils/` qui les liste (utile au fil d'Ariane). Construis le gabarit Article et publie les guides si leurs fiches sont prêtes.
 - **Page 404 :** utile, avec la recherche des prestations et le téléphone.
 
 **Les adresses sont celles du plan, à l'identique :** minuscules, tirets, barre oblique finale. Les 24 fiches chantier gardent l'identifiant de leur adresse actuelle (`/galerie/{slug}` → `/realisations/{slug}/`).
