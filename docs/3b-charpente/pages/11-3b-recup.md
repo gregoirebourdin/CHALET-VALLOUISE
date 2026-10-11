@@ -23,12 +23,12 @@
 - **Mots-clés secondaires :** bois de réemploi, matériaux de réemploi (90/mois), économie circulaire bâtiment (50/mois), déconstruction et réemploi, 3B Récup'.
 - **Intention de recherche :** informationnelle et locale : comprendre ce qu'est le réemploi du bois et trouver un professionnel des Hautes-Alpes qui le pratique de la dépose à la repose.
 - **Pages liées :** 12 `/3b-recup/diagnostic-pemd/`, 13 `/3b-recup/deconstruction-selective/`, 14 `/3b-recup/bois-de-reemploi/`, 24 `/conseils/reemploi-bois-construction/` (phase 2), 02 `/charpente-bois/`, 03 `/renovation-charpente-combles/`, 10 `/balcon-terrasse-abri-bois/`, 15 `/realisations/` et trois fiches de réalisation, 17 `/a-propos/`, 21 `/contact/`.
-- **Longueur du corps de page (section 3, hors FAQ) :** environ 1331 mots.
+- **Longueur du corps de page (section 3, hors FAQ) :** environ 1 187 mots.
 
 ## 2. SEO
 
 - **Balise title** (56 caractères) : 3B Récup' : réemploi du bois Hautes-Alpes | 3B Charpente
-- **Meta description** (148 caractères) : Déconstruction et réemploi du bois dans les Hautes-Alpes : 3B Récup', filière de 3B Charpente depuis 2007, dépose, transforme et repose. Parlons-en.
+- **Meta description** (150 caractères) : Déconstruction et réemploi du bois dans les Hautes-Alpes : 3B Récup', la filière de 3B Charpente, dépose, transforme et repose votre bois. Parlons-en.
 - **H1 :** 3B Récup' : **déconstruction et réemploi du bois** dans les Hautes-Alpes
 - **Données structurées :** Service + HowTo (la méthode en cinq étapes) + BreadcrumbList dans un même `@graph`, puis FAQPage. Le `provider` renvoie au LocalBusiness déclaré sur tout le site : aligner l'`@id` (`https://3bcharpente.fr/#entreprise`) avec celui retenu dans le gabarit global. Google n'affiche plus de résultat enrichi HowTo, mais le balisage reste utile aux IA pour comprendre l'ordre des étapes.
 
@@ -75,7 +75,7 @@
       "description": "Les cinq étapes de la prestation globale de 3B Récup', dans l'ordre du chantier.",
       "step": [
         { "@type": "HowToStep", "position": 1, "name": "Diagnostic", "url": "https://3bcharpente.fr/3b-recup/#methode", "text": "L'équipe réalise une expertise du bâtiment pour identifier les matériaux présents et évaluer leur potentiel de réemploi, en amont ou en appui du diagnostic PEMD." },
-        { "@type": "HowToStep", "position": 2, "name": "Stratégie", "url": "https://3bcharpente.fr/3b-recup/#methode", "text": "Une feuille de route détaillée fixe ce qui sera déposé, dans quel ordre, et ce que chaque pièce pourra devenir, en préservant l'intégrité et la valeur des matériaux réutilisables." },
+        { "@type": "HowToStep", "position": 2, "name": "Stratégie", "url": "https://3bcharpente.fr/3b-recup/#methode", "text": "Une fois le diagnostic complet, une feuille de route détaillée est élaborée pour maximiser l'efficacité du projet tout en préservant l'intégrité et la valeur des matériaux réutilisables." },
         { "@type": "HowToStep", "position": 3, "name": "Intervention", "url": "https://3bcharpente.fr/3b-recup/#methode", "text": "Les charpentiers interviennent sur le site pour déposer les matériaux récupérés, puis 3B Récup' gère la logistique du bois jusqu'aux ateliers." },
         { "@type": "HowToStep", "position": 4, "name": "Transformation", "url": "https://3bcharpente.fr/3b-recup/#methode", "text": "Dans les ateliers, les matériaux récupérés sont triés, nettoyés et usinés pour être préparés à leur remise en œuvre." },
         { "@type": "HowToStep", "position": 5, "name": "Repose", "url": "https://3bcharpente.fr/3b-recup/#methode", "text": "Sur le chantier, le système constructif est adapté aux matériaux de réemploi pour les remettre en œuvre." }
@@ -182,9 +182,9 @@ _Composant Framer : héros (titre en deux couleurs, mots forts en gras, un bout
 **Preuves (pastilles sauge) :** Depuis 2007 · De la dépose à la repose
 
 **Collage photo et légendes :**
-- grande photo : ferme en vieux bois. Légende : « Ferme de charpente en vieux bois, réfection d'une toiture. »
-- vignette 1 : garde-corps en bois de réemploi. Légende : « Garde-corps en bois de réemploi, L'Argentière-la-Bessée. »
-- vignette 2 : bardage vieux bois. Légende : « Bardage vieux bois, L'Argentière-la-Bessée. »
+- grande photo : « Ferme de charpente en vieux bois, réfection d'une toiture. »
+- vignette 1 : « Garde-corps en bois de réemploi, L'Argentière-la-Bessée. »
+- vignette 2 : « Bardage vieux bois, L'Argentière-la-Bessée. »
 
 _Note : ne pas reprendre le badge « Expert du Réemploi » ni le badge d'étoiles Google de la maquette (aucun justificatif, un seul avis Google)._
 
@@ -219,7 +219,7 @@ Concrètement, 3B Récup' :
 
 Nous intervenons du bâtiment industriel à la maison particulière. Pour nous, charpentiers, c'est aussi une manière d'apporter du sens supplémentaire à notre métier.
 
-**Légende photo :** « Garde-corps en bois de réemploi posé par 3B Charpente dans une maison rénovée à L'Argentière-la-Bessée. »
+**Légende photo :** « Garde-corps en bois de réemploi, maison rénovée à L'Argentière-la-Bessée. »
 
 ### 3.4 Pourquoi réemployer le bois
 
@@ -233,7 +233,7 @@ _Composant Framer : section plein cadre « forêt » sombre, titre blanc avec
 **Texte d'introduction :** La RE2020, la réglementation environnementale 2020, pousse le secteur du bâtiment à réduire son impact carbone sur tout le cycle de vie des bâtiments. En réponse, 3B Charpente, via 3B Récup', s'intègre pleinement dans la structuration et la promotion de la filière du réemploi.
 
 **Carte 1 · Réduire l'impact environnemental** (icône : feuille)
-Prolonger la vie des matériaux de construction, c'est réduire les déchets d'un chantier : chaque pièce remise en œuvre ne part pas en déchet.
+Prolonger la vie des matériaux de construction, c'est réduire les déchets et l'impact environnemental d'un chantier.
 
 **Carte 2 · Maximiser l'utilisation des ressources** (icône : flèches en boucle)
 Le troisième B de notre nom, c'est le Bois, « un être vivant ». Une pièce qui a porté une toiture peut encore servir, si l'on sait la déposer et la préparer.
@@ -250,13 +250,11 @@ _Composant Framer : deux grandes cartes blanches à coins arrondis côte à cô
 
 **H2 :** Professionnels ou particuliers, **des solutions sur mesure**
 
-**Texte d'introduction :** Que vous soyez architecte, entreprise du bâtiment, collectivité ou particulier, 3B Récup' saura vous apporter des solutions personnalisées.
-
 **Carte « Professionnels du bâtiment »** (icône : plan)
 
 _Sous-titre :_ Architectes, maîtres d'ouvrage, collectivités, entreprises de construction et de démolition
 
-Vous préparez une démolition, une réhabilitation ou un projet avec des matériaux de réemploi ? Associez-nous dès l'étude de faisabilité. Nous évaluons le **gisement bois** (les pièces réemployables, leur état, leurs usages possibles) en amont ou en appui du **diagnostic PEMD** (produits, équipements, matériaux et déchets), imposé avant la démolition ou la rénovation significative de certains bâtiments. Puis nos charpentiers déposent, transforment et reposent : un seul interlocuteur, de la dépose à la repose.
+Vous préparez une démolition, une réhabilitation ou un projet avec des matériaux de réemploi ? Associez-nous dès l'étude de faisabilité. Nous évaluons le **gisement bois** (les pièces réemployables, leur état, leurs usages possibles) en amont ou en appui du **diagnostic PEMD** (produits, équipements, matériaux et déchets). Puis nos charpentiers déposent, transforment et reposent : un seul interlocuteur, de la dépose à la repose.
 
 _Bouton contour :_ Diagnostic et gisement bois → `/3b-recup/diagnostic-pemd/`
 
@@ -264,7 +262,7 @@ _Bouton contour :_ Diagnostic et gisement bois → `/3b-recup/diagnostic-pemd/`
 
 _Sous-titre :_ Vous rénovez une grange, un chalet ou une maison de pays
 
-Vos poutres, vos planchers ou votre vieux bardage ont une histoire ? Nous regardons avec vous ce qui peut rester en place, être déposé avec soin ou être retravaillé dans nos ateliers pour retrouver une place dans votre projet. [À VALIDER AVEC JEAN : confirmer que le bois déposé chez un particulier peut être transformé à l'atelier puis reposé sur son propre chantier.] Comme tous nos projets, le vôtre débute par une étude sur mesure.
+Vos poutres, vos planchers ou votre vieux bardage ont une histoire ? Nous regardons avec vous ce qui peut rester en place, être déposé ou retravaillé dans nos ateliers pour votre projet. [À VALIDER AVEC JEAN : confirmer que le bois déposé chez un particulier peut être transformé à l'atelier puis reposé sur son propre chantier.] Comme tous nos projets, le vôtre débute par une étude sur mesure.
 
 _Bouton contour :_ Le bois de réemploi → `/3b-recup/bois-de-reemploi/`
 
@@ -294,7 +292,7 @@ _Lien :_ Le diagnostic et le gisement bois → `/3b-recup/diagnostic-pemd/`
 Une fois le diagnostic complet, nous élaborons une feuille de route détaillée. Cette stratégie d'intervention est conçue pour maximiser l'efficacité du projet tout en préservant l'intégrité et la valeur des matériaux réutilisables.
 
 **Onglet 03 · Intervention**
-Nos charpentiers qualifiés interviennent sur le site pour déposer les matériaux récupérés. Ils démontent la structure en suivant ses assemblages, pour préserver les pièces. Nous gérons ensuite la logistique du bois récupéré jusqu'à nos ateliers.
+Nos charpentiers qualifiés interviennent sur le site pour déposer les matériaux récupérés. Nous gérons ensuite la logistique du bois récupéré jusqu'à nos ateliers.
 
 _Lien :_ La déconstruction sélective → `/3b-recup/deconstruction-selective/`
 
@@ -323,12 +321,12 @@ _Composant Framer : trois cartes de services blanches à coins arrondis, icône
 Charpente, solivage et murs à ossature bois. Le solivage est l'ensemble des solives, les poutres qui portent un plancher.
 
 **Carte 2 · Couverture et isolation** (icône : toit)
-La couverture de la toiture et l'isolation en place, déposées et séparées du bois.
+La couverture et l'isolation en place, séparées du bois.
 
 **Carte 3 · Parements** (icône : planches)
 Planchers, bardages et panneaux d'habillage. Le bardage est le revêtement en planches qui habille et protège une façade.
 
-**Texte après les cartes :** Savoir comment une charpente a été taillée et assemblée, c'est savoir comment la démonter en préservant les pièces. C'est tout l'intérêt de confier la déconstruction à des charpentiers.
+**Texte après les cartes :** Qui sait comment une charpente a été assemblée sait la démonter en préservant les pièces : c'est l'intérêt de confier la déconstruction à des charpentiers.
 
 **Bouton contour :** Découvrir la déconstruction sélective → `/3b-recup/deconstruction-selective/`
 
@@ -340,8 +338,6 @@ _Composant Framer : cartes de réalisations (étiquette « 3B Charpente » po
 **Kicker :** Réalisations
 
 **H2 :** Le réemploi, **déjà dans nos chantiers**
-
-**Texte d'introduction :** Le bois de réemploi fait déjà partie de plusieurs réalisations publiées de 3B Charpente.
 
 **Carte 1 · Rénovation d'une maison d'habitation à L'Argentière-la-Bessée**
 Bardage vieux bois en façade et garde-corps en bois de réemploi.
@@ -380,7 +376,7 @@ _Lien :_ En savoir plus → `/3b-recup/deconstruction-selective/`
 Vieux bois, poutres anciennes, bardage : tri, nettoyage et usinage avant la repose.
 _Lien :_ En savoir plus → `/3b-recup/bois-de-reemploi/`
 
-**Lien texte sous les cartes :** Avant de vous lancer, lisez notre guide : réemployer le bois en construction → `/conseils/reemploi-bois-construction/`
+**Lien texte sous les cartes :** Lire notre guide du réemploi du bois → `/conseils/reemploi-bois-construction/`
 _Note : guide prévu en phase 2 ; afficher ce lien seulement quand la page est en ligne._
 
 ### 3.10 FAQ
@@ -401,7 +397,7 @@ _Composant Framer : bandeau vert forêt avec formes organiques vert clair en fo
 
 **H2 :** Parlons de **votre bâtiment**
 
-**Texte :** Un bâtiment à déconstruire, une grange à rénover, du bois de réemploi à intégrer ? Le réemploi peut réduire l'impact environnemental d'un projet, et parfois ses coûts, tout en offrant des solutions créatives et personnalisées. Chaque projet débute par une étude sur mesure.
+**Texte :** Architecte, entreprise du bâtiment, collectivité ou particulier, 3B Récup' saura vous apporter des solutions personnalisées. Le réemploi peut réduire l'impact environnemental d'un chantier, et parfois ses coûts. Chaque projet débute par une étude sur mesure.
 
 **Bouton plein (crème sur vert) :** Parlons de votre bâtiment → `/contact/`
 

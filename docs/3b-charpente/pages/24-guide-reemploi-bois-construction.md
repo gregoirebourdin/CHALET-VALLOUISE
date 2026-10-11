@@ -23,7 +23,7 @@
 - **Mots-clés secondaires :** matériauthèque (1 300/mois), re2020 réemploi, réemploi bois, réemploi bois hautes alpes, peut-on réutiliser une vieille charpente.
 - **Intention de recherche :** informationnelle (comprendre, se préparer), avec une suite commerciale (trouver un professionnel).
 - **Pages liées :** 11 `/3b-recup/`, 12 `/3b-recup/diagnostic-pemd/`, 13 `/3b-recup/deconstruction-selective/`, 14 `/3b-recup/bois-de-reemploi/`, 03 `/renovation-charpente-combles/`, 25 `/conseils/renover-chalet-maison-ancienne/`, fiches de réalisation 19 et 15, 21 `/contact/`.
-- **Longueur du corps de l'article (section 3, hors FAQ) :** environ 1719 mots.
+- **Longueur du corps de l'article (section 3, hors FAQ) :** environ 1 715 mots.
 
 ## 2. SEO
 
@@ -300,7 +300,7 @@ _Composant : liste numérotée en cartes blanches, une question par carte. Ancr
 
 **H2 :** Particuliers : **cinq questions** avant de jeter vos vieilles poutres
 
-1. **Mon bâtiment est-il concerné par le diagnostic PEMD ?** Au-delà de 1 000 m² de surface de plancher, ou si le bâtiment a accueilli une activité agricole, industrielle ou commerciale avec des substances classées dangereuses, oui. Sinon, un diagnostic ressources volontaire suffit pour savoir quoi garder.
+1. **Mon bâtiment est-il concerné par le diagnostic PEMD ?** Au-delà de 1 000 m² de surface de plancher, ou si le bâtiment a accueilli une activité agricole, industrielle ou commerciale avec des substances classées dangereuses, oui. Sinon, un diagnostic ressources, volontaire, vous aide à savoir quoi garder.
 2. **Le bois est-il sain ?** Un charpentier sait repérer une pièce affaiblie. Faites regarder le bois avant de décider, plutôt qu'après la dépose.
 3. **Peut-il rester en place ?** Le meilleur réemploi est parfois de ne rien déposer : une charpente existante peut se rénover et se renforcer, par exemple pour aménager les combles.
    _Lien :_ rénover une charpente existante → `/renovation-charpente-combles/`

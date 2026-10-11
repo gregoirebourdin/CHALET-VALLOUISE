@@ -24,7 +24,7 @@
 - **Mots-clés secondaires :** diagnostic ressources (50/mois), diagnostic pemd (20/mois), gisement bois, diagnostic réemploi, formulaire de récolement.
 - **Intention de recherche :** d'abord informationnelle (qu'est-ce que le PEMD, suis-je concerné ?), puis commerciale (qui peut évaluer le bois réemployable de mon bâtiment ?).
 - **Pages liées :** 11 `/3b-recup/`, 13 `/3b-recup/deconstruction-selective/`, 14 `/3b-recup/bois-de-reemploi/`, 24 `/conseils/reemploi-bois-construction/` (phase 2), 03 `/renovation-charpente-combles/`, 17 `/a-propos/`, 21 `/contact/`.
-- **Longueur du corps de page (section 3, hors FAQ, variante A) :** environ 1175 mots.
+- **Longueur du corps de page (section 3, hors FAQ, variante A) :** environ 1 128 mots.
 
 ## 2. SEO
 

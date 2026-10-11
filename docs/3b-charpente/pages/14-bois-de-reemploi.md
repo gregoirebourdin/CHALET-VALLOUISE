@@ -24,7 +24,7 @@
 - **Mots-clés secondaires :** bardage vieux bois (170), bois de récupération (140), poutres anciennes (110), planche vieux bois (110), bois de réemploi.
 - **Intention de recherche :** mixte. Inspiration et information (que faire avec du vieux bois, comment est-il préparé ?) et transaction (où en trouver, qui le pose ?). La variante B répond mieux à l'intention d'achat ; la variante A capte l'intention de projet.
 - **Pages liées :** 11 `/3b-recup/`, 12 `/3b-recup/diagnostic-pemd/`, 13 `/3b-recup/deconstruction-selective/`, 10 `/balcon-terrasse-abri-bois/`, 02 `/charpente-bois/`, 03 `/renovation-charpente-combles/`, fiches de réalisation 19, 15 et 13, 24 `/conseils/reemploi-bois-construction/` (phase 2), 21 `/contact/`.
-- **Longueur du corps de page (section 3, hors FAQ, une seule variante comptée) :** environ 1086 mots.
+- **Longueur du corps de page (section 3, hors FAQ, une seule variante comptée) :** environ 981 mots.
 
 ## 2. SEO
 

@@ -24,7 +24,7 @@
 - **Mots-clés secondaires :** déconstruction sélective (20/mois), dépose de charpente, déconstruction bâtiment bois, démolition ou déconstruction.
 - **Intention de recherche :** informationnelle (qu'est-ce que la déconstruction sélective ?) et commerciale locale (qui peut déconstruire un bâtiment dans les Hautes-Alpes ?).
 - **Pages liées :** 11 `/3b-recup/`, 12 `/3b-recup/diagnostic-pemd/`, 14 `/3b-recup/bois-de-reemploi/`, 03 `/renovation-charpente-combles/`, 02 `/charpente-bois/`, 17 `/a-propos/`, fiches de réalisation 14, 19 et 15, 21 `/contact/`.
-- **Longueur du corps de page (section 3, hors FAQ) :** environ 1177 mots.
+- **Longueur du corps de page (section 3, hors FAQ) :** environ 1 088 mots.
 
 ## 2. SEO
 
