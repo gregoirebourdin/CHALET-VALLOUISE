@@ -248,7 +248,7 @@ Les informations de ce formulaire sont utilisées par 3B Charpente (Jean-Michel 
 - **Copywriting :**
   - **Pastille :** 3B Récup'
   - **H2 :** Vous préparez une **déconstruction** ?
-  - **Texte :** Que vous soyez architecte, entreprise du bâtiment, collectivité ou particulier, 3B Récup' saura vous apporter des solutions personnalisées. Du bâtiment industriel à la maison particulière, nous déposons les structures bois, la couverture, l'isolation et les parements, puis nous transformons le bois dans nos ateliers. Associez-nous dès l'étude de faisabilité : c'est le meilleur moment pour prévoir le réemploi.
+  - **Texte :** Que vous soyez architecte, entreprise du bâtiment, collectivité ou particulier, 3B Récup' saura vous apporter des solutions personnalisées. Du bâtiment industriel à la maison particulière, nous déposons les structures bois, la couverture, l'isolation et les parements, puis nous transformons le bois dans nos ateliers. Associez-nous dès l'étude de faisabilité : c'est à ce stade que le réemploi se prévoit le plus simplement.
   - **Lien :** Découvrir 3B Récup' → `/3b-recup/`
 - *Note :* première phrase et liste des matériaux validées ; « dès l'étude de faisabilité » reprend l'ambition déclarée sur PRECI.
 

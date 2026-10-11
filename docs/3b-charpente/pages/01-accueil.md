@@ -202,42 +202,41 @@
 - **Copywriting :**
   - **Kicker :** Nos prestations
   - **H2 :** Tous nos **métiers du bois**, de la charpente à l'**isolation**
-  - **Intro :** Neuf prestations, une même façon de faire : du bois local, des isolants sains, des assemblages soignés.
   - **Carte 1 (icône : toit) :**
     - Titre (H3) : Charpente bois traditionnelle
-    - Texte : Des charpentes taillées et assemblées à l'ancienne, tenons, mortaises et chevilles, en mélèze et sapin des Hautes-Alpes.
+    - Texte : Des charpentes taillées à l'ancienne, tenons, mortaises et chevilles, en mélèze et sapin du pays.
     - Lien : Voir la charpente bois → `/charpente-bois/`
   - **Carte 2 (icône : marteau) :**
     - Titre (H3) : Rénovation de charpente et combles
-    - Texte : Rénovez votre charpente pour aménager les combles : renfort de la structure, lucarnes, fenêtres de toit.
+    - Texte : Renforcer la structure, aménager les combles, ouvrir lucarnes et fenêtres de toit.
     - Lien : Rénover ma charpente → `/renovation-charpente-combles/`
   - **Carte 3 (icône : feuille) :**
     - Titre (H3) : Isolation biosourcée
-    - Texte : Fibre de bois, ouate de cellulose, laine de chanvre, lin et coton, pour le confort d'hiver et d'été. Artisan RGE.
+    - Texte : Fibre de bois, ouate de cellulose, laine de chanvre, lin et coton : le confort d'hiver et d'été.
     - Lien : Isoler ma maison → `/isolation-biosourcee/`
   - **Carte 4 (icône : couches superposées) :**
     - Titre (H3) : Isolation de toiture par l'extérieur (sarking)
-    - Texte : Le sarking isole la toiture par-dessus les chevrons, côté extérieur : la charpente reste visible, sans perte de volume.
+    - Texte : Le sarking isole le toit par-dessus les chevrons, côté extérieur : la charpente reste visible.
     - Lien : Découvrir le sarking → `/isolation-toiture-sarking/`
   - **Carte 5 (icône : mur) :**
     - Titre (H3) : Isolation des murs (ITE et bâti ancien)
-    - Texte : L'ITE, ou isolation thermique par l'extérieur, enveloppe les murs d'un manteau isolant. En bâti ancien, nous isolons aussi par l'intérieur.
+    - Texte : L'ITE, ou isolation thermique par l'extérieur, enveloppe les murs d'un manteau isolant. En bâti ancien, aussi par l'intérieur.
     - Lien : Isoler mes murs → `/isolation-murs-ite/`
   - **Carte 6 (icône : maison) :**
     - Titre (H3) : Maison ossature bois
-    - Texte : Un habitat neuf et personnalisé, en ossature bois, avec une toiture isolée par l'extérieur de type sarking.
+    - Texte : Une maison neuve sur mesure, en ossature bois, avec une toiture isolée par sarking.
     - Lien : Construire en bois → `/maison-ossature-bois/`
   - **Carte 7 (icône : flèche vers le haut) :**
     - Titre (H3) : Extension et surélévation bois
-    - Texte : Gagner une pièce ou un étage sans tout reconstruire, comme nos surélévations à Briançon et à Pelvoux.
+    - Texte : Gagner une pièce ou un étage sans tout reconstruire, comme à Briançon et à Pelvoux.
     - Lien : Agrandir ma maison → `/extension-surelevation-bois/`
   - **Carte 8 (icône : escalier) :**
     - Titre (H3) : Escaliers bois sur mesure
-    - Texte : Quart tournant, balancé ou en bois debout : des escaliers dessinés pour votre maison et taillés dans notre atelier.
+    - Texte : Quart tournant, balancé ou en bois debout, dessinés pour votre maison, taillés à l'atelier.
     - Lien : Voir nos escaliers → `/escalier-bois-sur-mesure/`
   - **Carte 9 (icône : balcon) :**
     - Titre (H3) : Balcons, terrasses et abris bois
-    - Texte : Balcons, terrasses couvertes, garde-corps et abris sur mesure, pensés pour la montagne et l'âme de votre maison.
+    - Texte : Balcons, terrasses, garde-corps et abris, pensés pour la montagne et l'âme de votre maison.
     - Lien : Voir balcons et terrasses → `/balcon-terrasse-abri-bois/`
   - **Bouton sous la grille (contour) :** Parler de mon projet → `/contact/`
 - *Note de réécriture :* les cartes 2, 6 et 9 reprennent les textes de services validés, raccourcis ; les cartes 4 et 5 définissent sarking et ITE dès leur première apparition, comme l'exige le brief.
@@ -251,10 +250,10 @@
   - **Kicker :** Déconstruction et réemploi du bois
   - **H2 :** Donner une **seconde vie** au bois des **bâtiments déconstruits**
   - **Paragraphe 1 :** 3B Récup' est l'initiative de 3B Charpente dédiée au réemploi des matériaux et à la déconstruction sélective : démonter un bâtiment élément par élément pour récupérer ce qui peut resservir.
-  - **Paragraphe 2 :** Charpentiers de métier, nous déposons charpentes, solivages et murs à ossature bois, du bâtiment industriel à la maison particulière. Le bois est trié, nettoyé et usiné dans nos ateliers, puis réemployé sur nos chantiers.
+  - **Paragraphe 2 :** Charpentiers de métier, nous déposons les structures bois, du bâtiment industriel à la maison particulière. Le bois est trié, nettoyé et usiné dans nos ateliers, puis réemployé sur nos chantiers.
   - **Paragraphe 3 (gras) :** Architectes, entreprises, collectivités, particuliers : 3B Récup' vous apporte des solutions personnalisées.
   - **Les cinq étapes (onglets 01 à 05) :**
-    - 01 Diagnostic : repérer les matériaux réemployables, en lien avec le diagnostic PEMD (l'inventaire des produits, équipements, matériaux et déchets exigé avant certaines démolitions).
+    - 01 Diagnostic : repérer les matériaux réemployables, en lien avec le diagnostic PEMD (produits, équipements, matériaux et déchets), exigé avant certaines démolitions.
     - 02 Stratégie : une feuille de route pour déposer sans abîmer.
     - 03 Intervention : nos charpentiers déposent les éléments sur site.
     - 04 Transformation : tri, nettoyage et usinage à l'atelier.
@@ -264,11 +263,10 @@
     - Diagnostic et gisement (PEMD) → `/3b-recup/diagnostic-pemd/`
     - Déconstruction sélective → `/3b-recup/deconstruction-selective/`
     - Bois de réemploi → `/3b-recup/bois-de-reemploi/`
-  - **Mention discrète :** 3B Récup' figure sur PRECI, la plateforme de l'économie circulaire de la Région Sud. [À VALIDER AVEC JEAN : lien vers la fiche PRECI]
 - *Notes :*
   - « en lien avec le diagnostic PEMD » : formulation prudente imposée par le brief tant que Jean n'a pas confirmé qu'il réalise lui-même le diagnostic réglementaire ;
   - les étapes sont remises dans l'ordre du chantier (l'intervention, c'est-à-dire la dépose, avant la transformation) ; la maquette les listait dans l'ordre diagnostic, stratégie, transformation, repose, intervention. À valider avec Jean et à harmoniser avec la fiche 11 ;
-  - la preuve concrète (bardage en vieux bois, garde-corps de réemploi) est portée par la photo du bloc et par la carte 5 des réalisations ;
+  - la preuve concrète (bardage en vieux bois, garde-corps de réemploi) est portée par la photo du bloc et par la carte 5 des réalisations ; la mention de PRECI est réservée à la page À propos et à la page 3B Récup' ;
   - pas de badge « Expert du Réemploi » (aucune source).
 
 ### Section 6 : 3B = Bio, Bâti, Bois
@@ -295,9 +293,9 @@
 - **Copywriting :**
   - **Kicker :** Ce sur quoi vous pouvez compter
   - **H2 :** Un **savoir-faire** de compagnon, des **matériaux** d'ici
-  - **Carte 1, Depuis 2007 :** Installés à L'Argentière-la-Bessée depuis 2007 : la charpente d'abord, puis la rénovation de chalets, de maisons de pays et la construction neuve en ossature bois.
+  - **Carte 1, Depuis 2007 :** Installés à L'Argentière-la-Bessée depuis 2007 : la charpente d'abord, puis la rénovation de chalets et l'ossature bois.
   - **Carte 2, Formé chez les Compagnons du Devoir :** Jean-Michel Tardy, notre fondateur, a débuté à 16 ans, en 1995. CAP chez les Compagnons du Devoir, puis Tour de France : France métropolitaine, Martinique, Autriche.
-  - **Carte 3, Qualifié RGE :** RGE veut dire « reconnu garant de l'environnement ». Notre qualification Qualibat couvre l'isolation des murs et des toitures, les fenêtres de toit et les menuiseries extérieures. Elle ouvre l'accès aux aides publiques, sous conditions.
+  - **Carte 3, Qualifié RGE :** RGE veut dire « reconnu garant de l'environnement ». Notre qualification Qualibat couvre l'isolation des murs et des toitures et les menuiseries extérieures. Elle ouvre l'accès aux aides publiques à la rénovation énergétique, sous conditions.
   - **Carte 4, Du bois des Hautes-Alpes :** Principalement du mélèze et du sapin des Hautes-Alpes, sciés par notre partenaire local, la Scierie Savoldelli.
   - **Carte 5, Des isolants biosourcés :** Ouate de cellulose, fibre de bois, laine de chanvre, lin et coton : 28 cm dans les murs du chalet de Vallouise, 32 cm en toiture.
   - **Bouton contour :** Qui sommes-nous ? → `/a-propos/`
@@ -312,7 +310,7 @@
   - **H2 :** Chaque projet commence par une **étude sur mesure**
   - **01, Vous nous contactez :** par téléphone ou avec le formulaire, même en quelques lignes.
   - **02, Nous nous rencontrons :** nous parlons de vos besoins et vous donnons un calendrier estimatif.
-  - **03, Vous recevez un devis détaillé,** adapté à votre projet.
+  - **03, Vous recevez votre devis :** un devis détaillé, adapté à votre projet.
   - **04, Nous préparons à l'atelier :** traçage, taille et assemblage à blanc, c'est-à-dire un premier montage pour tout vérifier.
   - **05, Nous levons et posons :** levage, pose et finitions sur votre chantier.
   - **Bouton plein :** Demander mon devis → `/contact/`
@@ -334,7 +332,7 @@
   - **Carte 2 :**
     - Étiquette : L'Argentière-la-Bessée
     - Titre (H3) : Réfection d'une charpente avec lucarne
-    - Texte : Taille traditionnelle, levage des fermes et d'une lucarne, fibre de bois et bardage en mélèze.
+    - Texte : Taille traditionnelle, fermes et lucarne levées, bardage en mélèze.
     - Lien : Voir les travaux → `/realisations/refection-d-une-charpente-a-l-argentiere-la-bessee/`
   - **Carte 3 :**
     - Étiquette : Briançon
@@ -344,7 +342,7 @@
   - **Carte 4 :**
     - Étiquette : Briançon
     - Titre (H3) : Surélévation en ossature bois
-    - Texte : Pignons en ossature bois, pannes entaillées, panneaux trois plis en épicéa apparents.
+    - Texte : Pignons en ossature bois et panneaux trois plis en épicéa apparents.
     - Lien : Voir les travaux → `/realisations/surelevation-en-ossature-bois-d-une-maison-a-briancon/`
   - **Carte 5 :**
     - Étiquette : L'Argentière-la-Bessée
@@ -524,8 +522,9 @@ Photos à télécharger depuis https://3bcharpente.fr, à convertir en WebP, à 
 7. **Diagnostic PEMD :** Jean réalise-t-il lui-même le diagnostic PEMD réglementaire (compétences, assurance) ou intervient-il en appui du diagnostiqueur ? D'ici là, on écrit « en lien avec le diagnostic PEMD ».
 8. **Escalier quart tournant :** dans quelle commune ? (Même question pour les fiches 06, 07, 09, 10 et « Ronatlon ».)
 9. **Scierie Savoldelli :** accord pour la citer comme partenaire, avec logo et lien ?
-10. **Fiche PRECI :** lien exact à afficher.
+10. **Fiche PRECI :** lien exact à afficher (page À propos et page 3B Récup').
 11. **Fiche Google :** à revendiquer ; URL à mettre dans `sameAs` ; collecte de vrais avis avant de réintroduire un bloc d'avis.
 12. **Qualibat :** logo officiel et certificat RGE en cours de validité pour le pied de page.
 13. **Logo FEADER PACA LEADER :** faut-il l'afficher sur le site, et pour quel projet financé ?
-14. **Photos manquantes :** voir partie 6.
+14. **Atelier :** les charpentes sont-elles bien tracées, taillées et montées à blanc à l'atelier avant le levage (étape 04, carte « Bâti ») ? Une photo de l'atelier en action le prouverait.
+15. **Photos manquantes :** voir partie 6.

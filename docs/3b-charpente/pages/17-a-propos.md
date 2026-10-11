@@ -124,7 +124,6 @@
   - **H2 :** Une entreprise née de la **charpente**, grandie avec le **bois local**
   - **Paragraphe 1 :** Jean-Michel Tardy a fondé 3B Charpente en 2007, après plus de dix ans de métier. Il a choisi de s'installer à L'Argentière-la-Bessée, là où il avait été formateur.
   - **Paragraphe 2 :** Nous avons commencé avec des projets de charpente, puis nous avons progressivement étendu nos services à la rénovation de chalets et de maisons de pays, et à la construction neuve en ossature bois.
-  - **Paragraphe 3 :** Aujourd'hui, nous isolons aussi les maisons avec des matériaux biosourcés, avec la qualification RGE. Nous fabriquons escaliers, balcons et terrasses, nous agrandissons et surélevons des maisons. Et avec 3B Récup', nous donnons une seconde vie au bois issu de la déconstruction.
   - **Frise :**
     - **1995 :** Jean-Michel Tardy débute la charpente, apprenti à 16 ans dans une entreprise de Savoie.
     - **Ensuite :** CAP dans un CFA des Compagnons du Devoir, puis Tour de France, en France métropolitaine, en Martinique et en Autriche.
@@ -133,7 +132,7 @@
     - **[À VALIDER AVEC JEAN : année] :** lancement de 3B Récup', l'activité de déconstruction et de réemploi.
     - **Aujourd'hui :** une entreprise qualifiée RGE, 24 chantiers présentés sur ce site.
 - *Notes :*
-  - le paragraphe 2 est le texte validé de la maquette, presque mot pour mot ;
+  - le paragraphe 2 est le texte validé de la maquette, presque mot pour mot ; les métiers ajoutés depuis (isolation, escaliers, balcons, 3B Récup') sont présentés en section 6 ;
   - « plus de dix ans de métier » se déduit des dates vérifiées (début en 1995, création en 2007) ;
   - « là où il avait été formateur » relie deux faits vérifiés (formateur à L'Argentière-la-Bessée, puis création dans les Hautes-Alpes) ; à faire relire par Jean.
 
@@ -165,10 +164,10 @@
   - **Intro :** Trois lettres, trois mots, choisis pour leur sens d'origine.
   - **Carte Bio :**
     - Étymologie : du grec ancien βίος, qui exprime l'idée de vie.
-    - Texte : Pour nous, c'est la vie dans la maison : des matériaux sains et des isolants biosourcés, comme la fibre de bois, la ouate de cellulose ou la laine de chanvre, lin et coton. Dans un chalet de Vallouise, nous avons posé 28 cm d'isolant dans les murs et 32 cm en toiture.
+    - Texte : Pour nous, c'est la vie dans la maison : des matériaux sains et des isolants biosourcés, comme la fibre de bois, la ouate de cellulose ou la laine de chanvre, lin et coton.
   - **Carte Bâti :**
     - Étymologie : de l'ancien français bastir, idée d'entrelacer, d'assembler.
-    - Texte : C'est le cœur du métier : tracer, tailler, assembler. Tenons et mortaises chevillés, traits de Jupiter (un assemblage qui raboute deux pièces de bois), tenons à double embrèvement taillés à la besaiguë, l'outil à deux tranchants du charpentier. Nos charpentes sont montées à blanc à l'atelier avant d'être levées sur le chantier.
+    - Texte : C'est le cœur du métier : tracer, tailler, assembler. Tenons et mortaises chevillés, traits de Jupiter (un assemblage qui raboute deux pièces de bois), charpentes montées à blanc à l'atelier avant le levage.
   - **Carte Bois :**
     - Étymologie : un être vivant.
     - Texte : Nous travaillons principalement du mélèze et du sapin des Hautes-Alpes, sciés par notre partenaire local, la Scierie Savoldelli. Et parce qu'un bois peut servir plusieurs fois, nous réemployons le bois issu de la déconstruction avec 3B Récup'.
@@ -222,9 +221,9 @@
   - **Intro :** Notre mission : construire durablement, en réalisant des structures respectueuses de l'environnement. Innover, pour nous, c'est par exemple adapter notre système constructif aux matériaux de réemploi.
   - **Carte 1, L'écoute :** Chaque projet est unique. Nous travaillons en étroite collaboration avec vous pour adapter nos constructions à vos besoins, en respectant vos préférences esthétiques et fonctionnelles.
   - **Carte 2, La belle ouvrage :** Tracer, tailler, assembler à l'atelier, puis lever sur le chantier. Le savoir-faire appris sur le Tour de France, au service de votre maison.
-  - **Carte 3, Le bois d'ici :** Du mélèze et du sapin des Hautes-Alpes, sciés par notre partenaire local, la Scierie Savoldelli, et des isolants biosourcés.
+  - **Carte 3, Le bois d'ici :** Du mélèze et du sapin des Hautes-Alpes, et des isolants biosourcés.
   - **Carte 4, Le réemploi :** Prolonger la vie des matériaux de construction, réduire les déchets et l'impact environnemental, tout en proposant des solutions esthétiques et économiques.
-  - **Carte 5, La transparence :** Simple, transparent, et toujours à votre écoute : voilà notre promesse. Un calendrier estimatif dès la première rencontre, puis un devis détaillé.
+  - **Carte 5, La transparence :** Simple, transparent, et toujours à votre écoute : voilà notre promesse.
 - *Note de réécriture :* titre validé « Innovation et durabilité guident notre travail quotidien » gardé tel quel ; la mission validée « Construire durablement… réaliser des structures respectueuses de l'environnement » est reprise dans l'intro.
 
 ### Section 9 : qualifications et partenaires
@@ -243,7 +242,7 @@
       - fenêtres, volets, portes donnant sur l'extérieur.
     - Suite : Elle ouvre l'accès aux aides publiques à la rénovation énergétique, sous conditions. Vous pouvez la vérifier dans l'annuaire officiel des professionnels RGE.
     - Lien : Vérifier notre qualification → [À COMPLÉTER : lien vers la fiche de l'annuaire RGE]
-  - **Carte 2, Compagnons du Devoir :** Jean-Michel Tardy a préparé son CAP dans un CFA des Compagnons du Devoir, puis a fait son Tour de France.
+  - **Carte 2, Compagnons du Devoir :** CAP préparé dans un CFA des Compagnons du Devoir, puis Tour de France.
   - **Carte 3, Scierie Savoldelli :** Notre partenaire local scie le mélèze et le sapin des Hautes-Alpes que nous mettons en œuvre. [À VALIDER AVEC JEAN : accord de la scierie, logo et lien]
   - **Carte 4, PRECI :** 3B Récup' figure sur PRECI, la plateforme régionale de l'économie circulaire de la Région Sud, animée par CIRIDD. [À VALIDER AVEC JEAN : lien vers la fiche]
   - **Carte optionnelle, financement européen :** [À VALIDER AVEC JEAN : projet soutenu par le FEADER (programme LEADER), objet exact du financement et obligation d'affichage du logo]
@@ -258,10 +257,10 @@
 - **Copywriting :**
   - **Pastille :** 3B Récup'
   - **H2 :** **Prolonger la vie** des matériaux de construction
-  - **Texte :** Avec 3B Récup', nous voulons prolonger la vie des matériaux de construction, réduisant ainsi les déchets et l'impact environnemental, tout en offrant des solutions esthétiques et économiques. Charpentiers de métier, nous déposons les structures bois, nous les transformons dans nos ateliers et nous les réemployons sur nos chantiers.
+  - **Texte :** Avec 3B Récup', nous voulons prolonger la vie des matériaux de construction, réduisant ainsi les déchets et l'impact environnemental, tout en offrant des solutions esthétiques et économiques. Nous déposons les structures bois, les transformons dans nos ateliers et les réemployons sur nos chantiers.
   - **Puces (pastilles sauge) :** Réduire l'impact environnemental · Maximiser l'utilisation des ressources
   - **Bouton plein clair :** Découvrir 3B Récup' → `/3b-recup/`
-- *Note :* texte validé de la maquette, complété d'une phrase sur le rôle du charpentier (faits du brief).
+- *Note :* texte validé de la maquette, complété d'une phrase sur ce que fait 3B Récup' (faits du brief).
 
 ### Section 11 : où nous trouver
 
@@ -331,7 +330,7 @@ Nous utilisons principalement du mélèze et du sapin provenant des Hautes-Alpes
 | Charpentier à Briançon | `/charpentier-briancon/` |
 | Charpentier à Serre Chevalier | `/charpentier-serre-chevalier/` |
 | Charpentier en Vallouise et Pays des Écrins | `/charpentier-vallouise-pays-des-ecrins/` |
-| « dans un chalet de Vallouise » (carte Bio) | `/realisations/renovation-et-isolation-d-un-chalet-a-vallouise/` |
+| « isolants biosourcés » (carte Bio) | `/isolation-biosourcee/` |
 | « traits de Jupiter » (carte Bâti) | `/realisations/refection-d-une-charpente-a-l-argentiere-la-bessee/` |
 | Vérifier notre qualification | lien externe vers l'annuaire RGE (à compléter, `rel="noopener"`) |
 
@@ -376,4 +375,5 @@ Nous utilisons principalement du mélèze et du sapin provenant des Hautes-Alpes
 9. **RGE :** lien vers la fiche de l'annuaire officiel. Attention, l'annuaire indique le SIRET 494 482 714 00024 alors que les mentions légales actuelles indiquent 00016 (voir fiche 22).
 10. **PRECI :** lien exact vers la fiche 3B Récup'.
 11. **FEADER / LEADER :** objet du financement, et faut-il afficher le logo sur cette page ?
-12. **Photos :** portrait de Jean indispensable, voir partie 6.
+12. **Atelier :** confirmer que les charpentes sont taillées et montées à blanc à l'atelier (cartes « Bâti » et « La belle ouvrage », FAQ 3).
+13. **Photos :** portrait de Jean indispensable, voir partie 6.
