@@ -1,0 +1,271 @@
+<title>Audit Hôtel de la Gare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout : dossier d'audit, une colonne de lecture (≈ 980 px), tableaux et graphiques pleine largeur de colonne */
+:root {
+  --bg: #f3f6f6; --surface: #ffffff; --ink: #112023; --ink-2: #44575b; --ink-3: #6a7d81; --line: #d7e1e2;
+  --accent: #1d6a66; --accent-soft: #dcefed; --series: #1f8a83; --neutral-bar: #b3c3c4;
+  --crit: #b8372d; --crit-soft: #f8e4e1; --warn: #9a6512; --warn-soft: #f7ecd8; --good: #2c7a4b; --good-soft: #e0f0e6;
+  --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0d1718; --surface: #142224; --ink: #e5eff0; --ink-2: #a5b9bb; --ink-3: #7f9598; --line: #24393b;
+  --accent: #6fcfc5; --accent-soft: #163331; --series: #3fb3a9; --neutral-bar: #46595b;
+  --crit: #ec7d72; --crit-soft: #3a1f1d; --warn: #dcab55; --warn-soft: #362a14; --good: #6cc08c; --good-soft: #17301f; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0d1718; --surface: #142224; --ink: #e5eff0; --ink-2: #a5b9bb; --ink-3: #7f9598; --line: #24393b;
+  --accent: #6fcfc5; --accent-soft: #163331; --series: #3fb3a9; --neutral-bar: #46595b;
+  --crit: #ec7d72; --crit-soft: #3a1f1d; --warn: #dcab55; --warn-soft: #362a14; --good: #6cc08c; --good-soft: #17301f; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--body); margin: 0; padding: 0 16px; }
+.doc { max-width: 980px; margin: 0 auto; padding-block: 48px 96px; }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -0.01em; line-height: 1.15; text-wrap: balance; margin: 0 0 .5em; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; }
+h2 { font-size: clamp(1.45rem, 3vw, 1.9rem); font-weight: 600; }
+h3 { font-size: 1.12rem; font-weight: 600; }
+p { margin: 0 0 1em; max-width: 68ch; }
+a { color: var(--accent); }
+.kicker { font: 600 .74rem/1.2 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; display: block; }
+.meta { color: var(--ink-3); font-size: .92rem; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+section { padding-block: 44px; border-top: 1px solid var(--line); }
+header.top { padding-bottom: 36px; }
+.lede { font-size: 1.18rem; color: var(--ink-2); max-width: 64ch; }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-top: 28px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; min-width: 0; }
+.tile b { display: block; font: 500 1.7rem/1.1 var(--mono); font-variant-numeric: tabular-nums; margin-bottom: 4px; }
+.tile span { font-size: .88rem; color: var(--ink-2); }
+
+.verdict { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+.verdict li { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font: 600 .72rem/1 var(--display); letter-spacing: .06em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; white-space: nowrap; }
+.chip.crit { background: var(--crit-soft); color: var(--crit); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.chip.good { background: var(--good-soft); color: var(--good); }
+.chip.info { background: var(--accent-soft); color: var(--accent); }
+
+.figure { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 20px 14px; margin: 22px 0; position: relative; min-width: 0; }
+.figure h3 { margin-bottom: 2px; }
+.figure .meta { margin: 0 0 12px; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart text { fill: var(--ink-3); font: 12px var(--body); }
+.chart .grid line { stroke: var(--line); stroke-width: 1; }
+.chart .series-line { fill: none; stroke: var(--series); stroke-width: 2; stroke-linejoin: round; }
+.chart .series-area { fill: var(--series); opacity: .1; }
+.chart .cross { stroke: var(--ink-3); stroke-width: 1; }
+.chart .dot { fill: var(--series); stroke: var(--surface); stroke-width: 2; }
+.chart .anno { fill: var(--ink-2); font-weight: 600; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 6px 20px rgba(0,0,0,.12); border-radius: 8px; padding: 8px 10px; font-size: .85rem; white-space: nowrap; }
+.tip b { font: 500 1rem var(--mono); display: block; }
+
+.bars { display: grid; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: minmax(120px, 230px) 1fr; gap: 14px; align-items: center; }
+.bar-row .label { font-size: .95rem; min-width: 0; overflow-wrap: anywhere; }
+.bar-row .label small { display: block; color: var(--ink-3); font-size: .8rem; }
+.bar-track { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.bar { height: 14px; border-radius: 0 4px 4px 0; background: var(--neutral-bar); min-width: 3px; }
+.bar.hl { background: var(--series); }
+.bar-val { font: 500 .9rem var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); white-space: nowrap; }
+@media (max-width: 560px) { .bar-row { grid-template-columns: 1fr; gap: 4px; } }
+
+.table-wrap { overflow-x: auto; margin: 18px 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .94rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 .74rem/1.2 var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); background: var(--bg); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.r, th.r { text-align: right; }
+.vol { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.vol i { display: inline-block; height: 8px; border-radius: 0 3px 3px 0; background: var(--series); opacity: .75; }
+.pos { font: 500 .85rem var(--mono); padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+.pos.top { background: var(--good-soft); color: var(--good); }
+.pos.mid { background: var(--warn-soft); color: var(--warn); }
+.pos.none { background: var(--crit-soft); color: var(--crit); }
+
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 18px 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; min-width: 0; }
+.card h3 { margin-bottom: 6px; }
+.card p, .card li { font-size: .95rem; color: var(--ink-2); }
+.card ul { margin: 0; padding-left: 1.1em; }
+.card.feature { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.price { font: 500 1.6rem/1.1 var(--mono); color: var(--ink); margin: 6px 0 10px; }
+.price small { font: 400 .9rem var(--body); color: var(--ink-3); }
+
+.callout { background: var(--accent-soft); border-radius: 12px; padding: 16px 20px; margin: 18px 0; }
+.callout p:last-child { margin: 0; }
+.steps { counter-reset: s; list-style: none; padding: 0; margin: 18px 0; display: grid; gap: 14px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 12px; }
+.steps li::before { content: counter(s); font: 600 .9rem/34px var(--mono); text-align: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); }
+.steps b { display: block; }
+.months { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.month { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; }
+.month b { font-family: var(--display); font-size: .95rem; }
+.month p { font-size: .92rem; color: var(--ink-2); margin: 4px 0 0; }
+footer { color: var(--ink-3); font-size: .86rem; padding-top: 28px; border-top: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+<style>
+.vs { width: 100%; }
+.verdict li > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+p, li, td { overflow-wrap: break-word; }
+.vs td.l, .vs th.l { background: var(--accent-soft); }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: .88rem; color: var(--ink-2); margin: 0 0 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 18px; height: 3px; border-radius: 2px; display: inline-block; }
+.chart .series-2 { fill: none; stroke: var(--series-2); stroke-width: 2; stroke-linejoin: round; }
+.chart .series-3 { fill: none; stroke: var(--series-3); stroke-width: 2; stroke-linejoin: round; stroke-dasharray: 5 4; }
+.chart .dot2 { fill: var(--series-2); stroke: var(--surface); stroke-width: 2; }
+.chart .dot3 { fill: var(--series-3); stroke: var(--surface); stroke-width: 2; }
+:root { --series-2: #d9692b; --series-3: #6e7a84; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --series-2: #ec8a52; --series-3: #9aa6b0; } }
+:root[data-theme="dark"] { --series-2: #ec8a52; --series-3: #9aa6b0; }
+</style>
+<div class="doc">
+<header class="top">
+  <span class="kicker">Audit SEO &amp; GEO · 12 octobre 2026</span>
+  <h1>Hôtel de la Gare : le seul hôtel de la ville au pied du train de nuit, et un site qui ne le dit nulle part</h1>
+  <p class="lede">L'Hôtel de la Gare des Écrins a le site le plus solide des quatre hôtels de L'Argentière-la-Bessée : la meilleure autorité, une réservation en ligne directe, une version anglaise. Pourtant, sur « hôtel L'Argentière-la-Bessée », l'Hôtel de la Mairie passe devant lui, et l'IA de Google cite d'abord Glaizette. Le site ne parle jamais du train, trois adresses différentes circulent sur Internet, et les prix affichés par l'office de tourisme ne sont pas ceux du site.</p>
+  <p class="meta">Sources : SE Ranking (base France, octobre 2026), lecture des sites des quatre hôtels de la ville, recherche Google « hotel argentiere la bessee » relevée le 12 octobre 2026 depuis Briançon, fiches des offices de tourisme. Le trafic indiqué est une estimation d'outil ; les vrais chiffres sont dans Google Search Console.</p>
+  <div class="tiles">
+    <div class="tile"><b>4<sup>e</sup></b><span>sur « hotel l'argentière la bessée », derrière l'Hôtel de la Mairie (2<sup>e</sup>)</span></div>
+    <div class="tile"><b>≈ 7</b><span>visites Google par mois, contre ≈ 24 pour l'Hôtel de la Mairie</span></div>
+    <div class="tile"><b>0</b><span>fois le mot « train » sur le site d'un hôtel situé à 30 m de la gare</span></div>
+    <div class="tile"><b>3</b><span>adresses différentes pour l'hôtel selon les sites</span></div>
+    <div class="tile"><b>23 / 100</b><span>d'autorité, la plus forte des hôtels de la ville</span></div>
+  </div>
+</header>
+
+<section>
+  <span class="kicker">Synthèse</span>
+  <h2>Ce qu'il faut retenir</h2>
+  <ul class="verdict">
+    <li><span class="chip good">Acquis</span><span>Le site a la meilleure autorité des hôtels de la ville (23 sur 100, contre 15 pour la Mairie). La réservation en ligne est directe, sans commission, et Google la propose gratuitement dans son bloc « Hôtels », où l'Hôtel de la Gare apparaît en premier. C'est aussi le seul site de la ville rédigé en français et en anglais.</span></li>
+    <li><span class="chip crit">Bloquant</span><span>Le train de nuit Paris–Briançon s'arrête à L'Argentière-les-Écrins, à 30 m de l'hôtel. La fiche régionale de l'hôtel propose même un petit-déjeuner express pour ses voyageurs. Mais le site n'emploie jamais le mot « train ». C'est l'atout que personne d'autre en ville ne peut revendiquer.</span></li>
+    <li><span class="chip crit">Bloquant</span><span>Trois adresses circulent : « 2, avenue de la Gare » sur le site, « 2 avenue Charles de Gaulle » sur Google, « 48 avenue Charles de Gaulle » sur les sites des offices de tourisme. L'IA de Google en fait « 2-48 Avenue Charles de Gaulle ».</span></li>
+    <li><span class="chip warn">Prix</span><span>La fiche régionale (mise à jour en novembre 2025, « Tarifs 2026 ») affiche des chambres doubles de 50 à 60 €, le petit-déjeuner de 8 à 11 € et le dîner à 29 €. Le site affiche 75 à 80 €, 12 € et 32 €. Un client qui compare voit deux prix pour le même hôtel.</span></li>
+    <li><span class="chip warn">Manque</span><span>Absent de Google sur « hotel vallouise » (320 recherches par mois) et « hotel vallouise pelvoux » (140), alors que Vallouise est à une dizaine de minutes, et sur « hotel hautes alpes » (260).</span></li>
+    <li><span class="chip warn">Technique</span><span>Une seule vraie page. Dans le menu, « Prestations » et « Le Kota » ne mènent nulle part. 22 photos sur 28 n'ont pas de description pour Google. La page d'exemple de WordPress, « Bonjour tout le monde ! », est toujours en ligne.</span></li>
+    <li><span class="chip info">IA</span><span>Interrogée sur les hôtels de la ville, l'IA de Google cite Glaizette en premier. Elle s'appuie sur le site de la Mairie pour décrire la Mairie, mais sur des fiches extérieures pour décrire la Gare, dont une page Worhot qui situe l'hôtel « à Blachière » avec « une réception ouverte 24h/24 ».</span></li>
+  </ul>
+</section>
+
+<section>
+  <span class="kicker">Face aux hôtels de la ville</span>
+  <h2>Quatre hôtels, quatre petits sites, aucun leader</h2>
+  <p>L'Argentière-la-Bessée compte quatre hôtels : la Gare, la Mairie, Glaizette et Ice Rock Brasil. Aucun n'a de site qui travaille vraiment pour lui sur Google. La place de « l'hôtel de référence » de la ville est libre.</p>
+  <div class="table-wrap"><table class="vs">
+    <thead><tr><th>Indicateur</th><th class="l">Hôtel de la Gare</th><th>Hôtel de la Mairie</th><th>Glaizette</th><th>Ice Rock Brasil</th></tr></thead>
+    <tbody>
+      <tr><td>Chambres</td><td class="l">8</td><td>8</td><td>12, deux étoiles</td><td>non indiqué</td></tr>
+      <tr><td>Restauration</td><td class="l">Dîner sur réservation, à 19 h 30</td><td>Bar, pas de restaurant</td><td>Restaurant et pizzas</td><td>Restaurant brésilien et bar</td></tr>
+      <tr><td>Chambre double sur le site</td><td class="l num">75 – 80 €</td><td class="num">53 – 63 €</td><td>non affiché</td><td>non affiché sur l'accueil</td></tr>
+      <tr><td>Réservation en ligne</td><td class="l">Oui, et relayée par Google</td><td>Oui</td><td>Oui</td><td>Oui</td></tr>
+      <tr><td>Langues du site</td><td class="l">Français et anglais</td><td>Français</td><td>Français</td><td>Français</td></tr>
+      <tr><td>Données « hôtel » lisibles par Google</td><td class="l">Non</td><td>Non</td><td>Non</td><td>Oui</td></tr>
+      <tr><td>Autorité du domaine (SE Ranking, sur 100)</td><td class="l num">23</td><td class="num">15</td><td class="num">0</td><td class="num">10</td></tr>
+      <tr><td>Sites qui font un lien vers le site</td><td class="l num">47</td><td class="num">71</td><td class="num">0</td><td class="num">6</td></tr>
+      <tr><td>Visites Google par mois (estimation)</td><td class="l num">≈ 7</td><td class="num">≈ 24</td><td>non mesuré</td><td class="num">≈ 10</td></tr>
+      <tr><td>« hotel l'argentière la bessée » (210 / mois)</td><td class="l"><span class="pos mid">4<sup>e</sup></span></td><td><span class="pos top">2<sup>e</sup></span></td><td><span class="pos none">absent</span></td><td><span class="pos none">absent</span></td></tr>
+      <tr><td>Réponse de l'IA de Google</td><td class="l">Cité 2<sup>e</sup>, d'après des fiches extérieures</td><td>Cité 3<sup>e</sup>, d'après son propre site</td><td>Cité 1<sup>er</sup></td><td>Non cité</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">Le site de Glaizette n'est pas encore mesuré par SE Ranking (aucun lien ni mot-clé relevé). Sur Booking, Glaizette affiche 7,8 sur 10 avec 458 avis.</p>
+
+  <div class="cols">
+    <div class="card"><h3>Pourquoi la Mairie passe devant</h3><p>Son titre et sa description disent exactement ce qu'on cherche : « hôtel familial de huit chambres au cœur de l'Argentière-la-Bessée ». Elle a aussi plus de sites qui parlent d'elle (71 contre 47), même si ces liens pèsent moins. Son site reste pourtant très court : 268 mots, aucune donnée hôtel, et une faute dans son titre (« béssée »).</p></div>
+    <div class="card"><h3>Ce que la Gare a de plus que tous</h3><p>La gare, d'abord : c'est le seul hôtel où l'on pose son sac en descendant du train de nuit. Puis la réservation directe affichée par Google, le dîner, le pique-nique, la consigne, la douche de retour de montagne, le garage à motos et à vélos, et le partenariat avec Roc Écrins pour les activités.</p></div>
+  </div>
+</section>
+
+<section>
+  <span class="kicker">Positions</span>
+  <h2>Ce que voit un voyageur qui cherche une chambre</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Recherche</th><th class="r">Recherches / mois</th><th>Hôtel de la Gare</th><th>En tête</th></tr></thead>
+    <tbody>
+      <tr><td>« hotel l'argentière la bessée »</td><td class="r num">210</td><td><span class="pos mid">4<sup>e</sup></span></td><td>Booking, Hôtel de la Mairie (2<sup>e</sup>)</td></tr>
+      <tr><td>« hotel l argentière la bessée »</td><td class="r num">170</td><td><span class="pos mid">4<sup>e</sup></span></td><td>Hôtel de la Mairie (2<sup>e</sup>)</td></tr>
+      <tr><td>« hotel argentière »</td><td class="r num">90</td><td><span class="pos none">14<sup>e</sup></span></td><td>Hôtel de la Mairie (1<sup>er</sup>)</td></tr>
+      <tr><td>« hotel vallouise »</td><td class="r num">320</td><td><span class="pos none">absent</span></td><td>Aucun hôtel de L'Argentière</td></tr>
+      <tr><td>« hotel hautes alpes »</td><td class="r num">260</td><td><span class="pos none">absent</span></td><td>Aucun hôtel de L'Argentière</td></tr>
+      <tr><td>« train de nuit briancon »</td><td class="r num">210</td><td><span class="pos none">absent</span></td><td>Aucun hôtel de L'Argentière</td></tr>
+      <tr><td>« hotel vallouise pelvoux »</td><td class="r num">140</td><td><span class="pos none">absent</span></td><td>Aucun hôtel de L'Argentière</td></tr>
+      <tr><td>« hotel de la gare briançon »</td><td class="r num">260</td><td><span class="pos none">18<sup>e</sup></span></td><td>L'Hôtel de la Gare de Briançon, un autre établissement</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">Positions : SE Ranking, base France, octobre 2026. La recherche « hotel argentiere la bessee » a été vérifiée dans Google le 12 octobre 2026 depuis Briançon : la Mairie y apparaît au-dessus de la Gare.</p>
+  <div class="callout"><p><b>Attention au nom.</b> Il existe un autre Hôtel de la Gare, en face de la gare de Briançon. Le nom complet « Hôtel de la Gare des Écrins », toujours accompagné de « L'Argentière-la-Bessée », évite que Google et les voyageurs confondent les deux.</p></div>
+</section>
+
+<section>
+  <span class="kicker">GEO · moteurs de réponse IA</span>
+  <h2>L'IA de Google décrit l'hôtel avec les mots des autres</h2>
+  <p>Le 12 octobre, à la recherche « hotel argentiere la bessee », Google affiche d'abord une réponse de son IA. Elle liste trois hôtels : Glaizette en premier, puis la Gare, puis la Mairie.</p>
+  <ul class="verdict">
+    <li><span class="chip good">Bien</span><span>La Gare est citée, avec la gare SNCF, les navettes, le jardin, le Wi-Fi et le parking.</span></li>
+    <li><span class="chip crit">Faux</span><span>L'adresse devient « 2-48 Avenue Charles de Gaulle », un mélange des deux adresses qui circulent.</span></li>
+    <li><span class="chip crit">Faux</span><span>Parmi ses sources, une page Worhot indique que l'hôtel « est situé à Blachière » et dispose d'« une réception ouverte 24h/24 ».</span></li>
+    <li><span class="chip warn">Manque</span><span>Pour la Mairie, l'IA cite directement le site de l'hôtel. Pour la Gare, elle ne cite pas hotel-de-la-gare-05.fr, mais le site régional du tourisme et Worhot.</span></li>
+  </ul>
+  <p>Les IA reprennent les informations qui sont écrites clairement, et de la même façon partout. Une adresse unique, des prix à jour sur toutes les fiches, et un site qui dit en toutes lettres « hôtel face à la gare de L'Argentière-les-Écrins, arrivée du train de nuit Paris–Briançon » suffisent pour qu'elles décrivent l'hôtel correctement.</p>
+</section>
+
+<section>
+  <span class="kicker">Opportunités</span>
+  <h2>Les voyageurs que la Gare peut capter</h2>
+  <p class="meta">Volumes mensuels moyens en France (SE Ranking). Pour ces recherches, Google montre d'abord les hôtels proches du voyageur et du lieu cherché.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Famille</th><th>Recherches</th><th class="r">Vol. / mois</th><th>Ce qu'il faut créer</th></tr></thead>
+    <tbody>
+      <tr><td><b>Le village</b></td><td>hotel l'argentière la bessée (210), hotel l argentière la bessée (170), hotel argentière (90)</td><td class="r num">≈ 470</td><td>Un accueil réécrit : « Hôtel à L'Argentière-la-Bessée, face à la gare », avec l'adresse unique</td></tr>
+      <tr><td><b>Le train</b></td><td>train de nuit briancon (210), hotel proche gare (70)</td><td class="r num">≈ 280</td><td>Une page « Arriver en train de nuit » : horaires, petit-déjeuner express, consigne, douche, navettes</td></tr>
+      <tr><td><b>Vallouise et les Écrins</b></td><td>hotel vallouise (320), hotel vallouise pelvoux (140)</td><td class="r num">≈ 460</td><td>Une page « Dormir aux portes de Vallouise et des Écrins »</td></tr>
+      <tr><td><b>Les Hautes-Alpes</b></td><td>hotel hautes alpes (260)</td><td class="r num">≈ 260</td><td>Une page par saison, été et hiver, avec Puy-Saint-Vincent et Serre Chevalier</td></tr>
+      <tr><td><b>Les activités</b></td><td>parc national des ecrins (360), rafting durance (260)</td><td class="r num">≈ 620</td><td>Des séjours « nuit + activité » avec Roc Écrins : rafting, escalade, via ferrata</td></tr>
+      <tr><td><b>Les voyageurs étrangers</b></td><td>non mesuré</td><td class="r">—</td><td>Une vraie version anglaise, sur ses propres adresses, pour les voyageurs qui viennent en train</td></tr>
+    </tbody>
+  </table></div>
+  <p>Ces volumes paraissent modestes, mais pour un hôtel de 8 chambres, ils sont énormes : ensemble, environ 2 000 recherches par mois, venant de voyageurs qui cherchent une chambre ou préparent un séjour dans ce coin des Écrins. Aujourd'hui, la Gare n'en capte presque aucune.</p>
+</section>
+
+<section>
+  <span class="kicker">Audit technique</span>
+  <h2>Ce qui freine le site</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Priorité</th><th>Constat</th><th>Impact</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip crit">Haute</span></td><td>Une seule vraie page pour tout l'hôtel : chambres, tarifs, dîner, activités, contact et version anglaise s'enchaînent sur la même adresse.</td><td>Google ne peut classer qu'une page. Rien pour « Vallouise », « train de nuit » ou « rafting ».</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>Le texte anglais est sur la même page que le français, sans adresse ni balise de langue propre.</td><td>Google voit une page française : la version anglaise n'est jamais proposée aux voyageurs étrangers.</td></tr>
+      <tr><td><span class="chip crit">Haute</span></td><td>Aucune donnée structurée « hôtel » : ni adresse, ni prix, ni chambres, ni équipements sous une forme que Google lit directement.</td><td>Google et les IA doivent deviner, et piochent dans des fiches extérieures parfois fausses.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Dans le menu, « Prestations » et « Le Kota » renvoient vers des sections qui n'existent pas.</td><td>Deux clics sur cinq dans le menu ne mènent nulle part.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>22 photos sur 28 sans texte alternatif.</td><td>Aucune visibilité dans Google Images, accessibilité réduite.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>La page d'exemple de WordPress « Bonjour tout le monde ! » et la catégorie « Non classé » sont en ligne et dans le plan du site.</td><td>Pages vides indexées, image peu professionnelle.</td></tr>
+      <tr><td><span class="chip warn">Moyenne</span></td><td>Une seule balise H2 et aucune H3 sur l'accueil ; le titre principal est « Bienvenue à l'Hôtel de la Gare des Écrins », sans le nom de la ville.</td><td>Google comprend mal de quoi parle chaque partie de la page.</td></tr>
+      <tr><td><span class="chip info">Faible</span></td><td>Description Google répétitive (« Hôtel Argentière la Bessée, hôtel restaurant à l'Argentière la Bessée, hôtel à l'Argentière la Bessée… »). Tarifs « Hiver 2026 » sans année sur les dates. Petit-déjeuner à 12 € dans les tarifs, à 10 € dans les services.</td><td>Moins de clics depuis Google, doutes du client au moment de réserver.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">Points positifs : https actif et redirigé, une seule adresse de site (sans doublon www), plan du site déclaré, site lisible sur mobile, réservation directe en ligne, avis clients affichés, lien vers le partenaire Roc Écrins.</p>
+</section>
+
+<section>
+  <span class="kicker">Stratégie</span>
+  <h2>Devenir l'hôtel de référence de L'Argentière, celui du train</h2>
+  <ol class="steps">
+    <li><span><b>Une seule adresse, partout, en une semaine</b>Choisir l'adresse officielle, puis la reporter à l'identique sur le site, la fiche Google, les offices de tourisme du Pays des Écrins et de la région, Booking et Tripadvisor. Mettre à jour les prix 2026 sur les fiches touristiques.</span></li>
+    <li><span><b>Faire du train l'argument numéro un</b>Le titre de l'accueil, la description Google et une page dédiée : « Hôtel face à la gare de L'Argentière-les-Écrins, à la descente du train de nuit Paris–Briançon ». Petit-déjeuner express, consigne, douche et navettes au même endroit.</span></li>
+    <li><span><b>Une page par raison de venir</b>Vallouise et les Écrins, rafting et activités avec Roc Écrins, ski à Puy-Saint-Vincent et Serre Chevalier, étapes à moto et à vélo avec le garage.</span></li>
+    <li><span><b>Une vraie version anglaise</b>Des pages anglaises à leurs propres adresses, déclarées à Google, pour les voyageurs étrangers qui arrivent par Paris.</span></li>
+    <li><span><b>Les données « hôtel » pour Google et les IA</b>Adresse, téléphone, chambres, prix, équipements et horaires, écrits dans le format que Google lit directement.</span></li>
+    <li><span><b>Les avis, après chaque séjour</b>Un message de remerciement avec le lien vers la fiche Google. Glaizette, cité en premier par l'IA, compte déjà 458 avis sur Booking.</span></li>
+  </ol>
+  <div class="callout"><p><b>La bonne nouvelle :</b> aucun hôtel de la ville n'a encore pris cette place. La Gare a déjà la meilleure autorité, la réservation directe relayée par Google, et un atout que personne ne peut copier : la gare. Il suffit de le dire, au bon endroit, de la même façon partout.</p></div>
+</section>
+
+<footer>
+  <p>Méthode et limites : volumes de recherche, trafic, autorité et liens sont des estimations SE Ranking (base France, octobre 2026). La recherche « hotel argentiere la bessee » a été relevée dans Google le 12 octobre 2026, sur ordinateur, avec Briançon comme position. Les informations sur les hôtels viennent de leurs sites et des fiches des offices de tourisme, consultés le 12 octobre 2026. L'arrêt du train de nuit à L'Argentière-les-Écrins est à confirmer sur SNCF Connect pour chaque saison. Aucune donnée privée des établissements n'a été utilisée.</p>
+</footer>
+</div>
